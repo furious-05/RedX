@@ -1,0 +1,167 @@
+  [
+      {
+      "name": "Scanning",
+      "subItems": [
+        { "name": "Nmap", "file": "scanning-nmap" },
+        { "name": "Rustscan", "file": "scanning-rustscan" }
+      ]
+    },
+    {
+      "name": "Service Enumeration",
+      "subItems": [
+        { "name": "SMB", "file": "service-enum-smb" },
+        { "name": "FTP", "file": "service-enum-ftp" },
+        { "name": "SSH", "file": "service-enum-ssh" },
+        { "name": "WinRM", "file": "service-enum-winrm" },
+        { "name": "RDP", "file": "service-enum-rdp" },
+        { "name": "LDAP", "file": "service-enum-ldap" }
+      ]
+    },
+    {
+      "name": "Web Enumeration",
+      "subItems": [
+        { "name": "Directory Busting", "file": "web-enum-directory-busting" },
+        { "name": "Subdomain Enumeration", "file": "web-enum-subdomain-enum" },
+        { "name": "Git", "file": "web-enum-git" },
+        { "name": "LFI and RFI", "file": "web-enum-lfi-and-rfi" },
+        { "name": "SQLi with sqlmap", "file": "web-enum-sqlmap" }
+        
+      ]
+    },
+    {
+      "name": "Pivoting, Tunneling and Port Forwarding",
+      "subItems": [
+        { "name": "Port Forwarding", "file": "internal-port-forwarding" },
+        { "name": "Pivot (Ligolo-ng)", "file": "internal-pivot-with-ligolo" },
+        { "name": "Double Pivot (Ligolo-ng)", "file": "internal-doublepivot-ligolo" },
+        { "name": "Pivot & Double Pivot (sshuttle)", "file": "internal-pivot-doublepivot-sshuttle" }
+      ]
+    },
+    {
+      "name": "Active Directory Attack",
+      "subItems": [
+        { "name": "Kerberos Attacks", "file": "kerberos-attack" },
+        { "name": "LDAP Enumeration", "file": "ldap-enum" },
+        { "name": "Group Policy Abuse", "file": "gpo-abuse" }
+      ]
+    },
+    {
+    "name": "Reverse Shells",
+    "subItems": [
+      { "name": "Bash-i", "file": "reverse-shell-bash-i" },
+      { "name": "Bash 196", "file": "reverse-shell-bash-196" },
+      { "name": "Bash read line", "file": "reverse-shell-bash-readline" },
+      { "name": "Bash 5", "file": "reverse-shell-bash-5" },
+      { "name": "Bash udp", "file": "reverse-shell-bash-udp" },
+      { "name": "Netcat mkfifo", "file": "reverse-shell-nc-mkfifo" },
+      { "name": "Netcat -e", "file": "reverse-shell-nc-e" },
+      { "name": "Windows Netcat -e", "file": "reverse-shell-nc-exe-windows" },
+      { "name": "BusyBox Netcat -e", "file": "reverse-shell-busybox-nc-e" },
+      { "name": "Netcat -c", "file": "reverse-shell-nc-c" },
+      { "name": "Ncat -e", "file": "reverse-shell-ncat-e" },
+      { "name": "Ncat.exe -e (Windows)", "file": "reverse-shell-ncat-exe-e" },
+      { "name": "Ncat UDP mkfifo", "file": "reverse-shell-ncat-udp" },
+      { "name": "Rustcat Reverse Shell", "file": "reverse-shell-rustcat" },
+      { "name": "C", "file": "reverse-shell-c" },
+      { "name": "C Window", "file": "reverse-shell-window-c" },
+      { "name": "C# TCP Client", "file": "reverse-shell-csharp-tcp-client" },
+      { "name": "Haskell #1", "file": "reverse-shell-haskell" },
+      { "name": "Openssl", "file": "reverse-shell-openssl" },
+      { "name": "Perl", "file": "reverse-shell-perl" },
+      { "name": "Perl no sh", "file": "reverse-shell-perl-no-sh" },
+      { "name": "Perl PentestMonkey", "file": "reverse-shell-perl-pentest-monkey" },
+      { "name": "PHP PentestMonkey", "file": "reverse-shell-php-pentest-monkey" },
+      { "name": "PHP Ivan Sincek", "file": "reverse-shell-php-ivan-sincek" },
+      { "name": "PHP cmd", "file": "reverse-shell-php-cmd" },
+      
+      { "name": "PHP cmd 2", "file": "reverse-shell-php-cmd-2" },
+      { "name": "PHP cmd small", "file": "reverse-shell-cmd-small" },
+      { "name": "PHP exec", "file": "reverse-shell-php-exec" },
+      { "name": "PHP shell_exec", "file": "reverse-shell-php-shell-exec" },
+      { "name": "PHP system", "file": "reverse-shell-php-system" },
+      { "name": "PHP passthru", "file": "reverse-shell-php-passthru" },
+      
+      { "name": "PHP`", "file": "reverse-shell-php-backtick" },
+      { "name": "PHP popen", "file": "reverse-shell-php-popen" },
+      { "name": "PHP proc_open", "file": "reverse-shell-php-proc-open" },
+      { "name": "Windows ConPty", "file": "reverse-shell-windows-conpty" },
+      
+      
+      { "name": "Powershell #1", "file": "reverse-shell-powershell-1" },
+      { "name": "Powershell #2", "file": "reverse-shell-powershell-2" },
+      { "name": "Powershell #3", "file": "reverse-shell-powershell-3" },
+      { "name": "Powershell #4 tls", "file": "reverse-shell-powershell-4-tls" },
+      
+      { "name": "Python #1", "file": "reverse-shell-python-1" },
+      { "name": "Python #2", "file": "reverse-shell-python-2" },
+      { "name": "Python3 #1", "file": "reverse-shell-python3-1" },
+      { "name": "Python3 #2", "file": "reverse-shell-python3-2" },
+      
+      { "name": "Python3 Windows", "file": "reverse-shell-python3-windows" },
+      { "name": "Python3 Shortest", "file": "reverse-shell-python3-shortest" },
+      
+
+      { "name": "Ruby #1", "file": "reverse-shell-ruby-1" },
+      { "name": "Ruby no sh", "file": "reverse-shell-ruby-no-sh" },
+      { "name": "socat #1", "file": "reverse-shell-socat-1" },
+      { "name": "socat #2(TTY)", "file": "reverse-shell-socat-2-pty" },
+      { "name": "sqlite3 nc mkfifo", "file": "reverse-shell-sqlite3-nc-mkfifo" },
+    
+      { "name": "Node.js", "file": "reverse-shell-node" },
+      { "name": "Node.js #2", "file": "reverse-shell-node-2" },
+      { "name": "Java #1", "file": "reverse-shell-java-1" },
+      { "name": "Java #2", "file": "reverse-shell-java-2" },
+      { "name": "Java #3", "file": "reverse-shell-java-3" },
+    
+      { "name": "Java Web", "file": "reverse-shell-java-web" },
+      { "name": "Java Two Web", "file": "reverse-shell-java-2-web" },
+      { "name": "Javascript", "file": "reverse-shell-javascript" },
+    
+      { "name": "telnet", "file": "reverse-shell-telnet" },
+      { "name": "zsh", "file": "reverse-shell-zsh" },
+      { "name": "Lua #1", "file": "reverse-shell-lua-1" },
+      { "name": "Lua #2", "file": "reverse-shell-lua-2" },
+
+      { "name": "Vlang", "file": "reverse-shell-vlang" },
+      { "name": "Awk", "file": "reverse-shell-awk" },
+      { "name": "Dart", "file": "reverse-shell-dart" },
+      { "name": "Crystal (system)", "file": "reverse-shell-crystal-system" },
+      { "name": "Crystal (code)", "file": "reverse-shell-crystal-code" }
+    
+    ]
+  },
+    {
+      "name": "Databases",
+      "subItems": [
+        { "name": "MSSql", "file": "databases-mssql" },
+        { "name": "Sqlite3", "file": "databases-sqlite3" },
+        { "name": "MySql", "file": "databases-mysql" }
+        
+      ]
+    },
+    {
+      "name": "Password Cracking / Hash Cracking",
+      "subItems": [
+        { "name": "John the Ripper", "file": "hashcracking-json" },
+        { "name": "Hashcat", "file": "hashcracking-hashcat" }
+      ]
+    },
+    {
+      "name": "Post Exploitation",
+      "subItems": [
+        { "name": "Privilege Escalation", "file": "priv-esc" },
+        { "name": "Credential Harvesting", "file": "cred-harvest" },
+        { "name": "Persistence", "file": "persistence" }
+      ]
+    },
+    {
+      "name": "File Transfer & Payload Delivery",
+      "subItems": [
+        { "name": "Python server", "file": "file-transfer-python-http-server" },
+        { "name": "nc / ncat", "file": "file-transfer-nc-ncat" },
+        { "name": "SMB, FTP, SSH and base64", "file": "file-transfer-othermethod" }
+      ]
+    }
+  ]
+
+

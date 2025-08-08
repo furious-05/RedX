@@ -1,0 +1,19 @@
+{
+  "commands": [
+    {
+      "title": "Enum4linux Shares",
+      "description": "Use enum4linux to enumerate SMB shares",
+      "template": "enum4linux -S {ip}"
+    },
+    {
+      "title": "SMBClient List",
+      "description": "List shares using smbclient",
+      "template": "smbclient -L //{ip} -N"
+    },
+    {
+      "title": "Impacket SMBClient",
+      "description": "Use impacket smbclient for shares enumeration",
+      "template": "impacket-smbclient \\\\{ip}\\ -U ''"
+    }
+  ]
+}

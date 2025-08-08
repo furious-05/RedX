@@ -1,0 +1,45 @@
+{
+  "commands": [
+    {
+      "title": "Start Python 3 HTTP server",
+      "description": "Serve files from the current directory using Python 3",
+      "template": "python3 -m http.server {port}"
+    },
+    {
+      "title": "Start Python 2 HTTP server",
+      "description": "Serve files from the current directory using Python 2",
+      "template": "python -m SimpleHTTPServer {port}"
+    },
+    {
+      "title": "Download using wget",
+      "description": "Download file from Python server using wget",
+      "template": "wget http://{localip}:{port}/{filename}"
+    },
+    {
+      "title": "Download using curl",
+      "description": "Download file from Python server using curl",
+      "template": "curl http://{localip}:{port}/{filename} -o {filename}"
+    },
+    {
+      "title": "Download using certutil",
+      "description": "Download file using Windows certutil utility",
+      "template": "certutil -urlcache -split -f http://{localip}:{port}/{filename} {filename}"
+    },
+    {
+      "title": "Download using PowerShell (Invoke-WebRequest)",
+      "description": "Download file using PowerShell's Invoke-WebRequest",
+      "template": "powershell -Command \"Invoke-WebRequest -Uri http://{localip}:{port}/{filename} -OutFile {filename}\""
+    },
+    {
+      "title": "Download using PowerShell (WebClient)",
+      "description": "Download file using PowerShell's WebClient object",
+      "template": "powershell -Command \"$client = New-Object System.Net.WebClient; $client.DownloadFile('http://{localip}:{port}/{filename}', '{filename}')\""
+    },
+    {
+      "title": "Download using Bitsadmin",
+      "description": "Use bitsadmin to download file from HTTP server",
+      "template": "bitsadmin /transfer job /download /priority normal http://{localip}:{port}/{filename} {filename}"
+      
+    }
+  ]
+}

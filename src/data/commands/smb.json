@@ -1,0 +1,20 @@
+{
+  "commands": [
+    {
+      "title": "User Enumeration",
+      "template": "enum4linux -U {ip}"
+    },
+    {
+      "title": "Shares",
+      "template": "smbclient -L //{ip} -N"
+    },
+    {
+      "title": "SMB Version Detection",
+      "template": "nmap -sV -p 445 --script=smb-os-discovery {ip}"
+    },
+    {
+      "title": "Null Sessions",
+      "template": "rpcclient -U \"\" {ip}"
+    }
+  ]
+}

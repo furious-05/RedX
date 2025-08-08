@@ -1,0 +1,108 @@
+{
+  "commands": [
+    {
+      "title": "Basic TCP Scan",
+      "template": "nmap {ip}"
+    },
+    {
+      "title": "Scan Specific Port",
+      "template": "nmap -p {port} {ip}"
+    },
+    {
+      "title": "Service Version Detection",
+      "template": "nmap -sV {ip}"
+    },
+    {
+      "title": "Aggressive Scan (with OS detection)",
+      "template": "nmap -A {ip}"
+    },
+    {
+      "title": "Scan Multiple Ports",
+      "template": "nmap -p 22,80,443 {ip}"
+    },
+    {
+      "title": "Scan Port Range",
+      "template": "nmap -p {port}-1000 {ip}"
+    },
+    {
+      "title": "UDP Scan",
+      "template": "nmap -sU -p {port} {ip}"
+    },
+    {
+      "title": "Ping Scan (Host Discovery Only)",
+      "template": "nmap -sn {ip}"
+    },
+    {
+      "title": "OS Detection",
+      "template": "nmap -O {ip}"
+    },
+    {
+      "title": "Scan with Default Scripts",
+      "template": "nmap -sC {ip}"
+    },
+    {
+      "title": "Scan with Specific NSE Script",
+      "template": "nmap --script=http-title {ip}"
+    },
+    {
+      "title": "Fast Scan",
+      "template": "nmap -F {ip}"
+    },
+    {
+      "title": "Scan All Ports",
+      "template": "nmap -p- {ip}"
+    },
+    {
+      "title": "Scan with Verbose Output",
+      "template": "nmap -v {ip}"
+    },
+    {
+      "title": "Traceroute During Scan",
+      "template": "nmap --traceroute {ip}"
+    },
+    {
+      "title": "Detect Firewall",
+      "template": "nmap -sA {ip}"
+    },
+    {
+      "title": "Scan with Decoy IPs",
+      "template": "nmap -D RND:10 {ip}"
+    },
+    {
+      "title": "Fragment Packets",
+      "template": "nmap -f {ip}"
+    },
+    {
+      "title": "Scan and Save Output to Normal Text File",
+      "template": "nmap -oN output.txt {ip}"
+    },
+    {
+      "title": "Scan and Save Output to XML File",
+      "template": "nmap -oX output.xml {ip}"
+    },
+    {
+      "title": "Scan and Save Output to Grepable File",
+      "template": "nmap -oG output.gnmap {ip}"
+    },
+    {
+      "title": "Scan with Two Flags (-sS and -sV)",
+      "template": "nmap -sS -sV {ip}"
+    },
+    {
+      "title": "Scan with Three Flags (-sS, -sV and -O)",
+      "template": "nmap -sS -sV -O {ip}"
+    },
+    {
+      "title": "Aggressive Scan and Save to File",
+      "template": "nmap -A -oN aggressive_output.txt {ip}"
+    },
+    {
+      "title": "Scan All TCP Ports with Version Detection and OS Detection",
+      "template": "nmap -p- -sV -O {ip}"
+    },
+    {
+        "title":"Verbose Default Script & Version Scan on Port with Output  ",
+        "template":"nmap -sC -sV -vv -p {port} {ip} -oN output.txt"
+    }
+  ]
+}

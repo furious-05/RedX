@@ -1,0 +1,44 @@
+{
+  "commands": [
+    {
+      "title": "Basic Usage",
+      "template": "hashcat -m {mode} -a 0 -o cracked.txt {hashfile} {wordlist}",
+      "description": "Crack hashes using a wordlist with default attack mode."
+    },
+    {
+      "title": "Specify Hash Type",
+      "template": "hashcat -m {mode} -a 0 {hashfile} {wordlist}",
+      "description": "Specify the hash mode manually for better accuracy."
+    },
+    {
+      "title": "Resume a Session",
+      "template": "hashcat --session={session_name} --restore",
+      "description": "Resume an interrupted cracking session."
+    },
+    {
+      "title": "Save Session and Crack",
+      "template": "hashcat --session={session_name} -m {mode} -a 0 {hashfile} {wordlist}",
+      "description": "Start a new session that can be resumed later."
+    },
+    {
+      "title": "Benchmark Modes",
+      "template": "hashcat -I",
+      "description": "Detect available devices and benchmark supported modes."
+    },
+    {
+      "title": "Show Cracked Passwords",
+      "template": "hashcat -m {mode} --show {hashfile}",
+      "description": "Display cracked passwords from hash file."
+    },
+    {
+      "title": "Brute-force Attack",
+      "template": "hashcat -m {mode} -a 3 {hashfile} ?a?a?a?a?a?a",
+      "description": "Use brute-force mode with a custom mask."
+    },
+    {
+      "title": "Use Rules with Wordlist",
+      "template": "hashcat -m {mode} -a 0 -r rules/best64.rule {hashfile} {wordlist}",
+      "description": "Apply rules to the wordlist for more variations."
+    }
+  ]
+}

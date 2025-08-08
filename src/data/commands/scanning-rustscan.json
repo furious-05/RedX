@@ -1,0 +1,99 @@
+{
+  "commands": [
+    {
+      "title": "Basic Scan",
+      "description": "Scan all ports on a target IP quickly using RustScan.",
+      "template": "rustscan -a {ip}"
+    },
+    {
+      "title": "Scan Specific Port",
+      "description": "Scan a specific port on a target IP.",
+      "template": "rustscan -a {ip} -p {port}"
+    },
+    {
+      "title": "Scan Multiple Ports",
+      "description": "Scan multiple specified ports.",
+      "template": "rustscan -a {ip} -p 22,80,443"
+    },
+    {
+      "title": "Scan Port Range",
+      "description": "Scan ports within a specific range.",
+      "template": "rustscan -a {ip} -r {port}-1000"
+    },
+    {
+      "title": "Increase File Descriptor Limit",
+      "description": "Run RustScan with higher ulimit for faster scans.",
+      "template": "rustscan -a {ip} --ulimit 5000"
+    },
+    {
+      "title": "Service Version Detection",
+      "description": "Run RustScan and pass results to Nmap for service version detection.",
+      "template": "rustscan -a {ip} -- -sV"
+    },
+    {
+      "title": "Aggressive Scan with OS Detection",
+      "description": "Run RustScan and pass results to Nmap for aggressive scanning with OS detection.",
+      "template": "rustscan -a {ip} -- -A"
+    },
+    {
+      "title": "Nmap Default Scripts",
+      "description": "Run RustScan and pass results to Nmap with default scripts.",
+      "template": "rustscan -a {ip} -- -sC"
+    },
+    {
+      "title": "OS Detection",
+      "description": "Run RustScan and pass results to Nmap for OS detection.",
+      "template": "rustscan -a {ip} -- -O"
+    },
+    {
+      "title": "Fast Scan (Top 100 Ports)",
+      "description": "Quickly scan the most common 100 ports.",
+      "template": "rustscan -a {ip} -r 1-100"
+    },
+    {
+      "title": "Save Output to File",
+      "description": "Save Nmap output from RustScan to a file.",
+      "template": "rustscan -a {ip} -- -sC -sV -oN rustscan_output.txt"
+    },
+    {
+      "title": "Scan with Verbose Output",
+      "description": "Enable verbose mode in Nmap for more detailed output.",
+      "template": "rustscan -a {ip} -- -v"
+    },
+    {
+      "title": "Traceroute",
+      "description": "Perform traceroute during scan.",
+      "template": "rustscan -a {ip} -- --traceroute"
+    },
+    {
+      "title": "Stealth SYN Scan",
+      "description": "Run a stealth SYN scan using Nmap through RustScan.",
+      "template": "rustscan -a {ip} -- -sS"
+    },
+    {
+      "title": "UDP Scan",
+      "description": "Scan UDP ports using Nmap through RustScan.",
+      "template": "rustscan -a {ip} -- -sU"
+    },
+    {
+      "title": "Fragment Packets",
+      "description": "Fragment packets to avoid detection by firewalls.",
+      "template": "rustscan -a {ip} -- -f"
+    },
+    {
+      "title": "Scan with Decoy IPs",
+      "description": "Mask your scan by sending decoy packets from random IPs.",
+      "template": "rustscan -a {ip} -- -D RND:10"
+    },
+    {
+      "title": "Timing Template T4",
+      "description": "Use faster timing for scans.",
+      "template": "rustscan -a {ip} -- -T4"
+    },
+    {
+      "title": "Combine Multiple Nmap Flags",
+      "description": "Run RustScan with multiple Nmap flags for maximum detail.",
+      "template": "rustscan -a {ip} -- -sC -sV -O -A -oN full_scan.txt"
+    }
+  ]
+}

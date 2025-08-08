@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+
+/* Scrollbar styles for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111926; /* matches sidebar bg */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* gray-600 */
+  border-radius: 4px;
+  border: 2px solid #111926; /* adds padding around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280; /* lighter gray on hover */
+}
+
+/* index.css or App.css */
+@keyframes spin-3d {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+.loading-cube {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(45deg, #f97316, #fde68a);
+  box-shadow: 0 0 15px #f97316;
+  border-radius: 8px;
+  animation: spin-3d 3s linear infinite;
+  transform-style: preserve-3d;
+  margin-bottom: 1.5rem;
+}
+
+.scroll-padding-bottom {
+  scroll-padding-bottom: 2rem; /* or any px/rem value */
+}

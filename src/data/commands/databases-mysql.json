@@ -1,0 +1,47 @@
+{
+  "title": "MySQL Basic Commands",
+  "description": "Basic MySQL commands for connecting, exploring, and interacting with a MySQL database.",
+  "category": "mysql",
+  "commands": [
+    {
+      "title": "Connect to MySQL",
+      "template": "mysql -h {ip} -P {port} -u root -p",
+      "description": "Connect to a remote MySQL server using IP and port."
+    },
+    {
+      "title": "Show All Databases",
+      "template": "SHOW DATABASES;",
+      "description": "Display all available databases."
+    },
+    {
+      "title": "Use Database",
+      "template": "USE {database_name};",
+      "description": "Select a specific database to work with."
+    },
+    {
+      "title": "Show All Tables",
+      "template": "SHOW TABLES;",
+      "description": "List all tables in the current database."
+    },
+    {
+      "title": "Show Table Columns",
+      "template": "DESCRIBE {table_name};",
+      "description": "View the column names and data types of a specific table."
+    },
+    {
+      "title": "Select All Data",
+      "template": "SELECT * FROM {table_name};",
+      "description": "Display all data from a given table."
+    },
+    {
+      "title": "Select Specific Column",
+      "template": "SELECT {column_name} FROM {table_name};",
+      "description": "Display specific column values from a table."
+    },
+    {
+      "title": "Exit MySQL",
+      "template": "exit;",
+      "description": "Exit the MySQL shell."
+    }
+  ]
+}

