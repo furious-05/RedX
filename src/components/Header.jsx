@@ -32,7 +32,7 @@ function Header() {
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex space-x-6 items-center">
             <Link
-              to="/about"
+              to="./about"
               className={`flex items-center gap-2 ${hoverTextClass} transition`}
             >
               <img

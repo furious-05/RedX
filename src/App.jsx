@@ -342,7 +342,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<MainInterface />} />
-      <Route path="/about" element={<About />} />
+      <Route path="about" element={<About />} />
       {/* Redirect any unknown route to home */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
