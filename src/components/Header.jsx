@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../store/themeSlice";
+import { Link } from "react-router-dom";
 import logo from "../assets/robot.jpg";
 import githubIcon from "../assets/github.jpeg";
 import { FaMoon, FaSun } from "react-icons/fa";
@@ -17,11 +18,7 @@ function Header() {
     }
   }, [theme]);
 
-  const bgClass =
-    theme === "dark"
-      ? "bg-gray-900 text-white"
-      : "bg-gray-100 text-gray-900";
-
+  const bgClass = theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900";
   const hoverTextClass = "hover:text-gray-600";
   const btnHoverBgClass = "hover:bg-gray-200 dark:hover:bg-gray-700";
 
@@ -32,10 +29,10 @@ function Header() {
           {/* Logo / Brand */}
           <h1 className="text-xl font-bold tracking-wide">PentestX</h1>
 
-          {/* Navigation */}
+          {/* Navigation - Desktop */}
           <nav className="hidden md:flex space-x-6 items-center">
-            <a
-              href="#about"
+            <Link
+              to="/about"
               className={`flex items-center gap-2 ${hoverTextClass} transition`}
             >
               <img
@@ -44,7 +41,7 @@ function Header() {
                 className="h-6 w-6 rounded-full object-cover"
               />
               About
-            </a>
+            </Link>
 
             <a
               href="https://github.com/furious-05"
@@ -73,7 +70,11 @@ function Header() {
 
           {/* Mobile Menu Icon */}
           <div className="md:hidden">
-            <button className={`${btnHoverBgClass} p-2 rounded-md focus:outline-none`}>
+            <button
+              className={`${btnHoverBgClass} p-2 rounded-md focus:outline-none`}
+              aria-label="Open menu"
+              // You can add onClick handler here to toggle mobile menu
+            >
               <svg
                 className="h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"

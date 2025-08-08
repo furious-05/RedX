@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Routes, Route, Navigate } from "react-router-dom";
 import PentestXLoader from "./components/ThreeDLoader";
 import Header from "./components/Header";
 import RightBar from "./components/RightBar";
@@ -7,6 +8,7 @@ import LeftBar from "./components/LeftBar";
 import useCommands from "./hooks/useCommands";
 import categories from "./data/categories.json";
 import inputFieldsConfig from "./config/inputFieldsConfig";
+import About from "./components/About";  // import your About component
 
 export default function App() {
   const theme = useSelector((state) => state.theme.mode);
@@ -14,7 +16,9 @@ export default function App() {
   const [loadingScreen, setLoadingScreen] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]?.name || "SMB Enumeration");
+  const [selectedCategory, setSelectedCategory] = useState(
+    categories[0]?.name || "SMB Enumeration"
+  );
   const [selectedSubItemFile, setSelectedSubItemFile] = useState(null);
   const [selectedCommandTitle, setSelectedCommandTitle] = useState(null);
 
@@ -105,7 +109,8 @@ export default function App() {
 
   const currentInputs = inputFieldsConfig[selectedCategory] || inputFieldsConfig.default;
 
-  return (
+  // Main interface layout
+  const MainInterface = () => (
     <div
       className={`h-screen flex flex-col transition-colors duration-300 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
@@ -193,7 +198,7 @@ export default function App() {
                     key={name}
                     type={type}
                     placeholder={placeholder}
-                    className={`px-3 pb-3 pt-2 rounded-md border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition ${
+                    className={`px-3 pb-3 pt-2 rounded-md border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition ${
                       theme === "dark"
                         ? "bg-gray-800 text-white border-gray-600"
                         : "bg-white text-black border-gray-300"
@@ -258,31 +263,30 @@ export default function App() {
                             title={isCopied ? "Copied!" : "Copy command"}
                             style={{ userSelect: "none" }}
                           >
-                         {isCopied ? (
-  <svg
-    className="w-5 h-5 text-gray-400"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-  </svg>
-) : (
-  <svg
-    className="w-5 h-5 text-gray-400"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect x="9" y="9" width="10" height="10" rx="2" ry="2" />
-    <rect x="5" y="5" width="10" height="10" rx="2" ry="2" />
-  </svg>
-)}
-
+                            {isCopied ? (
+                              <svg
+                                className="w-5 h-5 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                            ) : (
+                              <svg
+                                className="w-5 h-5 text-gray-400"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <rect x="9" y="9" width="10" height="10" rx="2" ry="2" />
+                                <rect x="5" y="5" width="10" height="10" rx="2" ry="2" />
+                              </svg>
+                            )}
                           </button>
                         </div>
 
@@ -333,5 +337,14 @@ export default function App() {
         </div>
       </div>
     </div>
+  );
+
+  return (
+    <Routes>
+      <Route path="/" element={<MainInterface />} />
+      <Route path="/about" element={<About />} />
+      {/* Redirect any unknown route to home */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }

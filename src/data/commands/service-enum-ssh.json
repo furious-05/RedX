@@ -22,12 +22,12 @@
     },
     {
       "title": "Send a Local File to Remote SSH Target",
-      "template": "nxc ssh {ip} -u user -p pass --put-file {local_filename} /tmp/{file_name}",
+      "template": "nxc ssh {ip} -u {username} -p {password} --put-file {local_filename} /tmp/{file_name}",
       "description": "Uploads `file.txt` to `/tmp` on the remote machine."
     },
     {
       "title": "Download File From Remote SSH Target",
-      "template": "nxc ssh {ip} -u username -p passname --get-file /tmp/{remote_file} {local_filename}",
+      "template": "nxc ssh {ip} -u {username} -p {passname} --get-file /tmp/{remote_file} {local_filename}",
       "description": "Downloads a file from remote to your local system."
     },
     {

@@ -34,7 +34,9 @@
         { "name": "Port Forwarding", "file": "internal-port-forwarding" },
         { "name": "Pivot (Ligolo-ng)", "file": "internal-pivot-with-ligolo" },
         { "name": "Double Pivot (Ligolo-ng)", "file": "internal-doublepivot-ligolo" },
-        { "name": "Pivot & Double Pivot (sshuttle)", "file": "internal-pivot-doublepivot-sshuttle" }
+        { "name": "Pivot & Double Pivot (sshuttle)", "file": "internal-pivot-doublepivot-sshuttle" },
+        { "name": "Pivot (chisel)", "file": "internal-pivot-chisel" }
+        
       ]
     },
     {
