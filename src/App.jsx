@@ -18,7 +18,7 @@ const InputFields = React.memo(({ inputs, formValues, setFormValues, theme }) =>
         key={name}
         type={type}
         placeholder={placeholder}
-        className={`px-3 pb-3 pt-2 rounded-md border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition ${
+        className={`px-3 pb-3 pt-2 rounded-md border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition ${
           theme === "dark"
             ? "bg-gray-800 text-white border-gray-600"
             : "bg-white text-black border-gray-300"

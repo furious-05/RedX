@@ -1,0 +1,29 @@
+{
+  "commands": [
+    {
+      "title": "Add Group Member using bloodyAD",
+      "description": "Add a user to a group using bloodyAD. Use DN format for TargetUser and TargetGroup.",
+      "template": "bloodyAD --host \"{ip}\" -d \"{domain}\" -u \"{username}\" -p \"{password}\" add groupMember \"{target_object}\" \"{controlled_principal}\""
+    },
+    {
+      "title": "Add Group Member using ldeep (Python)",
+      "description": "Add a user to a group using ldeep LDAP tool. Use DN format for TargetUser and TargetGroup.",
+      "template": "ldeep ldap -d \"{domain}\" -s \"{ip}\" -u \"{username}\" -p \"{password}\" add_to_group \"{controlled_principal}\" \"{target_object}\""
+    },
+    {
+      "title": "Add User to Group (Windows command line)",
+      "description": "Add a user to a domain group using Windows net group command.",
+      "template": "net group '{target_object}' '{controlled_principal}' /add /domain"
+    },
+    {
+      "title": "Add Group Member using PowerShell Active Directory module",
+      "description": "Add a user to a group using PowerShell Active Directory module.",
+      "template": "Add-ADGroupMember -Identity '{target_object}' -Members '{controlled_principal}'"
+    },
+    {
+      "title": "Add Group Member using PowerSploit",
+      "description": "Add a user to a group using PowerSploit PowerShell module.",
+      "template": "Add-DomainGroupMember -Identity '{target_object}' -Members '{controlled_principal}'"
+    }
+  ]
+}

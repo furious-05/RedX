@@ -48,17 +48,22 @@ const inputFieldsConfig = {
   ],
 
   "Active Directory Attack": [
-    { name: "domain", placeholder: "Domain", type: "text" },
+    { name: "domain", placeholder: "Domain (e.g corp.local)", type: "text" },
     { name: "username", placeholder: "Username", type: "text" },
     { name: "password", placeholder: "Password", type: "text" },
     { name: "ntlm_hash", placeholder: "NTLM Hash", type: "text" },
+    { name: "target_object", placeholder: "Target Object", type: "text" },
     { name: "ip", placeholder: "DC IP", type: "text" },
     {
       name: "domain_controller",
-      placeholder: "Domain Controller",
+      placeholder: "Domain Controller (e.g dc01.corp.local)",
       type: "text",
     },
-    { name: "target_user", placeholder: "Target User", type: "text" },
+    {
+      name: "controlled_principal",
+      placeholder: "Controlled Object",
+      type: "text",
+    },
   ],
 
   "Password Cracking / Hash Cracking": [

@@ -1,7 +1,5 @@
 {
-  "title": "BloodHound Data Collection Commands",
-  "description": "Commands for using BloodHound-python, SharpHound, and RustHound-CE to enumerate Active Directory environments.",
-  "category": "bloodhound-collection",
+
   "commands": [
     {
       "title": "Enumerate AD with NTLM hash (BloodHound-python)",

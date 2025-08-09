@@ -1,0 +1,20 @@
+{
+  "commands": [
+    
+    {
+      "title": "Generate krb5.conf",
+      "description": "Kerberos configuration for realm and KDC settings (realm = uppercase domain).",
+      "template": "[domain_realm]\n    .{domain} = {DOMAIN_UPPER}\n    {domain} = {DOMAIN_UPPER}\n\n[libdefaults]\n    default_realm = {DOMAIN_UPPER}\n    dns_lookup_realm = false\n    dns_lookup_kdc = true\n    ticket_lifetime = 24h\n    forwardable = true\n\n[realms]\n    {DOMAIN_UPPER} = {\n        kdc = {domain_controller}\n        admin_server = {domain_controller}\n        default_domain = {domain}\n    }"
+    },
+    {
+      "title": "Get TGT with password (impacket-getTGT)",
+      "description": "Request a TGT using username and password, save to a Kerberos ccache file.",
+      "template": "impacket-getTGT {domain}/{username}:{password} -dc-ip {ip} -save {username}.ccache && export KRB5CCNAME={username}.ccache"
+    },
+    {
+      "title": "Get TGT with NTLM hash (impacket-getTGT)",
+      "description": "Request a TGT using username and NTLM hash without password.",
+      "template": "impacket-getTGT -no-pass -hashes :{ntlm_hash} {domain}/{username}@{domain_controller} -save {username}.ccache && export KRB5CCNAME={username}.ccache"
+    }
+  ]
+}

