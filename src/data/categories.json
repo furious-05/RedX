@@ -42,7 +42,7 @@
     {
       "name": "Active Directory Attack",
       "subItems": [
-        { "name": "Kerberos Attacks", "file": "kerberos-attack" },
+        { "name": "Data Collection", "file": "ad-data-collection" },
         { "name": "LDAP Enumeration", "file": "ldap-enum" },
         { "name": "Group Policy Abuse", "file": "gpo-abuse" }
       ]

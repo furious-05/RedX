@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Routes, Route, Navigate } from "react-router-dom";
 import PentestXLoader from "./components/ThreeDLoader";
@@ -8,109 +8,71 @@ import LeftBar from "./components/LeftBar";
 import useCommands from "./hooks/useCommands";
 import categories from "./data/categories.json";
 import inputFieldsConfig from "./config/inputFieldsConfig";
-import About from "./components/About";  // import your About component
+import About from "./components/About";
 
-export default function App() {
-  const theme = useSelector((state) => state.theme.mode);
-
-  const [loadingScreen, setLoadingScreen] = useState(true);
-  const [fadeOut, setFadeOut] = useState(false);
-
-  const [selectedCategory, setSelectedCategory] = useState(
-    categories[0]?.name || "SMB Enumeration"
-  );
-  const [selectedSubItemFile, setSelectedSubItemFile] = useState(null);
-  const [selectedCommandTitle, setSelectedCommandTitle] = useState(null);
-
-  const [formValues, setFormValues] = useState({});
-  const [command, setCommand] = useState("");
-  const [showLeft, setShowLeft] = useState(false);
-  const [showRight, setShowRight] = useState(false);
-
-  const { data, loading } = useCommands(selectedSubItemFile);
-
-  const [rightWidth, setRightWidth] = useState(256);
-  const [leftWidth, setLeftWidth] = useState(192);
-
-  const [copiedCommand, setCopiedCommand] = useState(null);
-
-  useEffect(() => {
-    const fadeTimer = setTimeout(() => setFadeOut(true), 1000);
-    const hideTimer = setTimeout(() => setLoadingScreen(false), 2000);
-    return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(hideTimer);
-    };
-  }, []);
-
-  useEffect(() => {
-    setSelectedSubItemFile(null);
-    setSelectedCommandTitle(null);
-
-    const cat = categories.find((c) => c.name === selectedCategory);
-    if (cat?.subItems?.length) {
-      setTimeout(() => {
-        setSelectedSubItemFile(cat.subItems[0].file);
-        setSelectedCommandTitle(cat.subItems[0].name);
-      }, 0);
-    }
-
-    setShowRight(false);
-
-    const inputs = inputFieldsConfig[selectedCategory] || inputFieldsConfig.default;
-
-    setFormValues((prevValues) => {
-      const newValues = { ...prevValues };
-      inputs.forEach(({ name }) => {
-        if (!(name in newValues)) {
-          newValues[name] = "";
+// Memoized InputFields component
+const InputFields = React.memo(({ inputs, formValues, setFormValues, theme }) => (
+  <div className="flex flex-wrap gap-3 mt-3" style={{ alignItems: "center" }}>
+    {inputs.map(({ name, placeholder, type }) => (
+      <input
+        key={name}
+        type={type}
+        placeholder={placeholder}
+        className={`px-3 pb-3 pt-2 rounded-md border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition ${
+          theme === "dark"
+            ? "bg-gray-800 text-white border-gray-600"
+            : "bg-white text-black border-gray-300"
+        }`}
+        value={formValues[name] || ""}
+        onChange={(e) =>
+          setFormValues((prev) => ({
+            ...prev,
+            [name]: e.target.value,
+          }))
         }
-      });
-      return newValues;
-    });
+        style={{
+          flexGrow: 1,
+          flexBasis: `${100 / Math.min(inputs.length, 4)}%`,
+          minWidth: "140px",
+          maxWidth: "100%",
+        }}
+      />
+    ))}
+  </div>
+));
+
+// MainInterface component, separated from App
+function MainInterface({
+  theme,
+  selectedCategory,
+  setSelectedCategory,
+  selectedSubItemFile,
+  setSelectedSubItemFile,
+  selectedCommandTitle,
+  setSelectedCommandTitle,
+  formValues,
+  setFormValues,
+  data,
+  loading,
+  copiedCommand,
+  copyCommand,
+  showLeft,
+  setShowLeft,
+  leftWidth,
+  setLeftWidth,
+  showRight,
+  setShowRight,
+  rightWidth,
+  setRightWidth,
+}) {
+  const currentInputs = useMemo(() => {
+    return inputFieldsConfig[selectedCategory] || inputFieldsConfig.default;
   }, [selectedCategory]);
-
-  useEffect(() => {
-    if (!data?.commands?.length || !selectedCommandTitle) {
-      setCommand("");
-      return;
-    }
-    const cmdObj = data.commands.find((c) => c.title === selectedCommandTitle);
-    if (!cmdObj) {
-      setCommand("");
-      return;
-    }
-
-    let out = cmdObj.template || "";
-    Object.entries(formValues).forEach(([key, value]) => {
-      const val = value || `<${key}>`;
-      out = out.replace(new RegExp(`{${key}}`, "g"), val);
-    });
-
-    setCommand(out);
-  }, [formValues, selectedCommandTitle, data]);
-
-  const copyCommand = async (text, title) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedCommand(title);
-      setTimeout(() => setCopiedCommand(null), 2000);
-    } catch {
-      alert("Copy failed");
-    }
-  };
 
   const handleToggleLeft = () => setShowLeft((s) => !s);
   const handleToggleRight = () => setShowRight((s) => !s);
 
-  if (loadingScreen) {
-    return <PentestXLoader fadeOut={fadeOut} />;
-  }
-
-  const currentInputs = inputFieldsConfig[selectedCategory] || inputFieldsConfig.default;
-
-  // Main interface layout
-  const MainInterface = () => (
+  return (
     <div
       className={`h-screen flex flex-col transition-colors duration-300 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
@@ -191,34 +153,13 @@ export default function App() {
                 </div>
               </div>
 
-              {/* INPUT FIELDS - dynamic */}
-              <div className="flex flex-wrap gap-3 mt-3" style={{ alignItems: "center" }}>
-                {currentInputs.map(({ name, placeholder, type }) => (
-                  <input
-                    key={name}
-                    type={type}
-                    placeholder={placeholder}
-                    className={`px-3 pb-3 pt-2 rounded-md border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition ${
-                      theme === "dark"
-                        ? "bg-gray-800 text-white border-gray-600"
-                        : "bg-white text-black border-gray-300"
-                    }`}
-                    value={formValues[name] || ""}
-                    onChange={(e) =>
-                      setFormValues((prev) => ({
-                        ...prev,
-                        [name]: e.target.value,
-                      }))
-                    }
-                    style={{
-                      flexGrow: 1,
-                      flexBasis: `${100 / Math.min(currentInputs.length, 4)}%`,
-                      minWidth: "140px",
-                      maxWidth: "100%",
-                    }}
-                  />
-                ))}
-              </div>
+              {/* INPUT FIELDS */}
+              <InputFields
+                inputs={currentInputs}
+                formValues={formValues}
+                setFormValues={setFormValues}
+                theme={theme}
+              />
 
               {/* COMMANDS AREA */}
               <div
@@ -338,10 +279,143 @@ export default function App() {
       </div>
     </div>
   );
+}
+
+export default function App() {
+  const theme = useSelector((state) => state.theme.mode);
+
+  const [loadingScreen, setLoadingScreen] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  const [selectedCategory, setSelectedCategory] = useState(
+    categories[0]?.name || "SMB Enumeration"
+  );
+  const [selectedSubItemFile, setSelectedSubItemFile] = useState(null);
+  const [selectedCommandTitle, setSelectedCommandTitle] = useState(null);
+
+  const [formValues, setFormValues] = useState({});
+  const [command, setCommand] = useState("");
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
+
+  const { data, loading } = useCommands(selectedSubItemFile);
+
+  const [rightWidth, setRightWidth] = useState(256);
+  const [leftWidth, setLeftWidth] = useState(192);
+
+  const [copiedCommand, setCopiedCommand] = useState(null);
+
+  // Loading screen timers
+  useEffect(() => {
+    const fadeTimer = setTimeout(() => setFadeOut(true), 1000);
+    const hideTimer = setTimeout(() => setLoadingScreen(false), 2000);
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
+
+  // On category change: reset sub-item, commands, and initialize form values carefully
+  useEffect(() => {
+    setSelectedSubItemFile(null);
+    setSelectedCommandTitle(null);
+
+    const cat = categories.find((c) => c.name === selectedCategory);
+    if (cat?.subItems?.length) {
+      // set in next tick to avoid state update conflicts
+      setTimeout(() => {
+        setSelectedSubItemFile(cat.subItems[0].file);
+        setSelectedCommandTitle(cat.subItems[0].name);
+      }, 0);
+    }
+
+    setShowRight(false);
+
+    const inputs = inputFieldsConfig[selectedCategory] || inputFieldsConfig.default;
+
+    setFormValues((prevValues) => {
+      // Only add missing keys, keep existing filled ones intact
+      const newValues = { ...prevValues };
+      inputs.forEach(({ name }) => {
+        if (!(name in newValues)) {
+          newValues[name] = "";
+        }
+      });
+      // Remove keys not in inputs to avoid stale data (optional)
+      Object.keys(newValues).forEach((key) => {
+        if (!inputs.find((input) => input.name === key)) {
+          delete newValues[key];
+        }
+      });
+      return newValues;
+    });
+  }, [selectedCategory]);
+
+  // Update command template on formValues, selectedCommandTitle or data change
+  useEffect(() => {
+    if (!data?.commands?.length || !selectedCommandTitle) {
+      setCommand("");
+      return;
+    }
+    const cmdObj = data.commands.find((c) => c.title === selectedCommandTitle);
+    if (!cmdObj) {
+      setCommand("");
+      return;
+    }
+
+    let out = cmdObj.template || "";
+    Object.entries(formValues).forEach(([key, value]) => {
+      const val = value || `<${key}>`;
+      out = out.replace(new RegExp(`{${key}}`, "g"), val);
+    });
+
+    setCommand(out);
+  }, [formValues, selectedCommandTitle, data]);
+
+  const copyCommand = async (text, title) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedCommand(title);
+      setTimeout(() => setCopiedCommand(null), 2000);
+    } catch {
+      alert("Copy failed");
+    }
+  };
+
+  if (loadingScreen) {
+    return <PentestXLoader fadeOut={fadeOut} />;
+  }
 
   return (
     <Routes>
-      <Route path="/" element={<MainInterface />} />
+      <Route
+        path="/"
+        element={
+          <MainInterface
+            theme={theme}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            selectedSubItemFile={selectedSubItemFile}
+            setSelectedSubItemFile={setSelectedSubItemFile}
+            selectedCommandTitle={selectedCommandTitle}
+            setSelectedCommandTitle={setSelectedCommandTitle}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            data={data}
+            loading={loading}
+            copiedCommand={copiedCommand}
+            copyCommand={copyCommand}
+            showLeft={showLeft}
+            setShowLeft={setShowLeft}
+            leftWidth={leftWidth}
+            setLeftWidth={setLeftWidth}
+            showRight={showRight}
+            setShowRight={setShowRight}
+            rightWidth={rightWidth}
+            setRightWidth={setRightWidth}
+          />
+        }
+      />
       <Route path="about" element={<About />} />
       {/* Redirect any unknown route to home */}
       <Route path="*" element={<Navigate to="/" replace />} />
