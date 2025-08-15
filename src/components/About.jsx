@@ -1,19 +1,22 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
   const theme = useSelector((state) => state.theme.mode);
+  const navigate = useNavigate(); // hook to navigate programmatically
 
-  // Light mode layout (as-is)
+  // Light mode layout
   if (theme !== "dark") {
     return (
       <div className="p-6 max-w-4xl mx-auto text-gray-800 bg-gray-100 transition-colors duration-300">
+        <GoBackButton theme={theme} navigate={navigate} />
         {renderContent("text-gray-600")}
       </div>
     );
   }
 
-  // Dark mode layout with side and center colors
+  // Dark mode layout
   return (
     <div
       className="w-full min-h-screen px-4 py-8 transition-colors duration-300"
@@ -23,13 +26,28 @@ const About = () => {
         className="max-w-4xl mx-auto rounded-lg p-6"
         style={{ backgroundColor: "#1E2939", color: "#E5E7EB" }}
       >
+        <GoBackButton theme={theme} navigate={navigate} />
         {renderContent("text-gray-400")}
       </div>
     </div>
   );
 };
 
-// Extracted content so we can reuse it in both themes
+// Go Back Button Component
+const GoBackButton = ({ theme, navigate }) => (
+  <button
+    onClick={() => navigate(-1)}
+    className={`mb-6 px-4 py-2 rounded-md font-semibold transition-colors duration-300 ${
+      theme === "dark"
+        ? "bg-gray-700 text-white hover:bg-gray-600"
+        : "bg-gray-200 text-gray-900 hover:bg-gray-300"
+    }`}
+  >
+    ← Go Back
+  </button>
+);
+
+// Extracted content function (unchanged)
 const renderContent = (noteTextClass) => (
   <>
     <h1 className="text-4xl font-extrabold mb-6">About PentestX</h1>

@@ -56,7 +56,9 @@
        { "name": "Grant ownership", "file": "ad-grant-owner" },
        { "name": "Grant rights", "file": "ad-grant-rights" },
        { "name": "Write Logon Script", "file": "ad-write-logon-script" },
-       { "name": "(RBCD)-Resource Based Constrained", "file": "ad-RBCD-Resource-based-constrained" }
+       { "name": "(RBCD)-Resource Based Constrained", "file": "ad-RBCD-Resource-based-constrained" },
+       { "name": "Shadow Credential", "file": "ad-shadow-credential" },
+       { "name":"ADCS", "file": "ad-adcs" }
        
         
 
@@ -164,11 +166,11 @@
       ]
     },
     {
-      "name": "Post Exploitation",
+      "name": "PrivEsc & Cred Access",
       "subItems": [
-        { "name": "Privilege Escalation", "file": "priv-esc" },
-        { "name": "Credential Harvesting", "file": "cred-harvest" },
-        { "name": "Persistence", "file": "persistence" }
+        { "name": "Priv Esc (linux)", "file": "privesc-linux" },
+        { "name": "Priv Esc (Window)", "file": "privesc-window" },
+        { "name": "Mimikatz", "file": "privesc-mimikatz" }
       ]
     },
     {

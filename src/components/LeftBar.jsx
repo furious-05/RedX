@@ -65,7 +65,7 @@ export default function LeftBar({
     window.removeEventListener("mouseup", onMouseUp);
   };
 
-  // Define background and text colors based on theme
+  // Theme-based classes
   const bgClass = theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900";
   const searchBgClass = theme === "dark" ? "bg-gray-800 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500";
   const hoverBgClass = theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-300";
@@ -74,13 +74,17 @@ export default function LeftBar({
   return (
     <aside
       style={{ width: `${width}px` }}
-      className={`${bgClass} h-screen relative flex flex-col transition-colors duration-300`}
+      className={`hidden md:flex ${bgClass} h-screen relative flex-col transition-colors duration-300`}
     >
+      {/* Add padding-top equal to header height (h-16) */}
       <div
-        className="overflow-y-auto flex-1 p-4 pr-5"
+        className="overflow-y-auto flex-1 p-4 pt-20 pr-5"
         style={{ boxSizing: "content-box" }}
       >
-        <h2 className="text-lg font-semibold mb-4">Options</h2>
+                <h2 className={`text-xl font-semibold mb-3 border-b pb-2 border-gray-700`}>
+          Options
+        </h2>
+
 
         {/* Search input */}
         <div className="mb-3">
@@ -94,6 +98,7 @@ export default function LeftBar({
           />
         </div>
 
+        {/* Options list */}
         <ul className="space-y-2 pb-20">
           {filteredSubItems.length === 0 ? (
             <li className={theme === "dark" ? "text-gray-400 italic" : "text-gray-600 italic"}>
@@ -107,9 +112,7 @@ export default function LeftBar({
               return (
                 <li
                   key={item.name + item.file}
-                  className={`cursor-pointer px-3 py-2 rounded-md transition ${hoverBgClass} ${
-                    isSelected ? selectedBgClass : ""
-                  }`}
+                  className={`cursor-pointer px-3 py-2 rounded-md transition ${hoverBgClass} ${isSelected ? selectedBgClass : ""}`}
                   onClick={() => {
                     setSelectedSubItemFile(item.file);
                     setSelectedCommandTitle(item.name);
@@ -131,14 +134,13 @@ export default function LeftBar({
         </ul>
       </div>
 
-      {/* Resize Handle */}
+      {/* Resize handle */}
       <div
         onMouseDown={onMouseDown}
         className="absolute top-0 right-0 w-4 cursor-ew-resize z-20"
         style={{
           height: "100%",
-          background:
-            "linear-gradient(270deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06))",
+          background: "linear-gradient(270deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06))",
         }}
       />
     </aside>

