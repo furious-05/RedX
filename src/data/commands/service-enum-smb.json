@@ -61,6 +61,21 @@
       "description": "Uses Kerberos authentication to list users on the target domain."
     },
     {
+      "title": "NetExec SMB: Brute force (continue on success)",
+      "template": "netexec smb {ip} -u users.txt -p passwords.txt --continue-on-success",
+      "description": "Run NetExec with a username list and password list and not stop trying a username after the first successful password."
+    },
+    {
+      "title": "NetExec SMB: Detect STATUS_PASSWORD_MUST_CHANGE",
+      "template": "netexec smb {ip} -u {domain}\\\\{username} -p '{password}'\n\nsmbpasswd -r {ip} -U \"{domain}\\\\{username}\"",
+      "description": "First attempts SMB auth with NetExec (may reveal account state such as STATUS_PASSWORD_MUST_CHANGE), then runs smbpasswd -r to change the SMB password interactively."
+    },
+    {
+      "title": "NetExec SMB: List password policy",
+      "template": "netexec smb {ip} -u {username} -p {password} --pass-pol",
+      "description": "Query the domain controller for password policy."
+    },
+    {
       "title": "Hydra SMB Bruteforce (Userlist)",
       "template": "hydra -L {userlist} -P {passwordlist} smb://{ip}",
       "description": "Uses Hydra to brute-force SMB login using a list of usernames and passwords."

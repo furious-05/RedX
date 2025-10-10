@@ -14,7 +14,8 @@
         { "name": "SSH", "file": "service-enum-ssh" },
         { "name": "WinRM", "file": "service-enum-winrm" },
         { "name": "RDP", "file": "service-enum-rdp" },
-        { "name": "LDAP", "file": "service-enum-ldap" }
+        { "name": "LDAP", "file": "service-enum-ldap" },
+        { "name": "SNMP", "file": "service-enum-snmp" }
       ]
     },
     {
@@ -43,22 +44,29 @@
       "name": "Active Directory Attack",
       "subItems": [
         
-        { "name": "Data Collection", "file": "ad-data-collection" },
-       { "name": "krb5.conf", "file": "ad-krb5-conf" },
-        { "name": "Kerberoast", "file": "ad-kerberoast" },
-        { "name": "Add Member", "file": "ad-add-member" },
-        { "name": "Tomb Stoned", "file": "ad-tombstoned" },
-        { "name": "Timeroasting", "file": "ad-timeroasting" },
+      { "name": "Data Collection", "file": "ad-data-collection" },
+      { "name": "krb5.conf and hosts file", "file": "ad-krb5-hosts-file" },
+      { "name": "Kerberoast", "file": "ad-kerberoast" },
+      { "name": "Add Member", "file": "ad-add-member" },
+      { "name": "Tomb Stoned", "file": "ad-tombstoned" },
+      { "name": "Timeroasting", "file": "ad-timeroasting" },
         
-        { "name": "Force Change Password", "file": "ad-force-change-password" },
-        { "name": "Targeted Kerberoasting", "file": "ad-targeted-kerberoasting" },
-        { "name": "ReadGMSAPassword", "file": "ad-read-gmsa-password" },
-       { "name": "Grant ownership", "file": "ad-grant-owner" },
-       { "name": "Grant rights", "file": "ad-grant-rights" },
-       { "name": "Write Logon Script", "file": "ad-write-logon-script" },
-       { "name": "(RBCD)-Resource Based Constrained", "file": "ad-RBCD-Resource-based-constrained" },
-       { "name": "Shadow Credential", "file": "ad-shadow-credential" },
-       { "name":"ADCS", "file": "ad-adcs" }
+      { "name": "Force Change Password", "file": "ad-force-change-password" },
+      { "name": "Targeted Kerberoasting", "file": "ad-targeted-kerberoasting" },
+      { "name": "ReadGMSAPassword", "file": "ad-read-gmsa-password" },
+      { "name": "Grant ownership", "file": "ad-grant-owner" },
+      { "name": "Grant rights", "file": "ad-grant-rights" },
+      { "name": "Write Logon Script", "file": "ad-write-logon-script" },
+      { "name": "(RBCD)-Resource Based Constrained", "file": "ad-RBCD-Resource-based-constrained" },
+      { "name":"Unconstrained delegation", "file": "ad-delegation-unconstrained" },
+      { "name":"Constrained delegation", "file": "ad-delegation-constrained" },
+      { "name": "Shadow Credential", "file": "ad-shadow-credential" },
+      { "name":"ADCS ESC1-ESC3", "file": "ad-adcs-esc1-3" },
+      { "name":"ADCS ESC4-ESC6", "file": "ad-adcs-esc4-6" },
+      { "name":"ADCS ESC7-ESC9", "file": "ad-adcs-esc7-9" },
+      { "name":"ADCS ESC10-ESC12", "file": "ad-adcs-esc10-12" },
+      { "name":"ADCS ESC13-ESC15", "file": "ad-adcs-esc13-15" },
+      { "name":"ADCS ESC16", "file": "ad-adcs-esc16" }
        
         
 

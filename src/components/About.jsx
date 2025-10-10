@@ -95,6 +95,8 @@ const renderContent = (noteTextClass) => (
         <li><a href="http://thehacker.recipes/" className="text-blue-400 underline" target="_blank">The Hacker Recipes</a></li>
         <li><a href="https://www.revshells.com/" className="text-blue-400 underline" target="_blank">RevShells</a></li>
         <li><a href="https://github.com/SecureAuthCorp/impacket" className="text-blue-400 underline" target="_blank">Impacket</a></li>
+        <li><a href="https://github.com/ly4k/Certipy/wiki/06-%E2%80%90-Privilege-Escalation" className="text-blue-400 underline" target="_blank">Certipy Wiki</a></li>
+        
       </ul>
     </section>
 

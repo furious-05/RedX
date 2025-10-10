@@ -36,6 +36,21 @@
           "template": "xfreerdp3 /u:{username} /p:{password} /v:{ip}",
           "description": "Connects to an RDP host from Linux using FreeRDP. Requires xfreerdp to be installed."
         },
+      {
+        "title": "RDP: Try without credentials (TLS)",
+        "template": "xfreerdp3 /v:{ip} /sec:tls /cert:ignore /dynamic-resolution +clipboard",
+        "description": "Attempt RDP connection without credentials using TLS."
+      },
+      {
+        "title": "RDP: Force RDP security (RDP)",
+        "template": "xfreerdp3 /v:{ip} /sec:rdp /cert:ignore /dynamic-resolution +clipboard",
+        "description": "Force use of the older RDP security protocol instead of TLS."
+      },
+      {
+        "title": "RDP: Using username (NLA, blank password)",
+        "template": "xfreerdp3 /v:{ip} /u:{username} /p: /sec:nla /cert:ignore +clipboard",
+        "description": "Connect as KioskUser0 using NLA with an intentionally blank password field."
+      },
         {
           "title": "Connect to RDP (macOS - Microsoft Remote Desktop)",
           "template": "Open Microsoft Remote Desktop → Add PC → Enter IP and credentials",
@@ -47,6 +62,7 @@
           "template": "hydra -t 4 -V -f -l {username} -P {passwordlist} rdp://{ip}",
           "description": "Performs brute-force RDP login with Hydra. Replace placeholders as needed."
         }
+
       ]
     }
 

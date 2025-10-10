@@ -9,6 +9,16 @@
       "description": "Connect to an MSSQL database using impacket-mssqlclient."
     },
     {
+      "title": "Connect to MSSQL using netexec (local auth)",
+      "template": "netexec mssql {ip} -u {username} -p {password} --local-auth",
+      "description": "Connect to an MSSQL service on dc.redelegate.vl using netexec with local authentication."
+    },
+    {
+      "title": "Connect to MSSQL using netexec with RID brute",
+      "template": "netexec mssql {ip} -u {username} -p {password} --local-auth --rid-brute",
+      "description": "Connect to an MSSQL service and perform RID brute forcing with netexec (local authentication)."
+    },
+    {
       "title": "Check Current Database User",
       "template": "SELECT USER_NAME();",
       "description": "Display the current user in the MSSQL session."

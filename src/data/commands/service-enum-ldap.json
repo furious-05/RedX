@@ -49,6 +49,16 @@
           "title": "Query Specific LDAP Attributes",
           "template": "nxc ldap {ip} -u <username> -p {password} --query \"(sAMAccountName=Administrator)\" \"sAMAccountName objectClass pwdLastSet\"",
           "description": "Returns selected attributes of the Administrator user."
-        }
+        },
+            {
+        "title": "Query users",
+        "template": "netexec ldap {ip} -u <username> -p {password} --query \"(objectClass=user)\" \"sAMAccountName  description\"",
+        "description": "Query LDAP for objects of class 'user' and return sAMAccountName and description attributes."
+      },
+        {
+        "title": "Dump all objects and grep responses",
+        "template": "netexec ldap {ip} -u <username> -p {password} --query \"(objectClass=*)\" \"\" | grep \"Response for object:\"",
+        "description": "Query LDAP for all objects and filter output for 'Response for object:' lines."
+      }
       ]   
 }

