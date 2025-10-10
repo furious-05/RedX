@@ -1,0 +1,2 @@
+const e=[{title:"NetExec SMB: Generate krb5.conf and set KRB5_CONFIG",description:"Generate a krb5.conf via NetExec and export KRB5_CONFIG to point at it (newline-separated).",template:`netexec smb {ip} -u {username} -p '{password}' --generate-krb5-file {path}
+export KRB5_CONFIG={path}`},{title:"NetExec SMB: Generate hosts file",description:"Export discovered hosts from NetExec SMB output into a hosts file.",template:"netexec smb {ip} --generate-hosts-file {filename}"}],t={commands:e};export{e as commands,t as default};

