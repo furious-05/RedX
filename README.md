@@ -20,5 +20,5 @@ A simple description:
 
 ## Try it / Repo
 
-**[https://github.com/furious-05/pentestX](https://github.com/furious-05/pentestX)**
+**[pentestX](https://furious-05.github.io/pentestX/)**
 
