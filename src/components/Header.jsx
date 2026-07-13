@@ -7,18 +7,95 @@ import githubIcon from "../assets/github.jpeg";
 import { FaMoon, FaSun, FaTimes } from "react-icons/fa";
 import categories from "../data/categories.json";
 
+const commandCache = {};
+
 function Header({ onSearchSelect, activeMode, setActiveMode }) {
   const theme = useSelector((state) => state.theme.mode);
   const dispatch = useDispatch();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestionsVisible, setSuggestionsVisible] = useState(false);
+  const [commandResults, setCommandResults] = useState([]);
   const searchRef = useRef();
+  const loadTimer = useRef(null);
 
   useEffect(() => {
     if (theme === "dark") document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
   }, [theme]);
+
+  // Build file-to-category mapping once
+  const fileMap = useMemo(() => {
+    const map = {};
+    Object.entries(categories).forEach(([mode, modeCategories]) => {
+      modeCategories.forEach((cat) => {
+        cat.subItems?.forEach((sub) => {
+          map[sub.file] = { category: cat.name, mode, subName: sub.name };
+        });
+      });
+    });
+    return map;
+  }, []);
+
+  // Warm the command cache in the background
+  useEffect(() => {
+    const entries = Object.entries(fileMap);
+    let i = 0;
+    const warm = () => {
+      const BATCH = 5;
+      let loaded = 0;
+      while (i < entries.length && loaded < BATCH) {
+        const [file] = entries[i++];
+        if (!commandCache[file]) {
+          import(`../data/commands/${file}.json`).then((mod) => {
+            commandCache[file] = mod.default || mod;
+          }).catch(() => {});
+          loaded++;
+        }
+      }
+      if (i < entries.length) setTimeout(warm, 50);
+    };
+    warm();
+  }, [fileMap]);
+
+  // Load command files and search titles/descriptions
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setCommandResults([]);
+      return;
+    }
+
+    if (loadTimer.current) clearTimeout(loadTimer.current);
+    loadTimer.current = setTimeout(() => {
+      const q = searchQuery.toLowerCase();
+      const results = [];
+
+      for (const [file, info] of Object.entries(fileMap)) {
+        const cmdData = commandCache[file];
+        if (!cmdData?.commands) continue;
+        for (const cmd of cmdData.commands) {
+          if (
+            cmd.title?.toLowerCase().includes(q) ||
+            cmd.description?.toLowerCase().includes(q)
+          ) {
+            results.push({
+              type: "command",
+              category: info.category,
+              name: cmd.title,
+              file: file,
+              mode: info.mode,
+            });
+          }
+        }
+      }
+
+      setCommandResults(results);
+    }, 150);
+
+    return () => {
+      if (loadTimer.current) clearTimeout(loadTimer.current);
+    };
+  }, [searchQuery, fileMap]);
 
   // Flatten categories + sub-items for suggestions
   const flattenedSuggestions = useMemo(() => {
@@ -35,14 +112,20 @@ function Header({ onSearchSelect, activeMode, setActiveMode }) {
         });
       });
     });
+    // Append matching command titles from loaded data
+    commandResults.forEach((cr) => {
+      result.push(cr);
+    });
     return result;
-  }, [searchQuery]);
+  }, [searchQuery, commandResults]);
 
   const handleSuggestionClick = (suggestion) => {
     if (onSearchSelect) {
       if (suggestion.type === "category") {
         onSearchSelect(suggestion.name, null, null, suggestion.mode);
       } else if (suggestion.type === "subItem") {
+        onSearchSelect(suggestion.category, suggestion.file, suggestion.name, suggestion.mode);
+      } else if (suggestion.type === "command") {
         onSearchSelect(suggestion.category, suggestion.file, suggestion.name, suggestion.mode);
       }
     }
@@ -103,16 +186,18 @@ function Header({ onSearchSelect, activeMode, setActiveMode }) {
             {/* Suggestions Dropdown */}
             {suggestionsVisible && flattenedSuggestions.length > 0 && (
               <ul
-                className={`absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded-md border shadow-lg ${theme === "dark" ? "bg-gray-800 border-gray-700" : "bg-white border-gray-300"}`}
+                className={`absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded-md border shadow-lg ${theme === "dark" ? "bg-zinc-900 border-white/5" : "bg-white border-zinc-200"}`}
               >
                 {flattenedSuggestions.map((s, idx) => (
                   <li
                     key={idx}
-                    className={`px-3 py-2 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700`}
+                    className={`px-3 py-2 cursor-pointer ${theme === "dark" ? "hover:bg-zinc-800" : "hover:bg-zinc-100"}`}
                     onClick={() => handleSuggestionClick(s)}
                   >
                     {s.type === "category" ? (
                       <span className="font-semibold">{s.name}</span>
+                    ) : s.type === "command" ? (
+                      <span><span className="text-emerald-400">›</span> {s.name} <span className="text-sm text-gray-400">({s.category})</span></span>
                     ) : (
                       <span>{s.name} <span className="text-sm text-gray-400">({s.category})</span></span>
                     )}
