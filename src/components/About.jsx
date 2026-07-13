@@ -50,11 +50,11 @@ const GoBackButton = ({ theme, navigate }) => (
 // Extracted content function (unchanged)
 const renderContent = (noteTextClass) => (
   <>
-    <h1 className="text-4xl font-extrabold mb-6">About PentestX</h1>
+    <h1 className="text-4xl font-extrabold mb-6">About RedX</h1>
 
     <section className="mb-6">
       <p className="text-lg leading-relaxed">
-        PentestX is a comprehensive offensive security toolkit crafted specifically
+        RedX is a comprehensive offensive security toolkit crafted specifically
         for red teamers, penetration testers, and ethical hackers...
       </p>
     </section>
@@ -71,7 +71,7 @@ const renderContent = (noteTextClass) => (
     </section>
 
     <section className="mb-8">
-      <h2 className="text-2xl font-semibold mb-3">Why Use PentestX?</h2>
+      <h2 className="text-2xl font-semibold mb-3">Why Use RedX?</h2>
       <p className="text-lg leading-relaxed">
         During penetration tests, quick access to reliable info is key...
       </p>

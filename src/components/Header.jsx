@@ -7,7 +7,7 @@ import githubIcon from "../assets/github.jpeg";
 import { FaMoon, FaSun, FaTimes } from "react-icons/fa";
 import categories from "../data/categories.json";
 
-function Header({ onSearchSelect }) {
+function Header({ onSearchSelect, activeMode, setActiveMode }) {
   const theme = useSelector((state) => state.theme.mode);
   const dispatch = useDispatch();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,14 +23,16 @@ function Header({ onSearchSelect }) {
   // Flatten categories + sub-items for suggestions
   const flattenedSuggestions = useMemo(() => {
     const result = [];
-    categories.forEach((cat) => {
-      if (cat.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-        result.push({ type: "category", name: cat.name });
-      }
-      cat.subItems?.forEach((sub) => {
-        if (sub.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-          result.push({ type: "subItem", category: cat.name, name: sub.name, file: sub.file });
+    Object.entries(categories).forEach(([mode, modeCategories]) => {
+      modeCategories.forEach((cat) => {
+        if (cat.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+          result.push({ type: "category", name: cat.name, mode });
         }
+        cat.subItems?.forEach((sub) => {
+          if (sub.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+            result.push({ type: "subItem", category: cat.name, name: sub.name, file: sub.file, mode });
+          }
+        });
       });
     });
     return result;
@@ -39,27 +41,52 @@ function Header({ onSearchSelect }) {
   const handleSuggestionClick = (suggestion) => {
     if (onSearchSelect) {
       if (suggestion.type === "category") {
-        onSearchSelect(suggestion.name, null, null);
+        onSearchSelect(suggestion.name, null, null, suggestion.mode);
       } else if (suggestion.type === "subItem") {
-        onSearchSelect(suggestion.category, suggestion.file, suggestion.name);
+        onSearchSelect(suggestion.category, suggestion.file, suggestion.name, suggestion.mode);
       }
     }
     setSearchQuery("");
     setSuggestionsVisible(false);
   };
 
-  const bgClass = theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900";
-  const btnHoverBgClass = "hover:bg-gray-200 dark:hover:bg-gray-700";
-  const searchBgClass = theme === "dark" ? "bg-gray-800 text-white placeholder-gray-400" : "bg-white text-black placeholder-gray-500";
+  const bgClass = theme === "dark" 
+    ? "bg-zinc-950 text-zinc-100 border-b border-white/5" 
+    : "bg-white text-zinc-900 border-b border-zinc-200";
+  const btnHoverBgClass = theme === "dark" ? "hover:bg-zinc-900" : "hover:bg-zinc-100";
+  const searchBgClass = theme === "dark" 
+    ? "bg-zinc-900 text-zinc-200 placeholder-zinc-500 border border-white/5 focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 rounded-md font-sans text-sm shadow-sm transition-all" 
+    : "bg-zinc-50 text-zinc-900 placeholder-zinc-500 border border-zinc-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 rounded-md font-sans text-sm shadow-sm transition-all";
 
   return (
-    <header className={`${bgClass} transition-colors duration-300 fixed w-full z-50`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 relative">
-          <h1 className="text-xl font-bold tracking-wide">PentestX</h1>
+    <header className={`${bgClass} transition-colors duration-200 fixed w-full z-50`}>
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 relative gap-4">
+          <div className="flex items-center gap-3 min-w-[150px]">
+            <img src="/RedX/Sitelogo.jpeg" alt="RedX Logo" className="w-8 h-8 rounded-md shadow-sm" />
+            <h1 className="text-xl font-bold tracking-tight text-zinc-100 cursor-pointer">
+              RedX<span className="text-emerald-400">.</span>
+            </h1>
+          </div>
+
+          {/* Mode Switcher Segmented Control */}
+          <div className={`hidden md:flex items-center p-1 rounded-lg ${theme === 'dark' ? 'bg-zinc-900 border border-white/5' : 'bg-zinc-100 border border-zinc-200'} transition-all`}>
+            <button 
+              onClick={() => setActiveMode('Pentesting')}
+              className={`px-4 py-1 text-sm font-medium rounded-md transition-all ${activeMode === 'Pentesting' ? (theme === 'dark' ? 'bg-zinc-800 text-emerald-400 shadow-sm' : 'bg-white text-emerald-600 shadow-sm') : (theme === 'dark' ? 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5' : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5')}`}
+            >
+              Pentesting
+            </button>
+            <button 
+              onClick={() => setActiveMode('Red Teaming')}
+              className={`px-4 py-1 text-sm font-medium rounded-md transition-all ${activeMode === 'Red Teaming' ? (theme === 'dark' ? 'bg-zinc-800 text-emerald-400 shadow-sm' : 'bg-white text-emerald-600 shadow-sm') : (theme === 'dark' ? 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5' : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/5')}`}
+            >
+              Red Teaming
+            </button>
+          </div>
 
           {/* Search Bar */}
-          <div className="relative flex-1 mx-4 md:mx-10">
+          <div className="relative flex-1 max-w-sm ml-auto">
             <input
               ref={searchRef}
               type="text"
@@ -102,7 +129,7 @@ function Header({ onSearchSelect }) {
               About
             </Link>
             <a
-              href="https://github.com/furious-05/pentestX"
+              href="https://github.com/furious-05/RedX"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center hover:text-gray-600 transition"
@@ -139,9 +166,9 @@ function Header({ onSearchSelect }) {
 
       {/* Mobile Sliding Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-full transform transition-transform duration-500 ease-in-out z-40 ${
+        className={`fixed top-0 left-0 h-full w-full transform transition-transform duration-200 ease-in-out z-40 ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}
+        } ${theme === "dark" ? "bg-zinc-950 text-zinc-100 border-r border-white/5" : "bg-white text-zinc-900 border-r border-zinc-200"}`}
       >
         {/* Close Button */}
         <div className="flex justify-end p-4">
@@ -154,11 +181,30 @@ function Header({ onSearchSelect }) {
         </div>
 
         {/* Menu Items */}
-        <div className="flex flex-col items-center mt-20 text-xl w-full">
+        <div className="flex flex-col items-center mt-10 text-xl w-full px-8">
+          {/* Mobile Mode Switcher */}
+          <div className="w-full mb-8">
+            <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-4 text-center">Mode</p>
+            <div className={`flex p-1 rounded-lg w-full ${theme === 'dark' ? 'bg-zinc-900 border border-white/5' : 'bg-zinc-100 border border-zinc-200'}`}>
+              <button 
+                onClick={() => { setActiveMode('Pentesting'); setMobileMenuOpen(false); }}
+                className={`flex-1 py-2 rounded-md text-sm font-medium transition-all ${activeMode === 'Pentesting' ? (theme === 'dark' ? 'bg-zinc-800 text-emerald-400 shadow-sm' : 'bg-white text-emerald-600 shadow-sm') : 'text-zinc-500'}`}
+              >
+                Pentesting
+              </button>
+              <button 
+                onClick={() => { setActiveMode('Red Teaming'); setMobileMenuOpen(false); }}
+                className={`flex-1 py-2 rounded-md text-sm font-medium transition-all ${activeMode === 'Red Teaming' ? (theme === 'dark' ? 'bg-zinc-800 text-emerald-400 shadow-sm' : 'bg-white text-emerald-600 shadow-sm') : 'text-zinc-500'}`}
+              >
+                Red Team
+              </button>
+            </div>
+          </div>
+
           {[
-            { type: "link", label: "About", to: "/about" },
-            { type: "external", label: "GitHub", href: "https://github.com/furious-05" },
-            { type: "button", label: theme === "light" ? "Dark Mode" : "Light Mode", action: () => dispatch(toggleTheme()) },
+            { type: "link", label: "ABOUT", to: "/about" },
+            { type: "external", label: "GITHUB", href: "https://github.com/furious-05" },
+            { type: "button", label: theme === "light" ? "DARK_MODE" : "LIGHT_MODE", action: () => dispatch(toggleTheme()) },
           ].map((item, index) => (
             <div key={index} className="w-full text-center">
               {item.type === "link" && (
@@ -192,7 +238,7 @@ function Header({ onSearchSelect }) {
                   {item.label}
                 </button>
               )}
-              <div className={`w-3/4 mx-auto h-px ${theme === "dark" ? "bg-gray-700" : "bg-gray-300"} my-1`}></div>
+              <div className={`w-full mx-auto h-px ${theme === "dark" ? "bg-white/5" : "bg-zinc-200"} my-1`}></div>
             </div>
           ))}
         </div>

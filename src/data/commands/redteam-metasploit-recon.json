@@ -1,0 +1,529 @@
+{
+  "title": "Metasploit - Auxiliary & Reconnaissance",
+  "commands": [
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "threads",
+          "description": "Thread count",
+          "default": "10"
+        },
+        {
+          "name": "ports",
+          "description": "Port range",
+          "default": "1-10000"
+        }
+      ],
+      "title": "TCP port scanner (connect scan)",
+      "description": "Full TCP connect scan. Reliable but noisy. Scans all 10000 ports by default.",
+      "template": "use auxiliary/scanner/portscan/tcp\\nset RHOSTS {rhhosts}\\nset THREADS {threads}\\nset PORTS {ports}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "threads",
+          "description": "Thread count",
+          "default": "10"
+        },
+        {
+          "name": "ports",
+          "description": "Port range",
+          "default": "1-10000"
+        }
+      ],
+      "title": "SYN port scanner (half-open)",
+      "description": "SYN stealth scan. Sends SYN, never completes handshake. Stealthier than full connect.",
+      "template": "use auxiliary/scanner/portscan/syn\\nset RHOSTS {rhhosts}\\nset THREADS {threads}\\nset PORTS {ports}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "threads",
+          "description": "Thread count",
+          "default": "10"
+        },
+        {
+          "name": "ports",
+          "description": "Port range",
+          "default": "1-10000"
+        }
+      ],
+      "title": "ACK port scanner (firewall detection)",
+      "description": "ACK scan. No response = filtered. RST = unfiltered. Used to map firewall rules.",
+      "template": "use auxiliary/scanner/portscan/ack\\nset RHOSTS {rhhosts}\\nset THREADS {threads}\\nset PORTS {ports}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "ARP sweep (local network discovery)",
+      "description": "Sends ARP requests to discover live hosts on the local subnet. Very fast, no noise.",
+      "template": "use auxiliary/scanner/discovery/arp_sweep\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "UDP service discovery sweep",
+      "description": "Probes for UDP services. Good for finding DNS, SNMP, DHCP, TFTP services.",
+      "template": "use auxiliary/scanner/discovery/udp_sweep\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SMB version detection",
+      "description": "Detects SMB version (1.0, 2.0, 2.1, 3.0) and OS. First step before any SMB attack.",
+      "template": "use auxiliary/scanner/smb/smb_version\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SMB2 support detection",
+      "description": "Checks if SMB2 is supported. Needed for certain exploits and modern features.",
+      "template": "use auxiliary/scanner/smb/smb2\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": ""
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": ""
+        }
+      ],
+      "title": "SMB share enumeration",
+      "description": "Lists accessible SMB shares. Use credentials if available for deeper enumeration.",
+      "template": "use auxiliary/scanner/smb/smb_enumshares\\nset RHOSTS {rhhosts}\\nset SMBUser {smb_user}\\nset SMBPass {smb_pass}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": ""
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": ""
+        }
+      ],
+      "title": "SMB user enumeration",
+      "description": "Enumerates local users and domain users via SMB RPC (SAMR/LSA).",
+      "template": "use auxiliary/scanner/smb/smb_enumusers\\nset RHOSTS {rhhosts}\\nset SMBUser {smb_user}\\nset SMBPass {smb_pass}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "smb_user",
+          "description": "SMB username",
+          "default": ""
+        },
+        {
+          "name": "smb_pass",
+          "description": "SMB password",
+          "default": ""
+        }
+      ],
+      "title": "SMB login brute-force",
+      "description": "Brute-forces SMB credentials. Set USER_FILE and PASS_FILE for wordlists.",
+      "template": "use auxiliary/scanner/smb/smb_login\\nset RHOSTS {rhhosts}\\nset SMBUser {smb_user}\\nset SMBPass {smb_pass}\\nset STOP_ON_SUCCESS true\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "MS17-010 (EternalBlue) vulnerability scan",
+      "description": "Scans for MS17-010 SMB vulnerability. Critical: EternalBlue/ETERNALROMANCE.",
+      "template": "use auxiliary/scanner/smb/smb_ms17_010\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SMB named pipe auditor",
+      "description": "Enumerates accessible SMB named pipes. Helpful for finding pipes used by specific services.",
+      "template": "use auxiliary/scanner/smb/pipe_auditor\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "HTTP service version detection",
+      "description": "Detects web server type and version (Apache, IIS, Nginx, etc).",
+      "template": "use auxiliary/scanner/http/http_version\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "HTTP title scanner",
+      "description": "Grabs the <title> tag from web pages. Great for quickly identifying web apps.",
+      "template": "use auxiliary/scanner/http/title\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "dictionary",
+          "description": "Directory wordlist",
+          "default": "/usr/share/wordlists/dirb/common.txt"
+        }
+      ],
+      "title": "Web directory scanner",
+      "description": "Brute-forces web directories and files. Useful for finding hidden admin panels.",
+      "template": "use auxiliary/scanner/http/dir_scanner\\nset RHOSTS {rhhosts}\\nset DICTIONARY {dictionary}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "HTTP header scanner",
+      "description": "Fetches HTTP response headers to identify server config, technologies, and security headers.",
+      "template": "use auxiliary/scanner/http/http_header\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "Robots.txt scanner",
+      "description": "Fetches and parses robots.txt from web servers. Reveals hidden/disallowed paths.",
+      "template": "use auxiliary/scanner/http/robots_txt\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "WebDAV scanner",
+      "description": "Detects WebDAV enabled directories. WebDAV can allow file uploads to the server.",
+      "template": "use auxiliary/scanner/http/webdav_scanner\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SSL/TLS certificate grabber",
+      "description": "Grabs SSL cert info (issuer, subject, validity). Useful for identifying hosts.",
+      "template": "use auxiliary/scanner/http/cert\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SSH version scan",
+      "description": "Detects SSH server version and supported auth methods.",
+      "template": "use auxiliary/scanner/ssh/ssh_version\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "userpass_file",
+          "description": "Wordlist file",
+          "default": "/usr/share/wordlists/metasploit/root_userpass.txt"
+        }
+      ],
+      "title": "SSH login brute-force",
+      "description": "Brute-forces SSH credentials with a wordlist.",
+      "template": "use auxiliary/scanner/ssh/ssh_login\\nset RHOSTS {rhhosts}\\nset USERPASS_FILE {userpass_file}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "userpass_file",
+          "description": "Wordlist file",
+          "default": "/usr/share/wordlists/metasploit/root_userpass.txt"
+        }
+      ],
+      "title": "FTP login brute-force",
+      "description": "Brute-forces FTP credentials.",
+      "template": "use auxiliary/scanner/ftp/ftp_login\\nset RHOSTS {rhhosts}\\nset USERPASS_FILE {userpass_file}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "FTP version detection",
+      "description": "Grabs FTP banner to identify FTP server type and version.",
+      "template": "use auxiliary/scanner/ftp/ftp_version\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        },
+        {
+          "name": "userpass_file",
+          "description": "Wordlist file",
+          "default": "/usr/share/wordlists/metasploit/root_userpass.txt"
+        }
+      ],
+      "title": "FTP anonymous login check",
+      "description": "Checks if FTP allows anonymous login.",
+      "template": "use auxiliary/scanner/ftp/anonymous\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SMTP server version & user enumeration",
+      "description": "Enumerates SMTP users via VRFY/EXPN/RCPT TO commands.",
+      "template": "use auxiliary/scanner/smtp/smtp_enum\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "domain",
+          "description": "Target domain",
+          "default": "target.com"
+        }
+      ],
+      "title": "DNS record scanner and enumerator",
+      "description": "Enumerates DNS records (A, AAAA, MX, NS, TXT, SOA) for a domain.",
+      "template": "use auxiliary/gather/enum_dns\\nset DOMAIN {domain}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "DNS amplification scanner",
+      "description": "Checks if DNS servers can be used for amplification attacks (open resolver check).",
+      "template": "use auxiliary/scanner/dns/dns_amp\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "SNMP enumeration",
+      "description": "Enumerates SNMP data: system info, network interfaces, running processes, users.",
+      "template": "use auxiliary/scanner/snmp/snmp_enum\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "NetBIOS name scan",
+      "description": "Resolves NetBIOS names to IPs. Great for finding Windows hosts in a local network.",
+      "template": "use auxiliary/scanner/netbios/nbname\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "RDP scanner",
+      "description": "Detects hosts speaking RDP (port 3389). Identifies RDP version and OS.",
+      "template": "use auxiliary/scanner/rdp/rdp_scanner\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "BlueKeep (CVE-2019-0708) RDP vulnerability scan",
+      "description": "Scans for BlueKeep vulnerability in RDP. Critical pre-auth RCE.",
+      "template": "use auxiliary/scanner/rdp/cve_2019_0708_bluekeep\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "Telnet version detection",
+      "description": "Identifies Telnet service and banner.",
+      "template": "use auxiliary/scanner/telnet/telnet_version\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "VNC no-auth scanner",
+      "description": "Checks for VNC servers that allow connections without authentication.",
+      "template": "use auxiliary/scanner/vnc/vnc_none_auth\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "MSSQL server discovery (ping)",
+      "description": "Discovers MSSQL instances on the network via UDP ping.",
+      "template": "use auxiliary/scanner/mssql/mssql_ping\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "MySQL version detection",
+      "description": "Detects MySQL/MariaDB server version.",
+      "template": "use auxiliary/scanner/mysql/mysql_version\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "PostgreSQL version detection",
+      "description": "Detects PostgreSQL server version.",
+      "template": "use auxiliary/scanner/postgres/postgres_version\\nset RHOSTS {rhhosts}\\nrun"
+    },
+    {
+      "args": [
+        {
+          "name": "rhhosts",
+          "description": "Target IP/range",
+          "default": "10.10.10.0/24"
+        }
+      ],
+      "title": "WinRM authentication methods detection",
+      "description": "Detects supported WinRM auth methods. Useful before attempting WinRM attacks.",
+      "template": "use auxiliary/scanner/winrm/winrm_auth_methods\\nset RHOSTS {rhhosts}\\nrun"
+    }
+  ]
+}

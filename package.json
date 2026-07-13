@@ -1,8 +1,8 @@
 {
-  "name": "pentest-x",
+  "name": "red-x",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://furious-05.github.io/pentestX",
+  "homepage": "https://furious-05.github.io/RedX",
   "type": "module",
   "scripts": {
     "dev": "vite",

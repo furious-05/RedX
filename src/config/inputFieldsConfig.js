@@ -94,6 +94,27 @@ const inputFieldsConfig = {
     { name: "targetip", placeholder: "Target ip (if needed)", type: "text" },
   ],
 
+  "Defense Evasion": [
+    { name: "lhost", placeholder: "LHOST (your IP)", type: "text" },
+    { name: "lport", placeholder: "LPORT", type: "text" }
+  ],
+  "Sliver": [
+    { name: "lhost_ip", placeholder: "LHOST IP", type: "text" },
+    { name: "lport", placeholder: "LPORT", type: "text" },
+    { name: "domain", placeholder: "Domain", type: "text" },
+    { name: "save_path", placeholder: "Save Path", type: "text" },
+    { name: "remote_path", placeholder: "Remote Path", type: "text" },
+    { name: "session_id", placeholder: "Session ID", type: "text" }
+  ],
+  "Command & Control (C2)": [
+    { name: "lhost_ip", placeholder: "LHOST IP", type: "text" },
+    { name: "lport", placeholder: "LPORT", type: "text" },
+    { name: "domain", placeholder: "Domain", type: "text" },
+    { name: "save_path", placeholder: "Save Path", type: "text" },
+    { name: "remote_path", placeholder: "Remote Path", type: "text" },
+    { name: "session_id", placeholder: "Session ID", type: "text" }
+  ]
+
   // Add more categories and their specific input fields here
 };
 

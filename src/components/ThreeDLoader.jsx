@@ -1,45 +1,41 @@
-// src/components/PentestXLoader.jsx
+// src/components/ThreeDLoader.jsx
 import React, { useEffect, useState } from "react";
 
-export default function PentestXLoader() {
+export default function PentestXLoader({ fadeOut }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Hide after animation (3s)
-    const timer = setTimeout(() => setVisible(false), 3000);
+    // Hide after animation
+    const timer = setTimeout(() => setVisible(false), 2000);
     return () => clearTimeout(timer);
   }, []);
 
   if (!visible) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-[#0e121b] text-[#00ff00]">
-      <h1 className="text-5xl font-extrabold animate-pentestx">
-        PentestX
-      </h1>
+    <div 
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-zinc-950 transition-opacity duration-700 ease-in-out ${
+        fadeOut ? "opacity-0" : "opacity-100"
+      }`}
+    >
+      <div className="flex flex-col items-center gap-6 animate-pulse-slow">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-100">
+          RedX<span className="text-emerald-400">.</span>
+        </h1>
+        <div className="flex gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: "0ms" }} />
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: "150ms" }} />
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-bounce" style={{ animationDelay: "300ms" }} />
+        </div>
+      </div>
 
       <style>{`
-        @keyframes pentestx-anim {
-          0% {
-            opacity: 0;
-            transform: translateZ(-100px) scale(0.5);
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-          }
-          50% {
-            opacity: 1;
-            transform: translateZ(0) scale(1);
-            text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
-          }
-          100% {
-            opacity: 0;
-            transform: translateZ(-100px) scale(0.5);
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-          }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
         }
-        .animate-pentestx {
-          animation: pentestx-anim 3s ease-in-out forwards;
-          transform-style: preserve-3d;
-          color: #00ff00;
+        .animate-pulse-slow {
+          animation: pulse-slow 2s ease-in-out infinite;
         }
       `}</style>
     </div>

@@ -1,0 +1,243 @@
+{
+  "title": "Sliver - Setup & Listeners",
+  "commands": [
+    {
+      "args": [],
+      "title": "Start Sliver Server (single-player console)",
+      "template": "sliver-server"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Local IP to bind gRPC",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "lport",
+          "description": "gRPC port",
+          "default": "31337"
+        }
+      ],
+      "title": "Start Sliver Server (daemon/multi-player mode)",
+      "template": "sliver-server daemon --lhost {lhost_ip} --lport {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "operator_name",
+          "description": "Operator name",
+          "default": "redteam"
+        },
+        {
+          "name": "lhost_ip",
+          "description": "Server IP",
+          "default": "192.168.1.100"
+        },
+        {
+          "name": "lport",
+          "description": "gRPC port",
+          "default": "31337"
+        }
+      ],
+      "title": "Create a new operator config (multi-player)",
+      "template": "sliver> new-operator --name {operator_name} --lhost {lhost_ip} --lport {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "config_file",
+          "description": "Path to operator config",
+          "default": "/home/user/redteam_operator.cfg"
+        }
+      ],
+      "title": "Connect client to server (multi-player)",
+      "template": "sliver-client import {config_file} && sliver-client console"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Local IP to bind to",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "lport",
+          "description": "TCP listen port",
+          "default": "8888"
+        }
+      ],
+      "title": "Start mTLS Listener",
+      "template": "mtls --lhost {lhost_ip} --lport {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Local IP to bind to",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "lport",
+          "description": "TCP listen port",
+          "default": "80"
+        }
+      ],
+      "title": "Start HTTP Listener",
+      "template": "http --lhost {lhost_ip} --lport {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Local IP to bind to",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "lport",
+          "description": "TCP listen port",
+          "default": "443"
+        },
+        {
+          "name": "domain",
+          "description": "Domain for TLS",
+          "default": "example.com"
+        }
+      ],
+      "title": "Start HTTPS Listener (self-signed cert)",
+      "template": "https --lhost {lhost_ip} --lport {lport} --domain {domain}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Local IP to bind to",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "lport",
+          "description": "TCP listen port",
+          "default": "443"
+        },
+        {
+          "name": "domain",
+          "description": "Public domain for Let's Encrypt",
+          "default": "attacker.com"
+        }
+      ],
+      "title": "Start HTTPS Listener (Let's Encrypt)",
+      "template": "https --lhost {lhost_ip} --lport {lport} --domain {domain} --lets-encrypt"
+    },
+    {
+      "args": [
+        {
+          "name": "domain",
+          "description": "Parent domain for DNS C2",
+          "default": "tunnel.example.com"
+        }
+      ],
+      "title": "Start DNS Listener",
+      "template": "dns --domains {domain}"
+    },
+    {
+      "args": [
+        {
+          "name": "domain",
+          "description": "Parent domain for DNS C2",
+          "default": "tunnel.example.com"
+        },
+        {
+          "name": "lport",
+          "description": "UDP listen port",
+          "default": "53"
+        }
+      ],
+      "title": "Start DNS Listener (custom port)",
+      "template": "dns --domains {domain} --lport {lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "lport",
+          "description": "UDP listen port",
+          "default": "53"
+        },
+        {
+          "name": "nport",
+          "description": "Virtual tun interface port",
+          "default": "8888"
+        },
+        {
+          "name": "key_port",
+          "description": "Key exchange port",
+          "default": "1337"
+        }
+      ],
+      "title": "Start WireGuard Listener",
+      "template": "wg --lport {lport} --nport {nport} --key-port {key_port}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Stager listener IP",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "lport",
+          "description": "Stager listener port",
+          "default": "8080"
+        },
+        {
+          "name": "profile_name",
+          "description": "Sliver profile name",
+          "default": "my-sliver-profile"
+        }
+      ],
+      "title": "Start TCP Stager Listener (linked to profile)",
+      "template": "stage-listener --url tcp://{lhost_ip}:{lport} --profile {profile_name}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Stager listener IP",
+          "default": "0.0.0.0"
+        },
+        {
+          "name": "lport",
+          "description": "Stager HTTPS port",
+          "default": "443"
+        },
+        {
+          "name": "profile_name",
+          "description": "Sliver profile name",
+          "default": "my-shellcode-profile"
+        }
+      ],
+      "title": "Start HTTPS Stager Listener",
+      "template": "stage-listener --url https://{lhost_ip}:{lport} --profile {profile_name}"
+    },
+    {
+      "args": [],
+      "title": "List all active listeners/jobs",
+      "template": "jobs"
+    },
+    {
+      "args": [],
+      "title": "Kill all active listeners",
+      "template": "jobs -K"
+    },
+    {
+      "args": [
+        {
+          "name": "job_id",
+          "description": "ID of the job to kill",
+          "default": "1"
+        }
+      ],
+      "title": "Kill a specific listener by job ID",
+      "template": "jobs -k {job_id}"
+    }
+  ]
+}

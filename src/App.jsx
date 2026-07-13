@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { Routes, Route, Navigate } from "react-router-dom";
 import PentestXLoader from "./components/ThreeDLoader";
 import Header from "./components/Header";
-import RightBar from "./components/RightBar";
-import LeftBar from "./components/LeftBar";
+import CategoriesBar from "./components/CategoriesBar";
+import OptionsBar from "./components/OptionsBar";
 import useCommands from "./hooks/useCommands";
-import categories from "./data/categories.json";
+import allCategories from "./data/categories.json";
 import inputFieldsConfig from "./config/inputFieldsConfig";
 import About from "./components/About";
 
@@ -18,10 +18,10 @@ const InputFields = React.memo(({ inputs, formValues, setFormValues, theme }) =>
         key={name}
         type={type}
         placeholder={placeholder}
-        className={`px-3 py-2 rounded-md border placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition ${
+        className={`px-4 py-2 font-mono text-sm rounded-md border focus:outline-none focus:ring-1 transition-all ${
           theme === "dark"
-            ? "bg-gray-800 text-white border-gray-600"
-            : "bg-white text-black border-gray-300"
+            ? "bg-zinc-900 text-zinc-200 border-white/5 placeholder-zinc-500 focus:border-emerald-500/50 focus:ring-emerald-500/20"
+            : "bg-white text-zinc-900 border-zinc-300 placeholder-zinc-500 focus:border-emerald-500 focus:ring-emerald-500/20"
         }`}
         value={formValues[name] || ""}
         onChange={(e) =>
@@ -71,14 +71,16 @@ function MainInterface(props) {
 
   return (
     <div
-      className={`h-screen flex flex-col ${
-        theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+      className={`h-screen flex flex-col font-sans ${
+        theme === "dark" ? "bg-zinc-950 text-zinc-200" : "bg-zinc-50 text-zinc-900"
       }`}
     >
       <Header
         onToggleLeft={() => setShowLeft((s) => !s)}
         onToggleRight={() => setShowRight((s) => !s)}
-        onSearchSelect={onSearchSelect} // pass search callback
+        onSearchSelect={onSearchSelect}
+        activeMode={props.activeMode}
+        setActiveMode={props.setActiveMode}
       />
 
       {/* rest of MainInterface stays unchanged */}
@@ -90,20 +92,15 @@ function MainInterface(props) {
           } md:block md:relative md:inset-auto md:z-auto`}
         >
           <div style={{ width: `${leftWidth}px` }}>
-            <LeftBar
+            <CategoriesBar
               width={leftWidth}
               setWidth={setLeftWidth}
               selectedCategory={selectedCategory}
-              selectedSubItemFile={selectedSubItemFile}
-              setSelectedSubItemFile={(file) => {
-                setSelectedSubItemFile(file);
+              setSelectedCategory={(c) => {
+                setSelectedCategory(c);
                 setShowLeft(false);
               }}
-              selectedCommandTitle={selectedCommandTitle}
-              setSelectedCommandTitle={(title) => {
-                setSelectedCommandTitle(title);
-                setShowLeft(false);
-              }}
+              categories={props.categories}
             />
           </div>
           {showLeft && (
@@ -125,28 +122,28 @@ function MainInterface(props) {
           ) : (
             <>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <h2 className="text-2xl font-semibold">
+                <h2 className={`text-xl font-bold tracking-tight ${theme === 'dark' ? 'text-zinc-100' : 'text-zinc-900'}`}>
                   {selectedCommandTitle || selectedSubItemFile || selectedCategory}
                 </h2>
                 <div className="flex items-center gap-2">
                   <div
-                    className={`hidden md:block text-sm ${
-                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    className={`hidden md:block text-xs font-semibold uppercase tracking-wider ${
+                      theme === "dark" ? "text-zinc-500" : "text-zinc-500"
                     }`}
                   >
                     Category: {selectedCategory}
                   </div>
                   <div className="md:hidden">
                     <select
-                      className={`px-2 py-1 rounded border ${
+                      className={`px-3 py-1.5 rounded-md border text-sm font-medium transition-all ${
                         theme === "dark"
-                          ? "bg-gray-800 text-white border-gray-600"
-                          : "bg-white text-black border-gray-300"
+                          ? "bg-zinc-900 text-zinc-200 border-white/5"
+                          : "bg-white text-zinc-900 border-zinc-200"
                       }`}
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
                     >
-                      {categories.map((c) => (
+                      {props.categories.map((c) => (
                         <option key={c.name} value={c.name}>
                           {c.name}
                         </option>
@@ -166,8 +163,10 @@ function MainInterface(props) {
 
               {/* COMMANDS AREA */}
               <div
-                className={`mt-6 flex-1 min-h-0 p-4 rounded-lg border space-y-6 overflow-auto ${
-                  theme === "dark" ? "bg-gray-800 border-gray-700" : "bg-white border-gray-300"
+                className={`mt-6 flex-1 min-h-0 p-6 rounded-xl border shadow-sm space-y-6 overflow-auto ${
+                  theme === "dark" 
+                    ? "bg-[#0c0c0e] border-white/5" 
+                    : "bg-white border-zinc-200"
                 }`}
               >
                 {data?.commands?.length > 0 ? (
@@ -182,15 +181,17 @@ function MainInterface(props) {
                     return (
                       <div
                         key={title}
-                        className={`pb-4 border-b ${
-                          theme === "dark" ? "border-gray-700" : "border-gray-300"
-                        } last:border-none`}
+                        className={`p-5 rounded-lg border ${
+                          theme === "dark" ? "bg-zinc-900/50 border-white/5" : "bg-zinc-50 border-zinc-200"
+                        }`}
                       >
-                        <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-start justify-between gap-3 mb-4">
                           <div>
-                            <h3 className="text-lg font-semibold mb-1">{title}</h3>
+                            <h3 className={`text-base font-semibold tracking-tight ${theme === 'dark' ? 'text-zinc-100' : 'text-zinc-900'}`}>
+                              {title}
+                            </h3>
                             {description && (
-                              <p className={theme === "dark" ? "mb-2 text-gray-400" : "mb-2 text-gray-600"}>
+                              <p className={`text-sm mt-1 ${theme === "dark" ? "text-zinc-400" : "text-zinc-500"}`}>
                                 {description}
                               </p>
                             )}
@@ -226,8 +227,10 @@ function MainInterface(props) {
                           </button>
                         </div>
                         <pre
-                          className={`whitespace-pre-wrap break-words font-mono text-sm rounded p-3 ${
-                            theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+                          className={`whitespace-pre-wrap break-words font-mono text-sm p-4 rounded-md border ${
+                            theme === "dark" 
+                              ? "bg-black/40 border-white/5 text-zinc-300" 
+                              : "bg-white border-zinc-200 text-zinc-800 shadow-sm"
                           }`}
                         >
                           {commandText}
@@ -252,14 +255,21 @@ function MainInterface(props) {
           } md:block md:relative md:inset-auto md:z-auto`}
         >
           <div style={{ width: `${rightWidth}px` }}>
-            <RightBar
+            <OptionsBar
               width={rightWidth}
               setWidth={setRightWidth}
               selectedCategory={selectedCategory}
-              setSelectedCategory={(c) => {
-                setSelectedCategory(c);
+              selectedSubItemFile={selectedSubItemFile}
+              setSelectedSubItemFile={(file) => {
+                setSelectedSubItemFile(file);
                 setShowRight(false);
               }}
+              selectedCommandTitle={selectedCommandTitle}
+              setSelectedCommandTitle={(title) => {
+                setSelectedCommandTitle(title);
+                setShowRight(false);
+              }}
+              categories={props.categories}
             />
           </div>
           {showRight && (
@@ -280,7 +290,10 @@ export default function App() {
   const [loadingScreen, setLoadingScreen] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]?.name || "SMB Enumeration");
+  const [activeMode, setActiveMode] = useState("Pentesting");
+  const categories = allCategories[activeMode] || [];
+
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]?.name || "Scanning");
   const [selectedSubItemFile, setSelectedSubItemFile] = useState(null);
   const [selectedCommandTitle, setSelectedCommandTitle] = useState(null);
 
@@ -327,7 +340,14 @@ export default function App() {
       });
       return newValues;
     });
-  }, [selectedCategory]);
+  }, [selectedCategory, activeMode, categories]);
+
+  // When mode changes, reset category to first in that mode
+  useEffect(() => {
+    if (categories.length > 0 && !categories.find(c => c.name === selectedCategory)) {
+      setSelectedCategory(categories[0].name);
+    }
+  }, [activeMode, categories]);
 
   const copyCommand = async (text, title) => {
     try {
@@ -339,15 +359,22 @@ export default function App() {
     }
   };
 
-  const handleSearchSelect = (category, subItemFile, commandTitle) => {
-    setSelectedCategory(category);
-    if (subItemFile) setSelectedSubItemFile(subItemFile);
-    else setSelectedSubItemFile(null);
-    if (commandTitle) setSelectedCommandTitle(commandTitle);
-    else setSelectedCommandTitle(null);
-
-    setShowLeft(false);
-    setShowRight(false);
+  const handleSearchSelect = (category, subItemFile, commandTitle, mode) => {
+    if (mode && mode !== activeMode) {
+      setActiveMode(mode);
+    }
+    
+    // We use a timeout to allow activeMode and categories to update first
+    setTimeout(() => {
+      setSelectedCategory(category);
+      if (subItemFile) setSelectedSubItemFile(subItemFile);
+      else setSelectedSubItemFile(null);
+      if (commandTitle) setSelectedCommandTitle(commandTitle);
+      else setSelectedCommandTitle(null);
+  
+      setShowLeft(false);
+      setShowRight(false);
+    }, 0);
 
     // Reset form values for new category
     const inputs = inputFieldsConfig[category] || inputFieldsConfig.default;
@@ -389,7 +416,10 @@ export default function App() {
             setShowRight={setShowRight}
             rightWidth={rightWidth}
             setRightWidth={setRightWidth}
-            onSearchSelect={handleSearchSelect} // pass search callback
+            onSearchSelect={handleSearchSelect}
+            activeMode={activeMode}
+            setActiveMode={setActiveMode}
+            categories={categories}
           />
         }
       />
